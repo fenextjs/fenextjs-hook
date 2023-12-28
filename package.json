@@ -1,6 +1,6 @@
 {
     "name": "fenextjs-hook",
-    "version": "1.4.5",
+    "version": "1.4.6",
     "description": "",
     "main": "./cjs/index.js",
     "module": "./cjs/index.js",
@@ -25,7 +25,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://gitlab.com/franciscoblancojn/fenextjs-hook.git"
+        "url": "git+https://github.com/franciscoblancojn/fenextjs-hook.git"
     },
     "keywords": [
         "fenextjs",
@@ -44,9 +44,9 @@
     "author": "franciscoblancojn",
     "license": "ISC",
     "bugs": {
-        "url": "https://gitlab.com/franciscoblancojn/fenextjs-hook/issues"
+        "url": "https://github.com/franciscoblancojn/fenextjs-hook/issues"
     },
-    "homepage": "https://gitlab.com/franciscoblancojn/fenextjs-hook#readme",
+    "homepage": "https://github.com/franciscoblancojn/fenextjs-hook#readme",
     "dependencies": {
         "country-state-city-nextjs": "^1.2.1",
         "fenextjs-error": "^1.0.14",
