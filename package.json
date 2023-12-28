@@ -1,0 +1,77 @@
+{
+    "name": "fenextjs-hook",
+    "version": "1.4.5",
+    "description": "",
+    "main": "./cjs/index.js",
+    "module": "./cjs/index.js",
+    "types": "./cjs/index.d.ts",
+    "scripts": {
+        "build": "npm run build:esm && npm run build:cjs",
+        "build:esm": "echo 'esm'",
+        "build:cjs": "tsc --module commonjs --outDir cjs",
+        "lint": "npx eslint src",
+        "lint:fix": "npm run lint -- --fix",
+        "prettier": "npx prettier src --check",
+        "prettier:fix": "npm run prettier -- --write",
+        "format": "npm run prettier:fix && npm run lint:fix",
+        "flb": "npm run format && npm run lint && npm run build",
+        "bun-i":"bun i",
+        "remove-bun-lockb":"rm -r bun.lockb",
+        "remove-node-module":"rm -r node_modules",
+        "remove":"npm run remove-node-module && npm run remove-bun-lockb",
+        "update-package":"ncu -u !next",
+        "update":"npm run update-package && npm run remove && npm run bun-i && npm run flb",
+        "u":"npm run update"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://gitlab.com/franciscoblancojn/fenextjs-hook.git"
+    },
+    "keywords": [
+        "fenextjs",
+        "ts",
+        "hook",
+        "nextjs",
+        "useData",
+        "useRequest",
+        "useModal",
+        "useNotification",
+        "useQuery",
+        "useUser",
+        "usePhone",
+        "useValidator"
+    ],
+    "author": "franciscoblancojn",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://gitlab.com/franciscoblancojn/fenextjs-hook/issues"
+    },
+    "homepage": "https://gitlab.com/franciscoblancojn/fenextjs-hook#readme",
+    "dependencies": {
+        "country-state-city-nextjs": "^1.2.1",
+        "fenextjs-error": "^1.0.14",
+        "fenextjs-interface": "^1.0.36",
+        "fenextjs-validator": "^1.0.17",
+        "jwt-decode": "^4.0.0",
+        "next": "13.4.12",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "uselocalstoragenextjs": "^1.2.5",
+        "world-phones": "^1.0.2"
+    },
+    "files": [
+        "cjs",
+        "esm"
+    ],
+    "devDependencies": {
+        "@types/node": "20.8.9",
+        "@types/react": "18.2.33",
+        "@types/react-dom": "18.2.14",
+        "@typescript-eslint/eslint-plugin": "^6.9.0",
+        "@typescript-eslint/parser": "^6.9.0",
+        "eslint": "8.52.0",
+        "prettier": "^3.0.3",
+        "ts-loader": "^9.5.0",
+        "typescript": "^5.2.2"
+    }
+}
