@@ -61,8 +61,8 @@ export declare const useData: <T, M = any, RT = void, RM = void>(defaultData: T,
     onReloadKeyData: () => void;
     isValidData: true | import("fenextjs-error").ErrorFenextjs<any>;
     isValidDataMemo: true | import("fenextjs-error").ErrorFenextjs<any>;
-    onSubmitData: () => Promise<void>;
-    onSubmitDataMemo: () => Promise<void>;
+    onSubmitData: () => Promise<RT | undefined>;
+    onSubmitDataMemo: () => Promise<RM | undefined>;
     loaderSubmit: boolean;
     loaderSubmitMemo: boolean;
     resultSubmitData: RT | undefined;

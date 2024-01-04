@@ -175,11 +175,13 @@ const useData = (defaultData, options) => {
                 setLoaderSubmit(true);
                 const r = await options?.onSubmitData?.(data);
                 setResultSubmitData(r);
+                return r;
             }
             finally {
                 setLoaderSubmit(false);
             }
         }
+        return undefined;
     }, [data, isValidData, options?.onSubmitData]);
     const onSubmitDataMemo = (0, react_1.useCallback)(async () => {
         if (options?.onSubmitDataMemo && isValidDataMemo === true) {
@@ -188,11 +190,13 @@ const useData = (defaultData, options) => {
                 setLoaderSubmitMemo(true);
                 const r = await options?.onSubmitDataMemo?.(dataMemo);
                 setResultSubmitDataMemo(r);
+                return r;
             }
             finally {
                 setLoaderSubmitMemo(false);
             }
         }
+        return undefined;
     }, [dataMemo, isValidDataMemo, options?.onSubmitDataMemo]);
     (0, react_1.useEffect)(() => {
         if (options?.refreshDataIfChangeDefaultData?.active === true) {

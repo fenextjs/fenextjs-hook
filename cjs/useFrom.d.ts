@@ -35,8 +35,8 @@ export declare const useForm: <T, M = any>({ defaultValue, onChangeDisabled, onC
     onReloadKeyData: () => void;
     isValidData: true | ErrorFenextjs<any>;
     isValidDataMemo: true | ErrorFenextjs<any>;
-    onSubmitData: () => Promise<void>;
-    onSubmitDataMemo: () => Promise<void>;
+    onSubmitData: () => Promise<void | undefined>;
+    onSubmitDataMemo: () => Promise<void | undefined>;
     loaderSubmit: boolean;
     loaderSubmitMemo: boolean;
     resultSubmitData: void | undefined;
