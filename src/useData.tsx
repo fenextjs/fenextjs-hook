@@ -27,7 +27,7 @@ export interface setDataOptions {
  * @param {Function} options.onSubmitDataMemo - A function if is valid dataMemo for to send.
  * @returns {Object} - An object with the data state and methods to manage it.
  */
-export interface useDataOptions<T, M = any> {
+export interface useDataOptions<T, M = any,RT=void,RM=void> {
     data?: T;
     refreshDataIfChangeDefaultData?: useDataOptionsRefreshDataIfChangeDefaultDataOptions;
     onChangeDataAfter?: (data: T) => void;
@@ -36,8 +36,8 @@ export interface useDataOptions<T, M = any> {
     onMemo?: (data: T) => M;
     validator?: FenextjsValidatorClass<T>;
     validatorMemo?: FenextjsValidatorClass<M>;
-    onSubmitData?: (data: T) => void | Promise<void>;
-    onSubmitDataMemo?: (data: T) => void | Promise<void>;
+    onSubmitData?: (data: T) => RT | Promise<RT>;
+    onSubmitDataMemo?: (data: M) => RM | Promise<RM>;
 }
 
 /**
@@ -48,9 +48,9 @@ export interface useDataOptions<T, M = any> {
  * @param {T} defaultData - The default value for the data.
  * @param {useDataOptions} options - The options for the hook.
  */
-export const useData = <T, M = any>(
+export const useData = <T, M = any,RT=void,RM=void>(
     defaultData: T,
-    options?: useDataOptions<T, M>,
+    options?: useDataOptions<T, M,RT,RM>,
 ) => {
     type keys = keyof T;
     const [loaderSubmit, setLoaderSubmit] = useState(false);
@@ -58,6 +58,8 @@ export const useData = <T, M = any>(
     const [keyData, setKeyData] = useState<number>(0);
     const [isChange, setIsChange] = useState(false);
     const [data_, setDataD] = useState<T>(defaultData);
+    const [resultSubmitData, setResultSubmitData] = useState<RT | undefined>(undefined);
+    const [resultSubmitDataMemo, setResultSubmitDataMemo] = useState<RM | undefined>(undefined);
     const data = useMemo<T>(
         () => options?.data ?? data_,
         [data_, options?.data],
@@ -227,23 +229,27 @@ export const useData = <T, M = any>(
     const onSubmitData = useCallback(async () => {
         if (options?.onSubmitData && isValidData === true) {
             try {
+                setResultSubmitData(undefined)
                 setLoaderSubmit(true);
-                await options?.onSubmitData?.(data);
+                const r = await options?.onSubmitData?.(data);
+                setResultSubmitData(r)
             } finally {
                 setLoaderSubmit(false);
             }
         }
     }, [data, isValidData, options?.onSubmitData]);
     const onSubmitDataMemo = useCallback(async () => {
-        if (options?.onSubmitDataMemo && isValidData === true) {
+        if (options?.onSubmitDataMemo && isValidDataMemo === true) {
             try {
+                setResultSubmitDataMemo(undefined)
                 setLoaderSubmitMemo(true);
-                await options?.onSubmitDataMemo?.(data);
+                const r = await options?.onSubmitDataMemo?.(dataMemo);
+                setResultSubmitDataMemo(r)
             } finally {
                 setLoaderSubmitMemo(false);
             }
         }
-    }, [data, isValidData, options?.onSubmitDataMemo]);
+    }, [dataMemo, isValidDataMemo, options?.onSubmitDataMemo]);
 
     useEffect(() => {
         if (options?.refreshDataIfChangeDefaultData?.active === true) {
@@ -283,5 +289,8 @@ export const useData = <T, M = any>(
 
         loaderSubmit,
         loaderSubmitMemo,
+
+        resultSubmitData,
+        resultSubmitDataMemo,
     };
 };
