@@ -16,6 +16,8 @@ const useData = (defaultData, options) => {
     const [keyData, setKeyData] = (0, react_1.useState)(0);
     const [isChange, setIsChange] = (0, react_1.useState)(false);
     const [data_, setDataD] = (0, react_1.useState)(defaultData);
+    const [resultSubmitData, setResultSubmitData] = (0, react_1.useState)(undefined);
+    const [resultSubmitDataMemo, setResultSubmitDataMemo] = (0, react_1.useState)(undefined);
     const data = (0, react_1.useMemo)(() => options?.data ?? data_, [data_, options?.data]);
     /**
      * Update a keyData
@@ -169,8 +171,10 @@ const useData = (defaultData, options) => {
     const onSubmitData = (0, react_1.useCallback)(async () => {
         if (options?.onSubmitData && isValidData === true) {
             try {
+                setResultSubmitData(undefined);
                 setLoaderSubmit(true);
-                await options?.onSubmitData?.(data);
+                const r = await options?.onSubmitData?.(data);
+                setResultSubmitData(r);
             }
             finally {
                 setLoaderSubmit(false);
@@ -178,16 +182,18 @@ const useData = (defaultData, options) => {
         }
     }, [data, isValidData, options?.onSubmitData]);
     const onSubmitDataMemo = (0, react_1.useCallback)(async () => {
-        if (options?.onSubmitDataMemo && isValidData === true) {
+        if (options?.onSubmitDataMemo && isValidDataMemo === true) {
             try {
+                setResultSubmitDataMemo(undefined);
                 setLoaderSubmitMemo(true);
-                await options?.onSubmitDataMemo?.(data);
+                const r = await options?.onSubmitDataMemo?.(dataMemo);
+                setResultSubmitDataMemo(r);
             }
             finally {
                 setLoaderSubmitMemo(false);
             }
         }
-    }, [data, isValidData, options?.onSubmitDataMemo]);
+    }, [dataMemo, isValidDataMemo, options?.onSubmitDataMemo]);
     (0, react_1.useEffect)(() => {
         if (options?.refreshDataIfChangeDefaultData?.active === true) {
             setData(defaultData, {
@@ -220,6 +226,8 @@ const useData = (defaultData, options) => {
         onSubmitDataMemo,
         loaderSubmit,
         loaderSubmitMemo,
+        resultSubmitData,
+        resultSubmitDataMemo,
     };
 };
 exports.useData = useData;

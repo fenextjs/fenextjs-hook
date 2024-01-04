@@ -27,7 +27,7 @@ export interface setDataOptions {
  * @param {Function} options.onSubmitDataMemo - A function if is valid dataMemo for to send.
  * @returns {Object} - An object with the data state and methods to manage it.
  */
-export interface useDataOptions<T, M = any,RT=void,RM=void> {
+export interface useDataOptions<T, M = any, RT = void, RM = void> {
     data?: T;
     refreshDataIfChangeDefaultData?: useDataOptionsRefreshDataIfChangeDefaultDataOptions;
     onChangeDataAfter?: (data: T) => void;
@@ -48,9 +48,9 @@ export interface useDataOptions<T, M = any,RT=void,RM=void> {
  * @param {T} defaultData - The default value for the data.
  * @param {useDataOptions} options - The options for the hook.
  */
-export const useData = <T, M = any,RT=void,RM=void>(
+export const useData = <T, M = any, RT = void, RM = void>(
     defaultData: T,
-    options?: useDataOptions<T, M,RT,RM>,
+    options?: useDataOptions<T, M, RT, RM>,
 ) => {
     type keys = keyof T;
     const [loaderSubmit, setLoaderSubmit] = useState(false);
@@ -58,8 +58,12 @@ export const useData = <T, M = any,RT=void,RM=void>(
     const [keyData, setKeyData] = useState<number>(0);
     const [isChange, setIsChange] = useState(false);
     const [data_, setDataD] = useState<T>(defaultData);
-    const [resultSubmitData, setResultSubmitData] = useState<RT | undefined>(undefined);
-    const [resultSubmitDataMemo, setResultSubmitDataMemo] = useState<RM | undefined>(undefined);
+    const [resultSubmitData, setResultSubmitData] = useState<RT | undefined>(
+        undefined,
+    );
+    const [resultSubmitDataMemo, setResultSubmitDataMemo] = useState<
+        RM | undefined
+    >(undefined);
     const data = useMemo<T>(
         () => options?.data ?? data_,
         [data_, options?.data],
@@ -229,10 +233,10 @@ export const useData = <T, M = any,RT=void,RM=void>(
     const onSubmitData = useCallback(async () => {
         if (options?.onSubmitData && isValidData === true) {
             try {
-                setResultSubmitData(undefined)
+                setResultSubmitData(undefined);
                 setLoaderSubmit(true);
                 const r = await options?.onSubmitData?.(data);
-                setResultSubmitData(r)
+                setResultSubmitData(r);
             } finally {
                 setLoaderSubmit(false);
             }
@@ -241,10 +245,10 @@ export const useData = <T, M = any,RT=void,RM=void>(
     const onSubmitDataMemo = useCallback(async () => {
         if (options?.onSubmitDataMemo && isValidDataMemo === true) {
             try {
-                setResultSubmitDataMemo(undefined)
+                setResultSubmitDataMemo(undefined);
                 setLoaderSubmitMemo(true);
                 const r = await options?.onSubmitDataMemo?.(dataMemo);
-                setResultSubmitDataMemo(r)
+                setResultSubmitDataMemo(r);
             } finally {
                 setLoaderSubmitMemo(false);
             }

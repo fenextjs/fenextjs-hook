@@ -25,7 +25,7 @@ export interface setDataOptions {
  * @param {Function} options.onSubmitDataMemo - A function if is valid dataMemo for to send.
  * @returns {Object} - An object with the data state and methods to manage it.
  */
-export interface useDataOptions<T, M = any> {
+export interface useDataOptions<T, M = any, RT = void, RM = void> {
     data?: T;
     refreshDataIfChangeDefaultData?: useDataOptionsRefreshDataIfChangeDefaultDataOptions;
     onChangeDataAfter?: (data: T) => void;
@@ -34,8 +34,8 @@ export interface useDataOptions<T, M = any> {
     onMemo?: (data: T) => M;
     validator?: FenextjsValidatorClass<T>;
     validatorMemo?: FenextjsValidatorClass<M>;
-    onSubmitData?: (data: T) => void | Promise<void>;
-    onSubmitDataMemo?: (data: T) => void | Promise<void>;
+    onSubmitData?: (data: T) => RT | Promise<RT>;
+    onSubmitDataMemo?: (data: M) => RM | Promise<RM>;
 }
 /**
  * A custom hook to manage data state and changes.
@@ -45,7 +45,7 @@ export interface useDataOptions<T, M = any> {
  * @param {T} defaultData - The default value for the data.
  * @param {useDataOptions} options - The options for the hook.
  */
-export declare const useData: <T, M = any>(defaultData: T, options?: useDataOptions<T, M> | undefined) => {
+export declare const useData: <T, M = any, RT = void, RM = void>(defaultData: T, options?: useDataOptions<T, M, RT, RM> | undefined) => {
     data: T;
     onChangeData: (id: keyof T) => (value: T[keyof T]) => void;
     onDeleteData: (id: keyof T) => void;
@@ -65,4 +65,6 @@ export declare const useData: <T, M = any>(defaultData: T, options?: useDataOpti
     onSubmitDataMemo: () => Promise<void>;
     loaderSubmit: boolean;
     loaderSubmitMemo: boolean;
+    resultSubmitData: RT | undefined;
+    resultSubmitDataMemo: RM | undefined;
 };
