@@ -115,10 +115,10 @@ export const useRequestFunction = <FP = any, FR = any, PE = any>({
         }
     };
     const onRequest = async (props: FP) => {
-        onRequestAction(props);
+        return await onRequestAction(props);
     };
-    const onRequestWihtThrow = async (props: FP) => {
-        onRequestAction(props, {
+    const onRequestWithThrow = async (props: FP) => {
+        return await onRequestAction(props, {
             onError: (error) => {
                 throw error;
             },
@@ -134,7 +134,7 @@ export const useRequestFunction = <FP = any, FR = any, PE = any>({
         error,
         result,
         onRequest,
-        onRequestWihtThrow,
+        onRequestWithThrow,
         onClear,
     };
 };

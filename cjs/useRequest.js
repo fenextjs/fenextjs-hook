@@ -72,10 +72,10 @@ const useRequestFunction = ({ f, parseError = (e) => e, }) => {
         }
     };
     const onRequest = async (props) => {
-        onRequestAction(props);
+        return await onRequestAction(props);
     };
-    const onRequestWihtThrow = async (props) => {
-        onRequestAction(props, {
+    const onRequestWithThrow = async (props) => {
+        return await onRequestAction(props, {
             onError: (error) => {
                 throw error;
             },
@@ -91,7 +91,7 @@ const useRequestFunction = ({ f, parseError = (e) => e, }) => {
         error,
         result,
         onRequest,
-        onRequestWihtThrow,
+        onRequestWithThrow,
         onClear,
     };
 };
