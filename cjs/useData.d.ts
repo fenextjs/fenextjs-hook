@@ -35,7 +35,23 @@ export interface useDataOptions<T, M = any, RT = void, RM = void> {
     validator?: FenextjsValidatorClass<T>;
     validatorMemo?: FenextjsValidatorClass<M>;
     onSubmitData?: (data: T) => RT | Promise<RT>;
+    onAfterSubmitDataOk?: (d: {
+        data: T;
+        result: RT;
+    }) => void;
+    onAfterSubmitDataError?: (d: {
+        data: T;
+        error: any;
+    }) => void;
     onSubmitDataMemo?: (data: M) => RM | Promise<RM>;
+    onAfterSubmitDataMemoOk?: (d: {
+        dataMemo: M;
+        result: RM;
+    }) => void;
+    onAfterSubmitDataMemoError?: (d: {
+        dataMemo: M;
+        error: any;
+    }) => void;
 }
 /**
  * A custom hook to manage data state and changes.

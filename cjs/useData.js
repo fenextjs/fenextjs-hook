@@ -173,9 +173,13 @@ const useData = (defaultData, options) => {
             try {
                 setResultSubmitData(undefined);
                 setLoaderSubmit(true);
-                const r = await options?.onSubmitData?.(data);
-                setResultSubmitData(r);
-                return r;
+                const result = await options?.onSubmitData?.(data);
+                setResultSubmitData(result);
+                options?.onAfterSubmitDataOk?.({ data, result });
+                return result;
+            }
+            catch (error) {
+                options?.onAfterSubmitDataError?.({ data, error });
             }
             finally {
                 setLoaderSubmit(false);
@@ -188,9 +192,13 @@ const useData = (defaultData, options) => {
             try {
                 setResultSubmitDataMemo(undefined);
                 setLoaderSubmitMemo(true);
-                const r = await options?.onSubmitDataMemo?.(dataMemo);
-                setResultSubmitDataMemo(r);
-                return r;
+                const result = await options?.onSubmitDataMemo?.(dataMemo);
+                setResultSubmitDataMemo(result);
+                options?.onAfterSubmitDataMemoOk?.({ dataMemo, result });
+                return result;
+            }
+            catch (error) {
+                options?.onAfterSubmitDataMemoError?.({ dataMemo, error });
             }
             finally {
                 setLoaderSubmitMemo(false);
