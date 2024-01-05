@@ -37,7 +37,11 @@ export interface useDataOptions<T, M = any, RT = void, RM = void> {
     validator?: FenextjsValidatorClass<T>;
     validatorMemo?: FenextjsValidatorClass<M>;
     onSubmitData?: (data: T) => RT | Promise<RT>;
+    onAfterSubmitDataOk?: (d: { data: T; result: RT }) => void;
+    onAfterSubmitDataError?: (d: { data: T; error: any }) => void;
     onSubmitDataMemo?: (data: M) => RM | Promise<RM>;
+    onAfterSubmitDataMemoOk?: (d: { dataMemo: M; result: RM }) => void;
+    onAfterSubmitDataMemoError?: (d: { dataMemo: M; error: any }) => void;
 }
 
 /**
@@ -235,9 +239,12 @@ export const useData = <T, M = any, RT = void, RM = void>(
             try {
                 setResultSubmitData(undefined);
                 setLoaderSubmit(true);
-                const r = await options?.onSubmitData?.(data);
-                setResultSubmitData(r);
-                return r;
+                const result = await options?.onSubmitData?.(data);
+                setResultSubmitData(result);
+                options?.onAfterSubmitDataOk?.({ data, result });
+                return result;
+            } catch (error) {
+                options?.onAfterSubmitDataError?.({ data, error });
             } finally {
                 setLoaderSubmit(false);
             }
@@ -249,9 +256,12 @@ export const useData = <T, M = any, RT = void, RM = void>(
             try {
                 setResultSubmitDataMemo(undefined);
                 setLoaderSubmitMemo(true);
-                const r = await options?.onSubmitDataMemo?.(dataMemo);
-                setResultSubmitDataMemo(r);
-                return r;
+                const result = await options?.onSubmitDataMemo?.(dataMemo);
+                setResultSubmitDataMemo(result);
+                options?.onAfterSubmitDataMemoOk?.({ dataMemo, result });
+                return result;
+            } catch (error) {
+                options?.onAfterSubmitDataMemoError?.({ dataMemo, error });
             } finally {
                 setLoaderSubmitMemo(false);
             }
