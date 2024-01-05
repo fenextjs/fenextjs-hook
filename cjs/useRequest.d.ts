@@ -25,12 +25,13 @@ export declare const useRequest: <Q = any, R = any, E = any, T = RequestResultTy
     error: E | undefined;
     onRequest: () => Promise<void>;
 };
-export interface useRequestFunctionProps<FP, FR> {
+export interface useRequestFunctionProps<FP, FR, PE = any> {
     f: RequestProps<FP, FR>;
+    parseError?: (errors: any) => PE;
 }
-export declare const useRequestFunction: <FP = any, FR = any>({ f, }: useRequestFunctionProps<FP, FR>) => {
+export declare const useRequestFunction: <FP = any, FR = any, PE = any>({ f, parseError, }: useRequestFunctionProps<FP, FR, PE>) => {
     loader: boolean;
-    error: undefined;
+    error: PE | undefined;
     result: FR | undefined;
     onRequest: (props: FP) => Promise<any>;
     onClear: () => void;

@@ -75,15 +75,17 @@ export const useRequest = <
     };
 };
 
-export interface useRequestFunctionProps<FP, FR> {
+export interface useRequestFunctionProps<FP, FR, PE = any> {
     f: RequestProps<FP, FR>;
+    parseError?: (errors: any) => PE;
 }
 
-export const useRequestFunction = <FP = any, FR = any>({
+export const useRequestFunction = <FP = any, FR = any, PE = any>({
     f,
-}: useRequestFunctionProps<FP, FR>) => {
+    parseError = (e) => e,
+}: useRequestFunctionProps<FP, FR, PE>) => {
     const [loader, setLoader] = useState(false);
-    const [error, setError] = useState(undefined);
+    const [error, setError] = useState<PE | undefined>(undefined);
     const [result, setResult] = useState<FR | undefined>(undefined);
 
     const onRequest = async (props: FP) => {
@@ -97,7 +99,8 @@ export const useRequestFunction = <FP = any, FR = any>({
             }
             setResult(r.result);
             return r;
-        } catch (error: any) {
+        } catch (err: any) {
+            const error = parseError?.(err) ?? err;
             setError(error);
             return error;
         } finally {

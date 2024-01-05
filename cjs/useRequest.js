@@ -45,7 +45,7 @@ const useRequest = ({ query, request, autoRequest = false, }) => {
     };
 };
 exports.useRequest = useRequest;
-const useRequestFunction = ({ f, }) => {
+const useRequestFunction = ({ f, parseError = (e) => e, }) => {
     const [loader, setLoader] = (0, react_1.useState)(false);
     const [error, setError] = (0, react_1.useState)(undefined);
     const [result, setResult] = (0, react_1.useState)(undefined);
@@ -61,7 +61,8 @@ const useRequestFunction = ({ f, }) => {
             setResult(r.result);
             return r;
         }
-        catch (error) {
+        catch (err) {
+            const error = parseError?.(err) ?? err;
             setError(error);
             return error;
         }
