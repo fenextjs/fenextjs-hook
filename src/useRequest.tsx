@@ -88,7 +88,13 @@ export const useRequestFunction = <FP = any, FR = any, PE = any>({
     const [error, setError] = useState<PE | undefined>(undefined);
     const [result, setResult] = useState<FR | undefined>(undefined);
 
-    const onRequest = async (props: FP) => {
+    interface onRequestActivionOptionsProps {
+        onError?: (error: any) => void;
+    }
+    const onRequestAction = async (
+        props: FP,
+        options?: onRequestActivionOptionsProps,
+    ) => {
         setLoader(true);
         setError(undefined);
         setResult(undefined);
@@ -102,10 +108,21 @@ export const useRequestFunction = <FP = any, FR = any, PE = any>({
         } catch (err: any) {
             const error = parseError?.(err) ?? err;
             setError(error);
+            options?.onError?.(error);
             return error;
         } finally {
             setLoader(false);
         }
+    };
+    const onRequest = async (props: FP) => {
+        onRequestAction(props);
+    };
+    const onRequestWihtThrow = async (props: FP) => {
+        onRequestAction(props, {
+            onError: (error) => {
+                throw error;
+            },
+        });
     };
     const onClear = () => {
         setLoader(false);
@@ -117,6 +134,7 @@ export const useRequestFunction = <FP = any, FR = any, PE = any>({
         error,
         result,
         onRequest,
+        onRequestWihtThrow,
         onClear,
     };
 };
