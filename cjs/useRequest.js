@@ -49,7 +49,7 @@ const useRequestFunction = ({ f, parseError = (e) => e, }) => {
     const [loader, setLoader] = (0, react_1.useState)(false);
     const [error, setError] = (0, react_1.useState)(undefined);
     const [result, setResult] = (0, react_1.useState)(undefined);
-    const onRequest = async (props) => {
+    const onRequestAction = async (props, options) => {
         setLoader(true);
         setError(undefined);
         setResult(undefined);
@@ -64,11 +64,22 @@ const useRequestFunction = ({ f, parseError = (e) => e, }) => {
         catch (err) {
             const error = parseError?.(err) ?? err;
             setError(error);
+            options?.onError?.(error);
             return error;
         }
         finally {
             setLoader(false);
         }
+    };
+    const onRequest = async (props) => {
+        onRequestAction(props);
+    };
+    const onRequestWihtThrow = async (props) => {
+        onRequestAction(props, {
+            onError: (error) => {
+                throw error;
+            },
+        });
     };
     const onClear = () => {
         setLoader(false);
@@ -80,6 +91,7 @@ const useRequestFunction = ({ f, parseError = (e) => e, }) => {
         error,
         result,
         onRequest,
+        onRequestWihtThrow,
         onClear,
     };
 };

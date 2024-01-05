@@ -33,6 +33,7 @@ export declare const useRequestFunction: <FP = any, FR = any, PE = any>({ f, par
     loader: boolean;
     error: PE | undefined;
     result: FR | undefined;
-    onRequest: (props: FP) => Promise<any>;
+    onRequest: (props: FP) => Promise<void>;
+    onRequestWihtThrow: (props: FP) => Promise<void>;
     onClear: () => void;
 };
