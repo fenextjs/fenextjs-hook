@@ -61,7 +61,10 @@ const useQuery = (props) => {
         }
         const queryParse = {};
         Object.keys(query).forEach((key) => {
-            queryParse[key] = `${query[key]}`;
+            const v = `${query[key] ?? ""}`;
+            if (v != "") {
+                queryParse[key] = v;
+            }
         });
         router?.push?.({
             pathname: router.pathname,
