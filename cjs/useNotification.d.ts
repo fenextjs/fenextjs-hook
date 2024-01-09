@@ -6,7 +6,7 @@ export interface NotificationDataProps {
     /**
      * The type of the notification
      */
-    type?: RequestResultTypeProps;
+    type?: RequestResultTypeProps | keyof typeof RequestResultTypeProps;
     /**
      * The message of the notification
      */
