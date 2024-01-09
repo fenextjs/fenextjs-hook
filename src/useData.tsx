@@ -27,7 +27,14 @@ export interface setDataOptions {
  * @param {Function} options.onSubmitDataMemo - A function if is valid dataMemo for to send.
  * @returns {Object} - An object with the data state and methods to manage it.
  */
-export interface useDataOptions<T, M = any, RT = void, RM = void> {
+export interface useDataOptions<
+    T,
+    M = any,
+    RT = void,
+    RM = void,
+    ET = any,
+    EM = any,
+> {
     data?: T;
     refreshDataIfChangeDefaultData?: useDataOptionsRefreshDataIfChangeDefaultDataOptions;
     onChangeDataAfter?: (data: T) => void;
@@ -38,10 +45,13 @@ export interface useDataOptions<T, M = any, RT = void, RM = void> {
     validatorMemo?: FenextjsValidatorClass<M>;
     onSubmitData?: (data: T) => RT | Promise<RT>;
     onAfterSubmitDataOk?: (d: { data: T; result: RT }) => void;
-    onAfterSubmitDataError?: (d: { data: T; error: any }) => void;
+    onAfterSubmitParseError?: (error: any) => ET;
+    onAfterSubmitDataError?: (d: { data: T; error: ET }) => void;
+
     onSubmitDataMemo?: (data: M) => RM | Promise<RM>;
     onAfterSubmitDataMemoOk?: (d: { dataMemo: M; result: RM }) => void;
-    onAfterSubmitDataMemoError?: (d: { dataMemo: M; error: any }) => void;
+    onAfterSubmitParseErrorMemo?: (error: any) => EM;
+    onAfterSubmitDataMemoError?: (d: { dataMemo: M; error: EM }) => void;
 }
 
 /**
@@ -52,9 +62,9 @@ export interface useDataOptions<T, M = any, RT = void, RM = void> {
  * @param {T} defaultData - The default value for the data.
  * @param {useDataOptions} options - The options for the hook.
  */
-export const useData = <T, M = any, RT = void, RM = void>(
+export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
     defaultData: T,
-    options?: useDataOptions<T, M, RT, RM>,
+    options?: useDataOptions<T, M, RT, RM, ET, EM>,
 ) => {
     type keys = keyof T;
     const [loaderSubmit, setLoaderSubmit] = useState(false);
@@ -62,6 +72,8 @@ export const useData = <T, M = any, RT = void, RM = void>(
     const [keyData, setKeyData] = useState<number>(0);
     const [isChange, setIsChange] = useState(false);
     const [data_, setDataD] = useState<T>(defaultData);
+    const [dataError, setDataError] = useState<ET | undefined>(undefined);
+    const [dataErrorMemo, setDataErrorMemo] = useState<EM | undefined>(undefined);
     const [resultSubmitData, setResultSubmitData] = useState<RT | undefined>(
         undefined,
     );
@@ -237,13 +249,16 @@ export const useData = <T, M = any, RT = void, RM = void>(
     const onSubmitData = useCallback(async () => {
         if (options?.onSubmitData && isValidData === true) {
             try {
+                setDataError(undefined)
                 setResultSubmitData(undefined);
                 setLoaderSubmit(true);
                 const result = await options?.onSubmitData?.(data);
                 setResultSubmitData(result);
                 options?.onAfterSubmitDataOk?.({ data, result });
                 return result;
-            } catch (error) {
+            } catch (err) {
+                const error = (options?.onAfterSubmitParseError?.(err) ?? (err as any)) as ET
+                setDataError(error)
                 options?.onAfterSubmitDataError?.({ data, error });
             } finally {
                 setLoaderSubmit(false);
@@ -254,13 +269,16 @@ export const useData = <T, M = any, RT = void, RM = void>(
     const onSubmitDataMemo = useCallback(async () => {
         if (options?.onSubmitDataMemo && isValidDataMemo === true) {
             try {
+                setDataErrorMemo(undefined)
                 setResultSubmitDataMemo(undefined);
                 setLoaderSubmitMemo(true);
                 const result = await options?.onSubmitDataMemo?.(dataMemo);
                 setResultSubmitDataMemo(result);
                 options?.onAfterSubmitDataMemoOk?.({ dataMemo, result });
                 return result;
-            } catch (error) {
+            } catch (err) {
+                const error = (options?.onAfterSubmitParseErrorMemo?.(err) ?? (err as any)) as EM
+                setDataErrorMemo(error)
                 options?.onAfterSubmitDataMemoError?.({ dataMemo, error });
             } finally {
                 setLoaderSubmitMemo(false);
@@ -310,5 +328,8 @@ export const useData = <T, M = any, RT = void, RM = void>(
 
         resultSubmitData,
         resultSubmitDataMemo,
+
+        dataError,
+        dataErrorMemo
     };
 };
