@@ -41,4 +41,6 @@ export declare const useForm: <T, M = any>({ defaultValue, onChangeDisabled, onC
     loaderSubmitMemo: boolean;
     resultSubmitData: void | undefined;
     resultSubmitDataMemo: void | undefined;
+    dataError: any;
+    dataErrorMemo: any;
 };

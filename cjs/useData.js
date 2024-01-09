@@ -16,6 +16,8 @@ const useData = (defaultData, options) => {
     const [keyData, setKeyData] = (0, react_1.useState)(0);
     const [isChange, setIsChange] = (0, react_1.useState)(false);
     const [data_, setDataD] = (0, react_1.useState)(defaultData);
+    const [dataError, setDataError] = (0, react_1.useState)(undefined);
+    const [dataErrorMemo, setDataErrorMemo] = (0, react_1.useState)(undefined);
     const [resultSubmitData, setResultSubmitData] = (0, react_1.useState)(undefined);
     const [resultSubmitDataMemo, setResultSubmitDataMemo] = (0, react_1.useState)(undefined);
     const data = (0, react_1.useMemo)(() => options?.data ?? data_, [data_, options?.data]);
@@ -171,6 +173,7 @@ const useData = (defaultData, options) => {
     const onSubmitData = (0, react_1.useCallback)(async () => {
         if (options?.onSubmitData && isValidData === true) {
             try {
+                setDataError(undefined);
                 setResultSubmitData(undefined);
                 setLoaderSubmit(true);
                 const result = await options?.onSubmitData?.(data);
@@ -178,7 +181,10 @@ const useData = (defaultData, options) => {
                 options?.onAfterSubmitDataOk?.({ data, result });
                 return result;
             }
-            catch (error) {
+            catch (err) {
+                const error = (options?.onAfterSubmitParseError?.(err) ??
+                    err);
+                setDataError(error);
                 options?.onAfterSubmitDataError?.({ data, error });
             }
             finally {
@@ -190,6 +196,7 @@ const useData = (defaultData, options) => {
     const onSubmitDataMemo = (0, react_1.useCallback)(async () => {
         if (options?.onSubmitDataMemo && isValidDataMemo === true) {
             try {
+                setDataErrorMemo(undefined);
                 setResultSubmitDataMemo(undefined);
                 setLoaderSubmitMemo(true);
                 const result = await options?.onSubmitDataMemo?.(dataMemo);
@@ -197,7 +204,10 @@ const useData = (defaultData, options) => {
                 options?.onAfterSubmitDataMemoOk?.({ dataMemo, result });
                 return result;
             }
-            catch (error) {
+            catch (err) {
+                const error = (options?.onAfterSubmitParseErrorMemo?.(err) ??
+                    err);
+                setDataErrorMemo(error);
                 options?.onAfterSubmitDataMemoError?.({ dataMemo, error });
             }
             finally {
@@ -240,6 +250,8 @@ const useData = (defaultData, options) => {
         loaderSubmitMemo,
         resultSubmitData,
         resultSubmitDataMemo,
+        dataError,
+        dataErrorMemo,
     };
 };
 exports.useData = useData;

@@ -25,7 +25,7 @@ export interface setDataOptions {
  * @param {Function} options.onSubmitDataMemo - A function if is valid dataMemo for to send.
  * @returns {Object} - An object with the data state and methods to manage it.
  */
-export interface useDataOptions<T, M = any, RT = void, RM = void> {
+export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM = any> {
     data?: T;
     refreshDataIfChangeDefaultData?: useDataOptionsRefreshDataIfChangeDefaultDataOptions;
     onChangeDataAfter?: (data: T) => void;
@@ -39,18 +39,20 @@ export interface useDataOptions<T, M = any, RT = void, RM = void> {
         data: T;
         result: RT;
     }) => void;
+    onAfterSubmitParseError?: (error: any) => ET;
     onAfterSubmitDataError?: (d: {
         data: T;
-        error: any;
+        error: ET;
     }) => void;
     onSubmitDataMemo?: (data: M) => RM | Promise<RM>;
     onAfterSubmitDataMemoOk?: (d: {
         dataMemo: M;
         result: RM;
     }) => void;
+    onAfterSubmitParseErrorMemo?: (error: any) => EM;
     onAfterSubmitDataMemoError?: (d: {
         dataMemo: M;
-        error: any;
+        error: EM;
     }) => void;
 }
 /**
@@ -61,7 +63,7 @@ export interface useDataOptions<T, M = any, RT = void, RM = void> {
  * @param {T} defaultData - The default value for the data.
  * @param {useDataOptions} options - The options for the hook.
  */
-export declare const useData: <T, M = any, RT = void, RM = void>(defaultData: T, options?: useDataOptions<T, M, RT, RM> | undefined) => {
+export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = any>(defaultData: T, options?: useDataOptions<T, M, RT, RM, ET, EM> | undefined) => {
     data: T;
     onChangeData: (id: keyof T) => (value: T[keyof T]) => void;
     onDeleteData: (id: keyof T) => void;
@@ -83,4 +85,6 @@ export declare const useData: <T, M = any, RT = void, RM = void>(defaultData: T,
     loaderSubmitMemo: boolean;
     resultSubmitData: RT | undefined;
     resultSubmitDataMemo: RM | undefined;
+    dataError: ET | undefined;
+    dataErrorMemo: EM | undefined;
 };

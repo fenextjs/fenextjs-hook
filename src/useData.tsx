@@ -73,7 +73,9 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
     const [isChange, setIsChange] = useState(false);
     const [data_, setDataD] = useState<T>(defaultData);
     const [dataError, setDataError] = useState<ET | undefined>(undefined);
-    const [dataErrorMemo, setDataErrorMemo] = useState<EM | undefined>(undefined);
+    const [dataErrorMemo, setDataErrorMemo] = useState<EM | undefined>(
+        undefined,
+    );
     const [resultSubmitData, setResultSubmitData] = useState<RT | undefined>(
         undefined,
     );
@@ -249,7 +251,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
     const onSubmitData = useCallback(async () => {
         if (options?.onSubmitData && isValidData === true) {
             try {
-                setDataError(undefined)
+                setDataError(undefined);
                 setResultSubmitData(undefined);
                 setLoaderSubmit(true);
                 const result = await options?.onSubmitData?.(data);
@@ -257,8 +259,9 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 options?.onAfterSubmitDataOk?.({ data, result });
                 return result;
             } catch (err) {
-                const error = (options?.onAfterSubmitParseError?.(err) ?? (err as any)) as ET
-                setDataError(error)
+                const error = (options?.onAfterSubmitParseError?.(err) ??
+                    (err as any)) as ET;
+                setDataError(error);
                 options?.onAfterSubmitDataError?.({ data, error });
             } finally {
                 setLoaderSubmit(false);
@@ -269,7 +272,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
     const onSubmitDataMemo = useCallback(async () => {
         if (options?.onSubmitDataMemo && isValidDataMemo === true) {
             try {
-                setDataErrorMemo(undefined)
+                setDataErrorMemo(undefined);
                 setResultSubmitDataMemo(undefined);
                 setLoaderSubmitMemo(true);
                 const result = await options?.onSubmitDataMemo?.(dataMemo);
@@ -277,8 +280,9 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 options?.onAfterSubmitDataMemoOk?.({ dataMemo, result });
                 return result;
             } catch (err) {
-                const error = (options?.onAfterSubmitParseErrorMemo?.(err) ?? (err as any)) as EM
-                setDataErrorMemo(error)
+                const error = (options?.onAfterSubmitParseErrorMemo?.(err) ??
+                    (err as any)) as EM;
+                setDataErrorMemo(error);
                 options?.onAfterSubmitDataMemoError?.({ dataMemo, error });
             } finally {
                 setLoaderSubmitMemo(false);
@@ -330,6 +334,6 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         resultSubmitDataMemo,
 
         dataError,
-        dataErrorMemo
+        dataErrorMemo,
     };
 };
