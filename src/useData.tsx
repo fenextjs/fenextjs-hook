@@ -47,11 +47,13 @@ export interface useDataOptions<
     onAfterSubmitDataOk?: (d: { data: T; result: RT }) => void;
     onAfterSubmitParseError?: (error: any) => ET;
     onAfterSubmitDataError?: (d: { data: T; error: ET }) => void;
+    afterSubmitDataSetIsChangeFalse?: boolean;
 
     onSubmitDataMemo?: (data: M) => RM | Promise<RM>;
     onAfterSubmitDataMemoOk?: (d: { dataMemo: M; result: RM }) => void;
     onAfterSubmitParseErrorMemo?: (error: any) => EM;
     onAfterSubmitDataMemoError?: (d: { dataMemo: M; error: EM }) => void;
+    afterSubmitDataMemoSetIsChangeFalse?: boolean;
 }
 
 /**
@@ -214,6 +216,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
      */
     const onRestart = () => {
         setDataD(defaultData);
+        setIsChange(false);
     };
 
     /**
@@ -257,6 +260,9 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 const result = await options?.onSubmitData?.(data);
                 setResultSubmitData(result);
                 options?.onAfterSubmitDataOk?.({ data, result });
+                if (options?.afterSubmitDataSetIsChangeFalse) {
+                    setIsChange(false);
+                }
                 return result;
             } catch (err) {
                 const error = (options?.onAfterSubmitParseError?.(err) ??
@@ -278,6 +284,9 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 const result = await options?.onSubmitDataMemo?.(dataMemo);
                 setResultSubmitDataMemo(result);
                 options?.onAfterSubmitDataMemoOk?.({ dataMemo, result });
+                if (options?.afterSubmitDataMemoSetIsChangeFalse) {
+                    setIsChange(false);
+                }
                 return result;
             } catch (err) {
                 const error = (options?.onAfterSubmitParseErrorMemo?.(err) ??

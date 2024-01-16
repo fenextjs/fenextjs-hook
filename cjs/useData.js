@@ -141,6 +141,7 @@ const useData = (defaultData, options) => {
      */
     const onRestart = () => {
         setDataD(defaultData);
+        setIsChange(false);
     };
     /**
      * Memoize the data.
@@ -179,6 +180,9 @@ const useData = (defaultData, options) => {
                 const result = await options?.onSubmitData?.(data);
                 setResultSubmitData(result);
                 options?.onAfterSubmitDataOk?.({ data, result });
+                if (options?.afterSubmitDataSetIsChangeFalse) {
+                    setIsChange(false);
+                }
                 return result;
             }
             catch (err) {
@@ -202,6 +206,9 @@ const useData = (defaultData, options) => {
                 const result = await options?.onSubmitDataMemo?.(dataMemo);
                 setResultSubmitDataMemo(result);
                 options?.onAfterSubmitDataMemoOk?.({ dataMemo, result });
+                if (options?.afterSubmitDataMemoSetIsChangeFalse) {
+                    setIsChange(false);
+                }
                 return result;
             }
             catch (err) {

@@ -44,6 +44,7 @@ export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM =
         data: T;
         error: ET;
     }) => void;
+    afterSubmitDataSetIsChangeFalse?: boolean;
     onSubmitDataMemo?: (data: M) => RM | Promise<RM>;
     onAfterSubmitDataMemoOk?: (d: {
         dataMemo: M;
@@ -54,6 +55,7 @@ export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM =
         dataMemo: M;
         error: EM;
     }) => void;
+    afterSubmitDataMemoSetIsChangeFalse?: boolean;
 }
 /**
  * A custom hook to manage data state and changes.
