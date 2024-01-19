@@ -55,7 +55,7 @@ const useQuery = (props) => {
      *
      * @param query - The query parameters to set.
      */
-    const setQuery = (query) => {
+    const setQuery = (0, react_1.useCallback)((query) => {
         if (!(router?.isReady ?? false)) {
             return false;
         }
@@ -72,7 +72,7 @@ const useQuery = (props) => {
         }, undefined, { scroll: false });
         setIsChange(true);
         return true;
-    };
+    }, [router?.isReady, router?.query, router?.pathname]);
     /**
      * Sets the query parameters in the URL.
      *
@@ -90,7 +90,7 @@ const useQuery = (props) => {
      *
      * @param id - The key of the query parameter to set.
      */
-    const onChangeQuery = (id) => (value) => {
+    const onChangeQuery = (0, react_1.useCallback)((id) => (value) => {
         if (!(router?.isReady ?? false)) {
             return false;
         }
@@ -103,8 +103,8 @@ const useQuery = (props) => {
         }, undefined, { scroll: false });
         setIsChange(true);
         return true;
-    };
-    const onDeleteQuery = (id) => {
+    }, [router?.isReady, router?.query, router?.pathname]);
+    const onDeleteQuery = (0, react_1.useCallback)((id) => {
         if (!(router?.isReady ?? false)) {
             return false;
         }
@@ -112,11 +112,11 @@ const useQuery = (props) => {
         delete q[id];
         router?.push?.({
             pathname: router.pathname,
-            query: q,
+            query: { ...q },
         }, undefined, { scroll: false });
         setIsChange(true);
         return true;
-    };
+    }, [router?.isReady, router?.query, router?.pathname]);
     return {
         load: router?.isReady ?? false,
         query,

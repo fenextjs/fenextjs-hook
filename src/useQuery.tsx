@@ -96,30 +96,33 @@ export const useQuery = (props?: useQueryProps) => {
      *
      * @param query - The query parameters to set.
      */
-    const setQuery = (query: useQuery_QueryProps) => {
-        if (!(router?.isReady ?? false)) {
-            return false;
-        }
-        const queryParse: {
-            [id: string]: string;
-        } = {};
-        Object.keys(query).forEach((key) => {
-            const v = `${query[key] ?? ""}`;
-            if (v != "") {
-                queryParse[key] = v;
+    const setQuery = useCallback(
+        (query: useQuery_QueryProps) => {
+            if (!(router?.isReady ?? false)) {
+                return false;
             }
-        });
-        router?.push?.(
-            {
-                pathname: router.pathname,
-                query: queryParse,
-            },
-            undefined,
-            { scroll: false },
-        );
-        setIsChange(true);
-        return true;
-    };
+            const queryParse: {
+                [id: string]: string;
+            } = {};
+            Object.keys(query).forEach((key) => {
+                const v = `${query[key] ?? ""}`;
+                if (v != "") {
+                    queryParse[key] = v;
+                }
+            });
+            router?.push?.(
+                {
+                    pathname: router.pathname,
+                    query: queryParse,
+                },
+                undefined,
+                { scroll: false },
+            );
+            setIsChange(true);
+            return true;
+        },
+        [router?.isReady, router?.query, router?.pathname],
+    );
     /**
      * Sets the query parameters in the URL.
      *
@@ -140,44 +143,49 @@ export const useQuery = (props?: useQueryProps) => {
      *
      * @param id - The key of the query parameter to set.
      */
-    const onChangeQuery =
+    const onChangeQuery = useCallback(
         (id: keyof useQuery_QueryProps) =>
-        (value: (typeof query)[useQuery_QueryKeysProps]) => {
+            (value: (typeof query)[useQuery_QueryKeysProps]) => {
+                if (!(router?.isReady ?? false)) {
+                    return false;
+                }
+                router?.push?.(
+                    {
+                        pathname: router.pathname,
+                        query: {
+                            ...(router?.query ?? {}),
+                            [id]: value,
+                        },
+                    },
+                    undefined,
+                    { scroll: false },
+                );
+                setIsChange(true);
+                return true;
+            },
+        [router?.isReady, router?.query, router?.pathname],
+    );
+
+    const onDeleteQuery = useCallback(
+        (id: keyof useQuery_QueryProps) => {
             if (!(router?.isReady ?? false)) {
                 return false;
             }
+            const q = { ...(router?.query ?? {}) };
+            delete q[id];
             router?.push?.(
                 {
                     pathname: router.pathname,
-                    query: {
-                        ...(router?.query ?? {}),
-                        [id]: value,
-                    },
+                    query: { ...q },
                 },
                 undefined,
                 { scroll: false },
             );
             setIsChange(true);
             return true;
-        };
-
-    const onDeleteQuery = (id: keyof useQuery_QueryProps) => {
-        if (!(router?.isReady ?? false)) {
-            return false;
-        }
-        const q = { ...(router?.query ?? {}) };
-        delete q[id];
-        router?.push?.(
-            {
-                pathname: router.pathname,
-                query: q,
-            },
-            undefined,
-            { scroll: false },
-        );
-        setIsChange(true);
-        return true;
-    };
+        },
+        [router?.isReady, router?.query, router?.pathname],
+    );
 
     return {
         load: router?.isReady ?? false,
