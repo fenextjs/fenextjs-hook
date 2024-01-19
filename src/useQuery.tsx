@@ -161,12 +161,31 @@ export const useQuery = (props?: useQueryProps) => {
             return true;
         };
 
+    const onDeleteQuery = (id: keyof useQuery_QueryProps) => {
+        if (!(router?.isReady ?? false)) {
+            return false;
+        }
+        const q = { ...(router?.query ?? {}) };
+        delete q[id];
+        router?.push?.(
+            {
+                pathname: router.pathname,
+                query: q,
+            },
+            undefined,
+            { scroll: false },
+        );
+        setIsChange(true);
+        return true;
+    };
+
     return {
         load: router?.isReady ?? false,
         query,
         setQuery,
         onConcatQuery,
         onChangeQuery,
+        onDeleteQuery,
         isChange,
     };
 };
