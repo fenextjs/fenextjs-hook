@@ -138,6 +138,6 @@ export const useUser = <U = UserProps,>({
         setUser,
         onLogin,
         onLogOut,
-        isValidUser
+        isValidUser,
     };
 };

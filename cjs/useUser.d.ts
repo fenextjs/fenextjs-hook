@@ -14,6 +14,7 @@ export interface useUserProps<Q = UserProps, R = any, E = any, T = RequestResult
      * Name Var of save user in localStorage.
      */
     varName?: string;
+    onValidateUser?: (user: Q | null | undefined) => boolean;
 }
 /**
  * Hook to manage user data and authentication.
@@ -22,10 +23,11 @@ export interface useUserProps<Q = UserProps, R = any, E = any, T = RequestResult
  * You can replace it with your own custom validation function.
  * @returns An object with the user data and authentication methods.
  */
-export declare const useUser: <U = UserProps>({ validateTokenUser, varName, }: useUserProps<U, any, any, RequestResultTypeProps>) => {
+export declare const useUser: <U = UserProps>({ validateTokenUser, varName, onValidateUser, }: useUserProps<U, any, any, RequestResultTypeProps>) => {
     load: boolean;
     user: U | null | undefined;
     setUser: (newValue: any) => void;
     onLogin: (data: U) => Promise<unknown>;
     onLogOut: () => void;
+    isValidUser: boolean;
 };
