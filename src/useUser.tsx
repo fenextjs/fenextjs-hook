@@ -7,6 +7,7 @@ import {
     RequestProps,
     RequestResultDataProps,
 } from "fenextjs-interface/cjs/Request";
+import { useMemo } from "react";
 
 /**
  * Properties to configure the useUser hook.
@@ -27,6 +28,8 @@ export interface useUserProps<
      * Name Var of save user in localStorage.
      */
     varName?: string;
+
+    onValidateUser?: (user: Q | null | undefined) => boolean;
 }
 
 /**
@@ -78,6 +81,7 @@ export const useUser = <U = UserProps,>({
         }
     },
     varName = "fenextjs-user",
+    onValidateUser,
 }: useUserProps<U>) => {
     const {
         value: user,
@@ -123,11 +127,17 @@ export const useUser = <U = UserProps,>({
         setUser(null);
     };
 
+    const isValidUser = useMemo(
+        () => (load ? onValidateUser?.(user) : true) ?? true,
+        [load, user],
+    );
+
     return {
         load,
         user,
         setUser,
         onLogin,
         onLogOut,
+        isValidUser
     };
 };
