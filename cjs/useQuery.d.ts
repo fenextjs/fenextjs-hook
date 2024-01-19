@@ -32,5 +32,6 @@ export declare const useQuery: (props?: useQueryProps) => {
     setQuery: (query: useQuery_QueryProps) => boolean;
     onConcatQuery: (newQuery: useQuery_QueryProps) => boolean;
     onChangeQuery: (id: keyof useQuery_QueryProps) => (value: string | number | string[] | undefined) => boolean;
+    onDeleteQuery: (id: keyof useQuery_QueryProps) => boolean;
     isChange: boolean;
 };
