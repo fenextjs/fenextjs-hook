@@ -32,7 +32,7 @@ export interface useUserProps<
 
     onValidateUser?: (user: Q | null | undefined) => boolean;
 
-    urlRedirectInLogut?:string
+    urlRedirectInLogut?: string;
 }
 
 /**
@@ -87,7 +87,7 @@ export const useUser = <U = UserProps,>({
     onValidateUser,
     urlRedirectInLogut,
 }: useUserProps<U>) => {
-    const router = useRouter()
+    const router = useRouter();
     const {
         value: user,
         load,
@@ -130,8 +130,8 @@ export const useUser = <U = UserProps,>({
      */
     const onLogOut = () => {
         setUser(null);
-        if(urlRedirectInLogut){
-            router?.push?.(urlRedirectInLogut)
+        if (urlRedirectInLogut) {
+            router?.push?.(urlRedirectInLogut);
         }
     };
 

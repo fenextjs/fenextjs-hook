@@ -6,6 +6,7 @@ const jwt_decode_1 = require("jwt-decode");
 const Error_1 = require("fenextjs-interface/cjs/Error");
 const Request_1 = require("fenextjs-interface/cjs/Request");
 const react_1 = require("react");
+const router_1 = require("next/router");
 /**
  * Hook to manage user data and authentication.
  * @param validateTokenUser Function to validate the user's token. By default, it will check that the user
@@ -53,7 +54,8 @@ const useUser = ({ validateTokenUser = async (user) => {
             },
         };
     }
-}, varName = "fenextjs-user", onValidateUser, }) => {
+}, varName = "fenextjs-user", onValidateUser, urlRedirectInLogut, }) => {
+    const router = (0, router_1.useRouter)();
     const { value: user, load, setLocalStorage: setUser, } = (0, uselocalstoragenextjs_1.useLocalStorage)({
         name: varName,
         defaultValue: null,
@@ -93,6 +95,9 @@ const useUser = ({ validateTokenUser = async (user) => {
      */
     const onLogOut = () => {
         setUser(null);
+        if (urlRedirectInLogut) {
+            router?.push?.(urlRedirectInLogut);
+        }
     };
     const isValidUser = (0, react_1.useMemo)(() => (load ? onValidateUser?.(user) : true) ?? true, [load, user]);
     return {
