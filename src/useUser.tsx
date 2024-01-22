@@ -8,6 +8,7 @@ import {
     RequestResultDataProps,
 } from "fenextjs-interface/cjs/Request";
 import { useMemo } from "react";
+import { useRouter } from "next/router";
 
 /**
  * Properties to configure the useUser hook.
@@ -30,6 +31,8 @@ export interface useUserProps<
     varName?: string;
 
     onValidateUser?: (user: Q | null | undefined) => boolean;
+
+    urlRedirectInLogut?:string
 }
 
 /**
@@ -82,7 +85,9 @@ export const useUser = <U = UserProps,>({
     },
     varName = "fenextjs-user",
     onValidateUser,
+    urlRedirectInLogut,
 }: useUserProps<U>) => {
+    const router = useRouter()
     const {
         value: user,
         load,
@@ -125,6 +130,9 @@ export const useUser = <U = UserProps,>({
      */
     const onLogOut = () => {
         setUser(null);
+        if(urlRedirectInLogut){
+            router?.push?.(urlRedirectInLogut)
+        }
     };
 
     const isValidUser = useMemo(
