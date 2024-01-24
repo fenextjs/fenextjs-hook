@@ -1,5 +1,3 @@
-import useLocalStorage from "uselocalstoragenextjs";
-
 /**
  * Props for configuring modal content.
  */
@@ -13,7 +11,6 @@ export interface useModalLocalStorageConfigContentProps {
      */
     data: any;
 }
-
 /**
  * Options for configuring a modal dialog component.
  */
@@ -52,60 +49,13 @@ export interface useModalLocalStorageConfigContentProps {
      */
     data: any;
 }
-
 /**
  * Hook for managing modal state and configuration
  * @returns an object with modal state and functions to update it
  */
-export const useModalLocalStorage = () => {
-    /**
-     * Custom hook for managing localStorage state
-     */
-    const {
-        load: loadModal,
-        setLocalStorage: setShowModal,
-        value: valueModal,
-    } = useLocalStorage<useModalLocalStorageConfigProps>({
-        name: "fenextjs-modal",
-        defaultValue: {
-            active: false,
-            use: false,
-            loader: false,
-            content: [],
-        },
-        parse: JSON.parse,
-    });
-
-    /**
-     * Function to update a modal property
-     * @param id - the name of the property to update
-     * @param value - the new value for the property
-     */
-    const updateModal = (
-        id: keyof useModalLocalStorageConfigProps,
-        value: any,
-    ) => {
-        setShowModal({
-            ...valueModal,
-            [id]: value,
-        });
-    };
-
-    /**
-     * Function to set the entire modal configuration
-     * @param value - the new modal configuration
-     */
-    const setModal = (value: useModalLocalStorageConfigProps) => {
-        setShowModal({
-            ...valueModal,
-            ...value,
-        });
-    };
-
-    return {
-        valueModal,
-        loadModal,
-        updateModal,
-        setModal,
-    };
+export declare const useModalLocalStorage: () => {
+    valueModal: useModalLocalStorageConfigProps | undefined;
+    loadModal: boolean;
+    updateModal: (id: keyof useModalLocalStorageConfigProps, value: any) => void;
+    setModal: (value: useModalLocalStorageConfigProps) => void;
 };

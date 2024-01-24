@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 tslib_1.__exportStar(require("./useData"), exports);
 tslib_1.__exportStar(require("./useModal"), exports);
+tslib_1.__exportStar(require("./useModalLocalStorage"), exports);
 tslib_1.__exportStar(require("./useRequest"), exports);
 tslib_1.__exportStar(require("./useNotification"), exports);
 tslib_1.__exportStar(require("./useQuery"), exports);
