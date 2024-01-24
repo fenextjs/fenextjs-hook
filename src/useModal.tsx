@@ -1,108 +1,40 @@
-import useLocalStorage from "uselocalstoragenextjs";
+import { useState } from "react";
 
-/**
- * Props for configuring modal content.
- */
-export interface useModalConfigContentProps {
-    /**
-     * A unique key to identify the content.
-     */
-    key: string;
-    /**
-     * Data to be passed to the modal content.
-     */
-    data: any;
-}
-
-/**
- * Options for configuring a modal dialog component.
- */
-export interface useModalConfigProps {
-    /**
-     * Whether the modal dialog should be displayed.
-     * Default is `false`.
-     */
+export interface useModalProps {
     active?: boolean;
-    /**
-     * Whether to use the modal dialog or not.
-     * Default is `true`.
-     */
-    use?: boolean;
-    /**
-     * Whether to show a loader while the modal content is being loaded.
-     * Default is `true`.
-     */
-    loader?: boolean;
-    /**
-     * The content to be displayed in the modal dialog.
-     * Each item in the array should have a unique `key` and `data`.
-     */
-    content?: useModalConfigContentProps[];
-}
-/**
- * Represents a single content item to be displayed in a modal dialog.
- */
-export interface useModalConfigContentProps {
-    /**
-     * Unique key for the content item.
-     */
-    key: string;
-    /**
-     * Data to be displayed in the content item.
-     */
-    data: any;
+    defaultActive?: boolean;
+    onActive?: () => void;
+    onClose?: () => void;
+    onChange?: (d: boolean) => void;
 }
 
-/**
- * Hook for managing modal state and configuration
- * @returns an object with modal state and functions to update it
- */
-export const useModal = () => {
-    /**
-     * Custom hook for managing localStorage state
-     */
-    const {
-        load: loadModal,
-        setLocalStorage: setShowModal,
-        value: valueModal,
-    } = useLocalStorage<useModalConfigProps>({
-        name: "fenextjs-modal",
-        defaultValue: {
-            active: false,
-            use: false,
-            loader: false,
-            content: [],
-        },
-        parse: JSON.parse,
-    });
+export const useModal = ({
+    active: activeProps,
+    defaultActive: defaultActiveProps,
+    onActive: onActiveProps,
+    onChange: onChangeProps,
+    onClose: onCloseProps,
+}: useModalProps) => {
+    const [active, setActive] = useState<boolean>(defaultActiveProps ?? false);
 
-    /**
-     * Function to update a modal property
-     * @param id - the name of the property to update
-     * @param value - the new value for the property
-     */
-    const updateModal = (id: keyof useModalConfigProps, value: any) => {
-        setShowModal({
-            ...valueModal,
-            [id]: value,
-        });
+    const onChange = (d: boolean) => {
+        onChangeProps?.(d);
+        setActive(d);
     };
 
-    /**
-     * Function to set the entire modal configuration
-     * @param value - the new modal configuration
-     */
-    const setModal = (value: useModalConfigProps) => {
-        setShowModal({
-            ...valueModal,
-            ...value,
-        });
+    const onActive = () => {
+        onChange(true);
+        onActiveProps?.();
+    };
+    const onClose = () => {
+        onChange(false);
+        onCloseProps?.();
     };
 
     return {
-        valueModal,
-        loadModal,
-        updateModal,
-        setModal,
+        active: activeProps ?? active,
+        onChange,
+        onActive,
+        onClose,
     };
 };

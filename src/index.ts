@@ -1,5 +1,6 @@
 export * from "./useData";
 export * from "./useModal";
+export * from "./useModalLocalStorage";
 export * from "./useRequest";
 export * from "./useNotification";
 export * from "./useQuery";
