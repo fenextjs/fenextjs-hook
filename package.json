@@ -1,6 +1,6 @@
 {
     "name": "fenextjs-hook",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "",
     "main": "./cjs/index.js",
     "module": "./cjs/index.js",
@@ -51,7 +51,7 @@
         "country-state-city-nextjs": "^1.2.1",
         "fenextjs-error": "^2.0.0",
         "fenextjs-interface": "^2.0.0",
-        "fenextjs-validator": "^2.0.0",
+        "fenextjs-validator": "^2.0.1",
         "jwt-decode": "^4.0.0",
         "next": "13.4.12",
         "react": "18.2.0",
