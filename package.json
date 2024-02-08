@@ -49,9 +49,9 @@
     "homepage": "https://github.com/franciscoblancojn/fenextjs-hook#readme",
     "dependencies": {
         "country-state-city-nextjs": "^1.2.1",
-        "fenextjs-error": "^1.1.0",
-        "fenextjs-interface": "^1.3.4",
-        "fenextjs-validator": "^1.2.2",
+        "fenextjs-error": "^2.0.0",
+        "fenextjs-interface": "^2.0.0",
+        "fenextjs-validator": "^2.0.0",
         "jwt-decode": "^4.0.0",
         "next": "13.4.12",
         "react": "18.2.0",
@@ -64,14 +64,14 @@
         "esm"
     ],
     "devDependencies": {
-        "@types/node": "20.10.8",
-        "@types/react": "18.2.47",
-        "@types/react-dom": "18.2.18",
-        "@typescript-eslint/eslint-plugin": "^6.18.1",
-        "@typescript-eslint/parser": "^6.18.1",
-        "npm-check-updates": "^16.14.12",
+        "@types/node": "20.11.16",
+        "@types/react": "18.2.55",
+        "@types/react-dom": "18.2.19",
+        "@typescript-eslint/eslint-plugin": "^6.21.0",
+        "@typescript-eslint/parser": "^6.21.0",
+        "npm-check-updates": "^16.14.14",
         "eslint": "8.56.0",
-        "prettier": "^3.1.1",
+        "prettier": "^3.2.5",
         "ts-loader": "^9.5.1",
         "typescript": "^5.3.3"
     }
