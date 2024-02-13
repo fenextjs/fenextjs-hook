@@ -55,6 +55,9 @@ export interface useDataOptions<
     onAfterSubmitDataMemoError?: (d: { dataMemo: M; error: EM }) => void;
     afterSubmitDataMemoSetIsChangeFalse?: boolean;
 }
+export interface onChangeDataOptionsProps<T> {
+    onCallback?: (data: T) => void;
+}
 
 /**
  * A custom hook to manage data state and changes.
@@ -104,23 +107,27 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
      * @param {keys} id - The id of the property to update.
      * @returns {Function} - A function to update the property.
      */
-    const onChangeData = (id: keyof T) => (value: (typeof data)[keys]) => {
-        if (value === data[id]) {
-            return;
-        }
-        setDataD((pre: T) => {
-            if (Array.isArray(pre)) {
-                const nData = [...pre] as T;
-                nData[id] = value;
-                options?.onChangeDataAfter?.(nData);
-                return nData;
+    const onChangeData =
+        (id: keyof T) =>
+        (value: (typeof data)[keys], _options: onChangeDataOptionsProps<T>) => {
+            if (value === data[id]) {
+                return;
             }
-            const nData = { ...pre, [id]: value };
-            options?.onChangeDataAfter?.(nData);
-            return nData;
-        });
-        setIsChange(true);
-    };
+            setDataD((pre: T) => {
+                if (Array.isArray(pre)) {
+                    const nData = [...pre] as T;
+                    nData[id] = value;
+                    options?.onChangeDataAfter?.(nData);
+                    _options?.onCallback?.(nData);
+                    return nData;
+                }
+                const nData = { ...pre, [id]: value };
+                options?.onChangeDataAfter?.(nData);
+                _options?.onCallback?.(nData);
+                return nData;
+            });
+            setIsChange(true);
+        };
 
     /**
      * Delete a single property of the data.
