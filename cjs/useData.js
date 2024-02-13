@@ -35,7 +35,7 @@ const useData = (defaultData, options) => {
      * @param {keys} id - The id of the property to update.
      * @returns {Function} - A function to update the property.
      */
-    const onChangeData = (id) => (value) => {
+    const onChangeData = (id) => (value, _options) => {
         if (value === data[id]) {
             return;
         }
@@ -44,10 +44,12 @@ const useData = (defaultData, options) => {
                 const nData = [...pre];
                 nData[id] = value;
                 options?.onChangeDataAfter?.(nData);
+                _options?.onCallback?.(nData);
                 return nData;
             }
             const nData = { ...pre, [id]: value };
             options?.onChangeDataAfter?.(nData);
+            _options?.onCallback?.(nData);
             return nData;
         });
         setIsChange(true);

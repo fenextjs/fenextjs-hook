@@ -57,6 +57,9 @@ export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM =
     }) => void;
     afterSubmitDataMemoSetIsChangeFalse?: boolean;
 }
+export interface onChangeDataOptionsProps<T> {
+    onCallback?: (data: T) => void;
+}
 /**
  * A custom hook to manage data state and changes.
  *
@@ -67,7 +70,7 @@ export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM =
  */
 export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = any>(defaultData: T, options?: useDataOptions<T, M, RT, RM, ET, EM> | undefined) => {
     data: T;
-    onChangeData: (id: keyof T) => (value: T[keyof T]) => void;
+    onChangeData: (id: keyof T) => (value: T[keyof T], _options?: onChangeDataOptionsProps<T> | undefined) => void;
     onDeleteData: (id: keyof T) => void;
     isChange: boolean;
     setData: (nData: T, optionsData?: setDataOptions) => void;

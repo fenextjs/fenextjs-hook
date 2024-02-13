@@ -109,7 +109,10 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
      */
     const onChangeData =
         (id: keyof T) =>
-        (value: (typeof data)[keys], _options: onChangeDataOptionsProps<T>) => {
+        (
+            value: (typeof data)[keys],
+            _options?: onChangeDataOptionsProps<T>,
+        ) => {
             if (value === data[id]) {
                 return;
             }

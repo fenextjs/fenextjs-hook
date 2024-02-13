@@ -21,7 +21,7 @@ export declare const useForm: <T, M = any>({ defaultValue, onChangeDisabled, onC
     setError: (nData: ErrorFenextjs<any> | undefined, optionsData?: import("./useData").setDataOptions | undefined) => void;
     onSubmit: () => Promise<import("fenextjs-interface/cjs/Request").RequestResultDataProps<RequestResultProps, any, import("fenextjs-interface/cjs/Request").RequestResultTypeProps> | undefined>;
     data: T;
-    onChangeData: (id: keyof T) => (value: T[keyof T]) => void;
+    onChangeData: (id: keyof T) => (value: T[keyof T], _options?: import("./useData").onChangeDataOptionsProps<T> | undefined) => void;
     onDeleteData: (id: keyof T) => void;
     isChange: boolean;
     setData: (nData: T, optionsData?: import("./useData").setDataOptions | undefined) => void;
