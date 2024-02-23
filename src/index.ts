@@ -13,3 +13,4 @@ export * from "./useFrom";
 export * from "./useDocumentEvent";
 export * from "./useTheme";
 export * from "./usePrint";
+export * from "./useAlert";
