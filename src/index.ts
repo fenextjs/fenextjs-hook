@@ -1,5 +1,3 @@
-import "module-alias/register";
-
 export * from "./useData";
 export * from "./useModal";
 export * from "./useModalLocalStorage";
