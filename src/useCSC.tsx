@@ -1,3 +1,4 @@
+import "module-alias/register";
 import {
     loadCountrysWidthImg,
     loadCountrys,
@@ -8,7 +9,7 @@ import {
     cityProps as CityProps,
 } from "country-state-city-nextjs/cjs/index";
 import { useEffect, useMemo, useState } from "react";
-import { useData } from "./useData";
+import { useData } from "@/useData";
 import { CSCProps } from "fenextjs-interface/cjs/CSC";
 
 /**

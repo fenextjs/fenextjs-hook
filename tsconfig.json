@@ -36,5 +36,5 @@
         "removeComments": false,
         "noImplicitAny": false,
         "isolatedModules": true
-    }
+    },
 }

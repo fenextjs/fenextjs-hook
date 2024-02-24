@@ -1,3 +1,4 @@
+import "module-alias/register";
 import { countryProps as CountryProps, stateProps as StateProps, cityProps as CityProps } from "country-state-city-nextjs/cjs/index";
 import { CSCProps } from "fenextjs-interface/cjs/CSC";
 /**
@@ -52,7 +53,7 @@ export declare const useCSC: ({ defaultValue, defaultValueString, onChangeDataAf
     countrys: CountryProps[];
     states: StateProps[];
     citys: CityProps[];
-    onChangeCSC: (id: keyof CSCProps) => (value: import("fenextjs-interface/cjs/CSC").CountryProps | import("fenextjs-interface/cjs/CSC").StateProps | import("fenextjs-interface/cjs/CSC").CityProps | undefined, _options?: import("./useData").onChangeDataOptionsProps<CSCProps> | undefined) => void;
+    onChangeCSC: (id: keyof CSCProps) => (value: import("fenextjs-interface/cjs/CSC").CountryProps | import("fenextjs-interface/cjs/CSC").StateProps | import("fenextjs-interface/cjs/CSC").CityProps | undefined, _options?: import("@/useData").onChangeDataOptionsProps<CSCProps> | undefined) => void;
     value: CSCProps;
     statesForCountrySelected: StateProps[];
     citysForStateSelected: CityProps[];
@@ -62,7 +63,7 @@ export declare const useCountryStateCity: ({ defaultValue, defaultValueString, o
     countrys: CountryProps[];
     states: StateProps[];
     citys: CityProps[];
-    onChangeCSC: (id: keyof CSCProps) => (value: import("fenextjs-interface/cjs/CSC").CountryProps | import("fenextjs-interface/cjs/CSC").StateProps | import("fenextjs-interface/cjs/CSC").CityProps | undefined, _options?: import("./useData").onChangeDataOptionsProps<CSCProps> | undefined) => void;
+    onChangeCSC: (id: keyof CSCProps) => (value: import("fenextjs-interface/cjs/CSC").CountryProps | import("fenextjs-interface/cjs/CSC").StateProps | import("fenextjs-interface/cjs/CSC").CityProps | undefined, _options?: import("@/useData").onChangeDataOptionsProps<CSCProps> | undefined) => void;
     value: CSCProps;
     statesForCountrySelected: StateProps[];
     citysForStateSelected: CityProps[];

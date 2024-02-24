@@ -15,13 +15,14 @@
         "prettier:fix": "npm run prettier -- --write",
         "format": "npm run prettier:fix && npm run lint:fix",
         "flb": "npm run format && npm run lint && npm run build",
-        "bun-i":"bun i",
-        "remove-bun-lockb":"rm -r bun.lockb",
-        "remove-node-module":"rm -r node_modules",
-        "remove":"npm run remove-node-module && npm run remove-bun-lockb",
-        "update-package":"ncu -u !next",
-        "update":"npm run update-package && npm run remove && npm run bun-i && npm run flb",
-        "u":"npm run update"
+        "bun-i": "bun i",
+        "remove-bun-lockb": "rm -r bun.lockb",
+        "remove-node-module": "rm -r node_modules",
+        "remove": "npm run remove-node-module && npm run remove-bun-lockb",
+        "update-package": "ncu -u !next",
+        "update": "npm run update-package && npm run remove && npm run bun-i && npm run flb",
+        "u": "npm run update",
+        "test": "bun ./test"
     },
     "repository": {
         "type": "git",
@@ -69,10 +70,14 @@
         "@types/react-dom": "18.2.19",
         "@typescript-eslint/eslint-plugin": "^7.0.2",
         "@typescript-eslint/parser": "^7.0.2",
-        "npm-check-updates": "^16.14.15",
         "eslint": "8.57.0",
+        "module-alias": "^2.2.3",
+        "npm-check-updates": "^16.14.15",
         "prettier": "^3.2.5",
         "ts-loader": "^9.5.1",
         "typescript": "^5.3.3"
+    },
+    "_moduleAliases": {
+        "@": "cjs"
     }
 }

@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useCountryStateCity = exports.useCSC = void 0;
+require("module-alias/register");
 const index_1 = require("country-state-city-nextjs/cjs/index");
 const react_1 = require("react");
-const useData_1 = require("./useData");
+const useData_1 = require("@/useData");
 /**
  * Hook that provides a CSC (Country, State, City) selector functionality.
  *
