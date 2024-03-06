@@ -35,7 +35,13 @@ export declare const useForm: <T, M = any>({ defaultValue, onChangeDisabled, onC
     onReloadKeyData: () => void;
     isValidData: true | ErrorFenextjs<any>;
     isValidDataMemo: true | ErrorFenextjs<any>;
-    onSubmitData: () => Promise<void | undefined>;
+    onSubmitData: (optionsSubmitData?: {
+        data?: T | undefined;
+        onSaveData?: ((p: {
+            data: T;
+            result: void;
+        }) => T) | undefined;
+    } | undefined) => Promise<void | undefined>;
     onSubmitDataMemo: () => Promise<void | undefined>;
     loaderSubmit: boolean;
     loaderSubmitMemo: boolean;

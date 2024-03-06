@@ -3,5 +3,5 @@ export interface useActionProps<T = any> {
     onActionExecute?: (d?: T) => void;
 }
 export declare const useAction: <T = any>({ name, onActionExecute, }: useActionProps<T>) => {
-    onAction: (data?: T | undefined) => void;
+    onAction: (data?: T) => void;
 };

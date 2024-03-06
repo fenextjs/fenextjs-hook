@@ -51,7 +51,7 @@
     "dependencies": {
         "country-state-city-nextjs": "^1.2.1",
         "fenextjs-error": "^2.0.0",
-        "fenextjs-interface": "^2.1.0",
+        "fenextjs-interface": "^2.2.0",
         "fenextjs-validator": "^2.0.1",
         "jwt-decode": "^4.0.0",
         "next": "13.4.12",
@@ -65,15 +65,15 @@
         "esm"
     ],
     "devDependencies": {
-        "@types/node": "20.11.20",
-        "@types/react": "18.2.58",
-        "@types/react-dom": "18.2.19",
-        "@typescript-eslint/eslint-plugin": "^7.0.2",
-        "@typescript-eslint/parser": "^7.0.2",
+        "@types/node": "20.11.25",
+        "@types/react": "18.2.64",
+        "@types/react-dom": "18.2.20",
+        "@typescript-eslint/eslint-plugin": "^7.1.1",
+        "@typescript-eslint/parser": "^7.1.1",
         "eslint": "8.57.0",
         "npm-check-updates": "^16.14.15",
         "prettier": "^3.2.5",
         "ts-loader": "^9.5.1",
-        "typescript": "^5.3.3"
+        "typescript": "^5.4.2"
     }
 }

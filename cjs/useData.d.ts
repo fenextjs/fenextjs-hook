@@ -68,9 +68,9 @@ export interface onChangeDataOptionsProps<T> {
  * @param {T} defaultData - The default value for the data.
  * @param {useDataOptions} options - The options for the hook.
  */
-export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = any>(defaultData: T, options?: useDataOptions<T, M, RT, RM, ET, EM> | undefined) => {
+export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = any>(defaultData: T, options?: useDataOptions<T, M, RT, RM, ET, EM>) => {
     data: T;
-    onChangeData: (id: keyof T) => (value: T[keyof T], _options?: onChangeDataOptionsProps<T> | undefined) => void;
+    onChangeData: (id: keyof T) => (value: T[keyof T], _options?: onChangeDataOptionsProps<T>) => void;
     onDeleteData: (id: keyof T) => void;
     isChange: boolean;
     setData: (nData: T, optionsData?: setDataOptions) => void;
@@ -78,13 +78,19 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     dataMemo: M;
     setIsChange: import("react").Dispatch<import("react").SetStateAction<boolean>>;
     onRestart: () => void;
-    onConcatData: (v: Partial<T> | T[]) => void;
+    onConcatData: (v: Partial<T> | Array<T>) => void;
     keyData: number;
     setKeyData: import("react").Dispatch<import("react").SetStateAction<number>>;
     onReloadKeyData: () => void;
     isValidData: true | import("fenextjs-error").ErrorFenextjs<any>;
     isValidDataMemo: true | import("fenextjs-error").ErrorFenextjs<any>;
-    onSubmitData: () => Promise<RT | undefined>;
+    onSubmitData: (optionsSubmitData?: {
+        data?: T | undefined;
+        onSaveData?: ((p: {
+            data: T;
+            result: RT;
+        }) => T) | undefined;
+    } | undefined) => Promise<RT | undefined>;
     onSubmitDataMemo: () => Promise<RM | undefined>;
     loaderSubmit: boolean;
     loaderSubmitMemo: boolean;

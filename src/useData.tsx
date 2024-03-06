@@ -261,30 +261,48 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         return options?.validatorMemo?.onValidate?.(dataMemo) ?? true;
     }, [dataMemo, options?.validatorMemo]);
 
-    const onSubmitData = useCallback(async () => {
-        if (options?.onSubmitData && isValidData === true) {
-            try {
-                setDataError(undefined);
-                setResultSubmitData(undefined);
-                setLoaderSubmit(true);
-                const result = await options?.onSubmitData?.(data);
-                setResultSubmitData(result);
-                options?.onAfterSubmitDataOk?.({ data, result });
-                if (options?.afterSubmitDataSetIsChangeFalse) {
-                    setIsChange(false);
+    const onSubmitData = useCallback(
+        async (optionsSubmitData?: {
+            data?: T;
+            onSaveData?: (p: { data: T; result: RT }) => T;
+        }) => {
+            const dataUse = optionsSubmitData?.data ?? data;
+            const isValidDataUse = optionsSubmitData?.data
+                ? options?.validator?.onValidate?.(optionsSubmitData?.data) ??
+                  true
+                : isValidData;
+            if (options?.onSubmitData && isValidDataUse === true) {
+                try {
+                    setDataError(undefined);
+                    setResultSubmitData(undefined);
+                    setLoaderSubmit(true);
+                    const result = await options?.onSubmitData?.(dataUse);
+                    setResultSubmitData(result);
+                    options?.onAfterSubmitDataOk?.({ data: dataUse, result });
+                    if (options?.afterSubmitDataSetIsChangeFalse) {
+                        setIsChange(false);
+                    }
+                    if (optionsSubmitData?.onSaveData) {
+                        const newData = optionsSubmitData?.onSaveData?.({
+                            data: dataUse,
+                            result,
+                        });
+                        setData(newData);
+                    }
+                    return result;
+                } catch (err) {
+                    const error = (options?.onAfterSubmitParseError?.(err) ??
+                        (err as any)) as ET;
+                    setDataError(error);
+                    options?.onAfterSubmitDataError?.({ data: dataUse, error });
+                } finally {
+                    setLoaderSubmit(false);
                 }
-                return result;
-            } catch (err) {
-                const error = (options?.onAfterSubmitParseError?.(err) ??
-                    (err as any)) as ET;
-                setDataError(error);
-                options?.onAfterSubmitDataError?.({ data, error });
-            } finally {
-                setLoaderSubmit(false);
             }
-        }
-        return undefined;
-    }, [data, isValidData, options?.onSubmitData]);
+            return undefined;
+        },
+        [data, isValidData, options?.onSubmitData],
+    );
     const onSubmitDataMemo = useCallback(async () => {
         if (options?.onSubmitDataMemo && isValidDataMemo === true) {
             try {

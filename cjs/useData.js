@@ -173,17 +173,29 @@ const useData = (defaultData, options) => {
     const isValidDataMemo = (0, react_1.useMemo)(() => {
         return options?.validatorMemo?.onValidate?.(dataMemo) ?? true;
     }, [dataMemo, options?.validatorMemo]);
-    const onSubmitData = (0, react_1.useCallback)(async () => {
-        if (options?.onSubmitData && isValidData === true) {
+    const onSubmitData = (0, react_1.useCallback)(async (optionsSubmitData) => {
+        const dataUse = optionsSubmitData?.data ?? data;
+        const isValidDataUse = optionsSubmitData?.data
+            ? options?.validator?.onValidate?.(optionsSubmitData?.data) ??
+                true
+            : isValidData;
+        if (options?.onSubmitData && isValidDataUse === true) {
             try {
                 setDataError(undefined);
                 setResultSubmitData(undefined);
                 setLoaderSubmit(true);
-                const result = await options?.onSubmitData?.(data);
+                const result = await options?.onSubmitData?.(dataUse);
                 setResultSubmitData(result);
-                options?.onAfterSubmitDataOk?.({ data, result });
+                options?.onAfterSubmitDataOk?.({ data: dataUse, result });
                 if (options?.afterSubmitDataSetIsChangeFalse) {
                     setIsChange(false);
+                }
+                if (optionsSubmitData?.onSaveData) {
+                    const newData = optionsSubmitData?.onSaveData?.({
+                        data: dataUse,
+                        result,
+                    });
+                    setData(newData);
                 }
                 return result;
             }
@@ -191,7 +203,7 @@ const useData = (defaultData, options) => {
                 const error = (options?.onAfterSubmitParseError?.(err) ??
                     err);
                 setDataError(error);
-                options?.onAfterSubmitDataError?.({ data, error });
+                options?.onAfterSubmitDataError?.({ data: dataUse, error });
             }
             finally {
                 setLoaderSubmit(false);
