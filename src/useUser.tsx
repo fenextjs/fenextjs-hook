@@ -62,7 +62,7 @@ export const useUser = <U = UserProps,>({
                 return {
                     type: RequestResultTypeProps.OK,
                     message: "User Validate Ok",
-                }
+                };
             }
             throw {
                 type: RequestResultTypeProps.ERROR,
