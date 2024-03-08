@@ -7,7 +7,7 @@ import {
     RequestProps,
     RequestResultDataProps,
 } from "fenextjs-interface/cjs/Request";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useRouter } from "next/router";
 
 /**
@@ -43,7 +43,12 @@ export interface useUserProps<
  * @returns An object with the user data and authentication methods.
  */
 export const useUser = <U = UserProps,>({
-    validateTokenUser = async (user: U) => {
+    validateTokenUser: validateTokenUserProps,
+    varName = "fenextjs-user",
+    onValidateUser,
+    urlRedirectInLogut,
+}: useUserProps<U>) => {
+    const validateTokenUserDefault = async (user: U) => {
         const { token } = user as any;
         if (!token) {
             throw {
@@ -82,11 +87,12 @@ export const useUser = <U = UserProps,>({
                 },
             } as RequestResultDataProps;
         }
-    },
-    varName = "fenextjs-user",
-    onValidateUser,
-    urlRedirectInLogut,
-}: useUserProps<U>) => {
+    };
+    const validateTokenUser = useCallback(
+        validateTokenUserProps ?? validateTokenUserDefault,
+        [validateTokenUserProps, validateTokenUserDefault],
+    );
+
     const router = useRouter();
     const {
         value: user,
@@ -130,7 +136,7 @@ export const useUser = <U = UserProps,>({
      */
     const onLogOut = () => {
         setUser(null);
-        if (urlRedirectInLogut) {
+        if (urlRedirectInLogut && router?.isReady) {
             router?.push?.(urlRedirectInLogut);
         }
     };

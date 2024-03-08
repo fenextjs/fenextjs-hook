@@ -14,47 +14,49 @@ const router_1 = require("next/router");
  * You can replace it with your own custom validation function.
  * @returns An object with the user data and authentication methods.
  */
-const useUser = ({ validateTokenUser = async (user) => {
-    const { token } = user;
-    if (!token) {
-        throw {
-            type: Request_1.RequestResultTypeProps.ERROR,
-            message: "User not Token",
-            error: {
-                code: Error_1.ErrorCode.USER_TOKEN_NOT_FOUND,
+const useUser = ({ validateTokenUser: validateTokenUserProps, varName = "fenextjs-user", onValidateUser, urlRedirectInLogut, }) => {
+    const validateTokenUserDefault = async (user) => {
+        const { token } = user;
+        if (!token) {
+            throw {
+                type: Request_1.RequestResultTypeProps.ERROR,
                 message: "User not Token",
-            },
-        };
-    }
-    try {
-        const user_token = (0, jwt_decode_1.jwtDecode)(token);
-        const { id } = user_token;
-        if (id) {
-            return {
-                type: Request_1.RequestResultTypeProps.OK,
-                message: "User Validate Ok",
+                error: {
+                    code: Error_1.ErrorCode.USER_TOKEN_NOT_FOUND,
+                    message: "User not Token",
+                },
             };
         }
-        throw {
-            type: Request_1.RequestResultTypeProps.ERROR,
-            message: "Token Invalid",
-            error: {
-                code: Error_1.ErrorCode.USER_TOKEN_INVALID,
+        try {
+            const user_token = (0, jwt_decode_1.jwtDecode)(token);
+            const { id } = user_token;
+            if (id) {
+                return {
+                    type: Request_1.RequestResultTypeProps.OK,
+                    message: "User Validate Ok",
+                };
+            }
+            throw {
+                type: Request_1.RequestResultTypeProps.ERROR,
                 message: "Token Invalid",
-            },
-        };
-    }
-    catch (error) {
-        throw {
-            type: Request_1.RequestResultTypeProps.ERROR,
-            message: "Token Invalid",
-            error: {
-                code: Error_1.ErrorCode.USER_TOKEN_INVALID,
+                error: {
+                    code: Error_1.ErrorCode.USER_TOKEN_INVALID,
+                    message: "Token Invalid",
+                },
+            };
+        }
+        catch (error) {
+            throw {
+                type: Request_1.RequestResultTypeProps.ERROR,
                 message: "Token Invalid",
-            },
-        };
-    }
-}, varName = "fenextjs-user", onValidateUser, urlRedirectInLogut, }) => {
+                error: {
+                    code: Error_1.ErrorCode.USER_TOKEN_INVALID,
+                    message: "Token Invalid",
+                },
+            };
+        }
+    };
+    const validateTokenUser = (0, react_1.useCallback)(validateTokenUserProps ?? validateTokenUserDefault, [validateTokenUserProps, validateTokenUserDefault]);
     const router = (0, router_1.useRouter)();
     const { value: user, load, setLocalStorage: setUser, } = (0, uselocalstoragenextjs_1.useLocalStorage)({
         name: varName,
@@ -95,7 +97,7 @@ const useUser = ({ validateTokenUser = async (user) => {
      */
     const onLogOut = () => {
         setUser(null);
-        if (urlRedirectInLogut) {
+        if (urlRedirectInLogut && router?.isReady) {
             router?.push?.(urlRedirectInLogut);
         }
     };
