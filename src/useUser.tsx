@@ -8,7 +8,6 @@ import {
     RequestResultDataProps,
 } from "fenextjs-interface/cjs/Request";
 import { useCallback, useMemo } from "react";
-import { useRouter } from "next/router";
 
 /**
  * Properties to configure the useUser hook.
@@ -93,7 +92,6 @@ export const useUser = <U = UserProps,>({
         [validateTokenUserProps, validateTokenUserDefault],
     );
 
-    const router = useRouter();
     const {
         value: user,
         load,
@@ -136,8 +134,8 @@ export const useUser = <U = UserProps,>({
      */
     const onLogOut = () => {
         setUser(null);
-        if (urlRedirectInLogut && router?.isReady) {
-            router?.push?.(urlRedirectInLogut);
+        if (urlRedirectInLogut && typeof window != "undefined") {
+            window.location.href = urlRedirectInLogut;
         }
     };
 
