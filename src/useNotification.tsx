@@ -1,5 +1,6 @@
-import { useLocalStorage } from "uselocalstoragenextjs";
 import { RequestResultTypeProps } from "fenextjs-interface/cjs/Request";
+import { useState } from "react";
+import { useAction } from "./useAction";
 
 /**
  * Represents the properties of a notification
@@ -31,54 +32,41 @@ export interface useNotificationProps {
  * @returns An object with methods to manage notifications
  */
 export const useNotification = ({ time = 2000 }: useNotificationProps) => {
-    const {
-        value: notification,
-        load: loadNotification,
-        setLocalStorage: setNotification,
-    } = useLocalStorage<NotificationDataProps>({
+    const [notification, setNotification] = useState<
+        NotificationDataProps | undefined
+    >(undefined);
+    const { onAction } = useAction<NotificationDataProps>({
         name: "fenextjs-notification",
-        defaultValue: {
-            type: RequestResultTypeProps.NORMAL,
-            message: "",
-        },
-        parse: (v: any) => {
-            try {
-                return JSON.parse(v);
-            } catch (error) {
-                return {
-                    type: RequestResultTypeProps.NONE,
-                    message: "",
-                };
-            }
-        },
+        onActionExecute: setNotification,
     });
 
     /**
      * Resets the notification to its default state
      */
     const reset = () => {
-        setNotification({
-            type: RequestResultTypeProps.NONE,
-            message: "",
-        });
+        onAction(undefined);
     };
 
     /**
      * Sets a notification to be displayed
      * @param props - Notification properties
      */
-    const pop = (props: NotificationDataProps) => {
-        setNotification(props);
+    const pop = (
+        props: NotificationDataProps,
+        options?: NotificationOptions,
+    ) => {
+        onAction(props);
+        Notification.requestPermission().then((permission) => {
+            if (permission == "granted") {
+                new Notification(props.message, options);
+            }
+        });
         setTimeout(() => {
             reset();
         }, time);
     };
 
     return {
-        /**
-         * Loads the notification from local storage
-         */
-        loadNotification,
         /**
          * The current notification object
          */
