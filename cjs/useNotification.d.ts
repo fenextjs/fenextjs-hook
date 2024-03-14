@@ -28,17 +28,13 @@ export interface useNotificationProps {
  */
 export declare const useNotification: ({ time }: useNotificationProps) => {
     /**
-     * Loads the notification from local storage
-     */
-    loadNotification: boolean;
-    /**
      * The current notification object
      */
     notification: NotificationDataProps | undefined;
     /**
      * Sets a new notification to be displayed
      */
-    pop: (props: NotificationDataProps) => void;
+    pop: (props: NotificationDataProps, options?: NotificationOptions) => void;
     /**
      * Resets the current notification
      */
