@@ -4,38 +4,12 @@ import {
     countryProps as CountryProps,
     stateProps as StateProps,
     cityProps as CityProps,
-    parseNameFolder,
+    loadStatesByCountry,
+    loadCitysByStateAndCountry,
 } from "country-state-city-nextjs/cjs/index";
 import { useEffect, useState } from "react";
 import { useData } from "./useData";
 import { CSCProps } from "fenextjs-interface/cjs/CSC";
-
-const loadStatesByCountry = async (country: { text: string; id: number }) => {
-    const { states }: { states: StateProps[] } = await import(
-        `country-state-city-nextjs/cjs/country/${parseNameFolder(
-            country,
-        )}/states`
-    );
-    return states;
-};
-
-export const loadCitysByStateAndCountry = async (
-    country: {
-        text: string;
-        id: number;
-    },
-    state: {
-        text: string;
-        id: number;
-    },
-) => {
-    const { citys }: { citys: CityProps[] } = await import(
-        `country-state-city-nextjs/cjs/country/${parseNameFolder(
-            country,
-        )}/${parseNameFolder(state)}/citys`
-    );
-    return citys;
-};
 
 /**
  * Represents the properties for the useCSC hook.
