@@ -9,19 +9,9 @@ export interface useCSCProps {
      */
     defaultValue?: CSCProps;
     /**
-     * The default value for the CSC object.
-     */
-    defaultValueString?: {
-        [id in keyof CSCProps]: string;
-    };
-    /**
      * onChangeDataAfter value for the CSC object.
      */
-    onChangeDataAfter?: (data: CSCProps) => void;
-    /**
-     * onChangeDataMemoAfter value for the CSC object.
-     */
-    onChangeDataMemoAfter?: (data: CSCProps) => void;
+    onChange?: (data: CSCProps) => void;
     /**
      * The ifLoadImgCountry.
      */
@@ -47,23 +37,17 @@ export interface useCSCProps {
  * @returns {Array} statesForCountrySelected - Array containing all loaded state objects that belong to the currently selected country.
  * @returns {Array} citysForStateSelected - Array containing all loaded city objects that belong to the currently selected state.
  */
-export declare const useCSC: ({ defaultValue, defaultValueString, onChangeDataAfter, onChangeDataMemoAfter, ifLoadImgCountry, }: useCSCProps) => {
-    load: boolean;
+export declare const useCSC: ({ defaultValue, onChange, ifLoadImgCountry, }: useCSCProps) => {
     countrys: CountryProps[];
     states: StateProps[];
     citys: CityProps[];
-    onChangeCSC: (id: keyof CSCProps) => (value: import("fenextjs-interface/cjs/CSC").CountryProps | import("fenextjs-interface/cjs/CSC").StateProps | import("fenextjs-interface/cjs/CSC").CityProps | undefined, _options?: import("./useData").onChangeDataOptionsProps<CSCProps> | undefined) => void;
+    onChangeCSC: (id: keyof CSCProps) => (value: CountryProps | StateProps | CityProps | undefined) => void;
     value: CSCProps;
-    statesForCountrySelected: StateProps[];
-    citysForStateSelected: CityProps[];
 };
-export declare const useCountryStateCity: ({ defaultValue, defaultValueString, onChangeDataAfter, onChangeDataMemoAfter, ifLoadImgCountry, }: useCSCProps) => {
-    load: boolean;
+export declare const useCountryStateCity: ({ defaultValue, onChange, ifLoadImgCountry, }: useCSCProps) => {
     countrys: CountryProps[];
     states: StateProps[];
     citys: CityProps[];
-    onChangeCSC: (id: keyof CSCProps) => (value: import("fenextjs-interface/cjs/CSC").CountryProps | import("fenextjs-interface/cjs/CSC").StateProps | import("fenextjs-interface/cjs/CSC").CityProps | undefined, _options?: import("./useData").onChangeDataOptionsProps<CSCProps> | undefined) => void;
+    onChangeCSC: (id: keyof CSCProps) => (value: CountryProps | StateProps | CityProps | undefined) => void;
     value: CSCProps;
-    statesForCountrySelected: StateProps[];
-    citysForStateSelected: CityProps[];
 };

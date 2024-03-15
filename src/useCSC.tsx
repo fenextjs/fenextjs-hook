@@ -8,7 +8,7 @@ import {
     loadCitysByStateAndCountry,
 } from "country-state-city-nextjs/cjs/index";
 import { useEffect, useState } from "react";
-import { onChangeDataOptionsProps, useData } from "./useData";
+import { useData } from "./useData";
 import { CSCProps } from "fenextjs-interface/cjs/CSC";
 
 /**
@@ -118,10 +118,7 @@ export const useCSC = ({
     });
     const onChangeCSC =
         (id: keyof CSCProps) =>
-        (
-            value: CountryProps | StateProps | CityProps | undefined,
-            _options?: onChangeDataOptionsProps<CSCProps> | undefined,
-        ) => {
+        (value: CountryProps | StateProps | CityProps | undefined) => {
             if (id == "country") {
                 onConcatData({
                     country: value as CountryProps,
