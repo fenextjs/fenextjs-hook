@@ -1,14 +1,14 @@
 import {
     loadCountrysWidthImg,
     loadCountrys,
-    loadStates,
-    loadCitys,
     countryProps as CountryProps,
     stateProps as StateProps,
     cityProps as CityProps,
+    loadStatesByCountry,
+    loadCitysByStateAndCountry,
 } from "country-state-city-nextjs/cjs/index";
-import { useEffect, useMemo, useState } from "react";
-import { useData } from "./useData";
+import { useEffect, useState } from "react";
+import { onChangeDataOptionsProps, useData } from "./useData";
 import { CSCProps } from "fenextjs-interface/cjs/CSC";
 
 /**
@@ -19,21 +19,11 @@ export interface useCSCProps {
      * The default value for the CSC object.
      */
     defaultValue?: CSCProps;
-    /**
-     * The default value for the CSC object.
-     */
-    defaultValueString?: {
-        [id in keyof CSCProps]: string;
-    };
 
     /**
      * onChangeDataAfter value for the CSC object.
      */
-    onChangeDataAfter?: (data: CSCProps) => void;
-    /**
-     * onChangeDataMemoAfter value for the CSC object.
-     */
-    onChangeDataMemoAfter?: (data: CSCProps) => void;
+    onChange?: (data: CSCProps) => void;
     /**
      * The ifLoadImgCountry.
      */
@@ -61,15 +51,9 @@ export interface useCSCProps {
  */
 export const useCSC = ({
     defaultValue = {},
-    defaultValueString = {},
-    onChangeDataAfter,
-    onChangeDataMemoAfter,
+    onChange,
     ifLoadImgCountry = false,
 }: useCSCProps) => {
-    /**
-     * Indicates whether the hook is currently loading data.
-     */
-    const [load, setLoad] = useState(false);
     /**
      * An array of countries loaded by the hook.
      */
@@ -82,122 +66,108 @@ export const useCSC = ({
      * An array of cities loaded by the hook.
      */
     const [citys, setCitys] = useState<CityProps[]>([]);
+
+    const onLoadCountrys = async () => {
+        const countrys: CountryProps[] = await (
+            ifLoadImgCountry ? loadCountrysWidthImg : loadCountrys
+        )();
+        setCountrys(countrys);
+        if (defaultValue?.country) {
+            await onLoadStates(defaultValue?.country);
+            if (defaultValue?.state) {
+                await onLoadCitys(defaultValue?.country, defaultValue?.state);
+            }
+        }
+    };
+    const onLoadStates = async (country?: { text: string; id: number }) => {
+        setStates([]);
+        setCitys([]);
+        if (country) {
+            const states: StateProps[] = await loadStatesByCountry(country);
+            setStates(states);
+        }
+    };
+    const onLoadCitys = async (
+        country?: { text: string; id: number },
+        state?: {
+            text: string;
+            id: number;
+        },
+    ) => {
+        setCitys([]);
+        if (country && state) {
+            const citys: CityProps[] = await loadCitysByStateAndCountry(
+                country,
+                state,
+            );
+            setCitys(citys);
+        }
+    };
+
     /**
      * A memoized version of the `value` property returned by the `useData` hook.
      * The `onChangeData` function returned by the `useData` hook is used to
      * convert the input CSC data to the correct format.
      */
     const {
-        dataMemo: value,
-        onChangeData: onChangeCSC,
-        setData,
+        data: value,
+        onConcatData,
+        setDataFunction,
     } = useData<CSCProps, CSCProps>(defaultValue, {
-        onMemo: (data: CSCProps) => {
-            const country = data.country;
-            const state =
-                data.state?.id_country == country?.id ? data.state : undefined;
-            const city =
-                data.city?.id_state == state?.id ? data.city : undefined;
-            return {
-                country,
-                state: country ? state : undefined,
-                city: state ? city : undefined,
-            };
-        },
-        onChangeDataAfter,
-        onChangeDataMemoAfter,
+        onChangeDataAfter: onChange,
     });
-
+    const onChangeCSC =
+        (id: keyof CSCProps) =>
+        (
+            value: CountryProps | StateProps | CityProps | undefined,
+            _options?: onChangeDataOptionsProps<CSCProps> | undefined,
+        ) => {
+            if (id == "country") {
+                onConcatData({
+                    country: value as CountryProps,
+                    state: undefined,
+                    city: undefined,
+                });
+                onLoadStates(value);
+            }
+            if (id == "state") {
+                setDataFunction((old) => {
+                    if (old?.country) {
+                        onLoadCitys(old?.country, value);
+                        return {
+                            ...old,
+                            state: value as StateProps,
+                            city: undefined,
+                        };
+                    }
+                    return old;
+                });
+            }
+            if (id == "city") {
+                setDataFunction((old) => {
+                    if (old?.country && old?.state) {
+                        return {
+                            ...old,
+                            city: value as CityProps,
+                        };
+                    }
+                    return old;
+                });
+            }
+        };
     /**
      * Loads the countries, states and cities asynchronously.
      */
-    const onLoad = async () => {
-        let countrys: CountryProps[] = [];
-        if (ifLoadImgCountry) {
-            countrys = await loadCountrysWidthImg();
-        } else {
-            countrys = await loadCountrys();
-        }
-        const states: StateProps[] = await loadStates();
-        const citys: CityProps[] = await loadCitys();
-        setCountrys(countrys);
-        setStates(states);
-        setCitys(citys);
-
-        if (defaultValueString?.country) {
-            const countrysSelect = countrys?.find(
-                (e) => e.text == defaultValueString?.country,
-            );
-            let statesSelect: StateProps | undefined = undefined;
-            let citysSelect: CityProps | undefined = undefined;
-            if (defaultValueString?.state && countrysSelect) {
-                statesSelect = states?.find(
-                    (e) =>
-                        e?.id_country == countrysSelect?.id &&
-                        e?.text == defaultValueString?.state,
-                );
-                if (defaultValueString?.city && statesSelect) {
-                    citysSelect = citys?.find(
-                        (e) =>
-                            e?.id_state == statesSelect?.id &&
-                            e?.text == defaultValueString?.city,
-                    );
-                }
-            }
-            setData(
-                {
-                    country: countrysSelect,
-                    state: statesSelect,
-                    city: citysSelect,
-                },
-                {
-                    useOptionsOnChangeDataAfter: false,
-                    useSetIsChange: false,
-                },
-            );
-        }
-
-        setLoad(true);
-    };
     useEffect(() => {
-        onLoad();
+        onLoadCountrys();
     }, []);
 
-    /**
-     * Returns an array of states that belong to the currently selected country.
-     */
-    const statesForCountrySelected = useMemo(() => {
-        if (!load) {
-            return [];
-        }
-        if (value?.country == undefined) {
-            return [];
-        }
-        return states.filter((s) => s.id_country == value?.country?.id);
-    }, [load, value?.country]);
-
-    /**
-     * Returns an array of cities that belong to the currently selected state.
-     */
-    const citysForStateSelected = useMemo(() => {
-        if (!load) {
-            return [];
-        }
-        if (value?.state == undefined) {
-            return [];
-        }
-        return citys.filter((c) => c.id_state == value?.state?.id);
-    }, [load, value?.state]);
-
     return {
-        load,
         countrys,
         states,
         citys,
         onChangeCSC,
         value,
-        statesForCountrySelected,
-        citysForStateSelected,
     };
 };
 export const useCountryStateCity = useCSC;

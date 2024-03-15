@@ -139,4 +139,72 @@ const useCSC = ({ defaultValue = {}, defaultValueString = {}, onChangeDataAfter,
 };
 exports.useCSC = useCSC;
 exports.useCountryStateCity = exports.useCSC;
+const useCSC = (props) => {
+    const [countrys, setCountrys] = (0, react_1.useState)([]);
+    const [states, setStates] = (0, react_1.useState)([]);
+    const [citys, setCitys] = (0, react_1.useState)([]);
+    const [countrySelected, setCountrySelected] = (0, react_1.useState)(props?.defaultCountry);
+    const [stateSelected, setStateSelected] = (0, react_1.useState)(props?.defaultState);
+    const [citySelected, setCitySelected] = (0, react_1.useState)(props?.defaultCity);
+    const onLoadCountrys = async () => {
+        const countrys = await (0, index_1.loadCountrys)();
+        setCountrys(countrys);
+        if (props?.defaultCountry) {
+            await onLoadStates(props?.defaultCountry);
+            if (props?.defaultState) {
+                await onLoadCitys(props?.defaultCountry, props?.defaultState);
+            }
+        }
+    };
+    const onLoadStates = async (country) => {
+        setStates([]);
+        setCitys([]);
+        const states = await loadStatesByCountry(country);
+        setStates(states);
+    };
+    const onLoadCitys = async (country, state) => {
+        setCitys([]);
+        const citys = await loadCitysByStateAndCountry(country, state);
+        setCitys(citys);
+    };
+    const onChangeCSC = {
+        country: (country) => {
+            setCountrySelected(country);
+            setStateSelected(undefined);
+            setCitySelected(undefined);
+            if (country) {
+                onLoadStates(country);
+            }
+        },
+        state: (state) => {
+            if (countrySelected == undefined) {
+                return;
+            }
+            setStateSelected(state);
+            setCitySelected(undefined);
+            if (state) {
+                onLoadCitys(countrySelected, state);
+            }
+        },
+        city: (city) => {
+            if (stateSelected == undefined) {
+                return;
+            }
+            setCitySelected(city);
+        },
+    };
+    (0, react_1.useEffect)(() => {
+        onLoadCountrys();
+    }, []);
+    return {
+        countrys,
+        states,
+        citys,
+        countrySelected,
+        stateSelected,
+        citySelected,
+        onChangeCSC,
+    };
+};
+exports.useCSC = useCSC;
 //# sourceMappingURL=useCSC.js.map
