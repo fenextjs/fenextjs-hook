@@ -4,38 +4,12 @@ import {
     countryProps as CountryProps,
     stateProps as StateProps,
     cityProps as CityProps,
-    getRuteStatesByCountry,
-    getRuteCitysByStateAndCountry,
+    getDataStatesByCountry,
+    getDataCitysByStateAndCountry,
 } from "country-state-city-nextjs/cjs/index";
 import { useEffect, useState } from "react";
 import { useData } from "./useData";
 import { CSCProps } from "fenextjs-interface/cjs/CSC";
-
-export const loadStatesByCountry = async (country: {
-    text: string;
-    id: number;
-}) => {
-    const { states }: { states: StateProps[] } = await import(
-        `${getRuteStatesByCountry(country)}`
-    );
-    return states;
-};
-
-export const loadCitysByStateAndCountry = async (
-    country: {
-        text: string;
-        id: number;
-    },
-    state: {
-        text: string;
-        id: number;
-    },
-) => {
-    const { citys }: { citys: CityProps[] } = await import(
-        `${getRuteCitysByStateAndCountry(country, state)}`
-    );
-    return citys;
-};
 
 /**
  * Represents the properties for the useCSC hook.
@@ -109,7 +83,7 @@ export const useCSC = ({
         setStates([]);
         setCitys([]);
         if (country) {
-            const states: StateProps[] = await loadStatesByCountry(country);
+            const states: StateProps[] = await getDataStatesByCountry(country);
             setStates(states);
         }
     };
@@ -122,7 +96,7 @@ export const useCSC = ({
     ) => {
         setCitys([]);
         if (country && state) {
-            const citys: CityProps[] = await loadCitysByStateAndCountry(
+            const citys: CityProps[] = await getDataCitysByStateAndCountry(
                 country,
                 state,
             );
