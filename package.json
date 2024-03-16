@@ -1,6 +1,6 @@
 {
     "name": "fenextjs-hook",
-    "version": "4.4.0",
+    "version": "4.4.1",
     "description": "",
     "main": "./cjs/index.js",
     "module": "./cjs/index.js",
@@ -49,7 +49,7 @@
     },
     "homepage": "https://github.com/franciscoblancojn/fenextjs-hook#readme",
     "dependencies": {
-        "country-state-city-nextjs": "^5.0.0",
+        "country-state-city-nextjs": "^5.0.1",
         "fenextjs-error": "^2.0.0",
         "fenextjs-interface": "^2.4.0",
         "fenextjs-validator": "^2.0.1",
