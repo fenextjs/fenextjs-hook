@@ -1,42 +1,9 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useCountryStateCity = exports.useCSC = exports.loadCitysByStateAndCountry = exports.loadStatesByCountry = void 0;
+exports.useCountryStateCity = exports.useCSC = void 0;
 const index_1 = require("country-state-city-nextjs/cjs/index");
 const react_1 = require("react");
 const useData_1 = require("./useData");
-const loadStatesByCountry = async (country) => {
-    const { states } = await Promise.resolve(`${`${(0, index_1.getRuteStatesByCountry)(country)}`}`).then(s => __importStar(require(s)));
-    return states;
-};
-exports.loadStatesByCountry = loadStatesByCountry;
-const loadCitysByStateAndCountry = async (country, state) => {
-    const { citys } = await Promise.resolve(`${`${(0, index_1.getRuteCitysByStateAndCountry)(country, state)}`}`).then(s => __importStar(require(s)));
-    return citys;
-};
-exports.loadCitysByStateAndCountry = loadCitysByStateAndCountry;
 /**
  * Hook that provides a CSC (Country, State, City) selector functionality.
  *
@@ -84,14 +51,14 @@ const useCSC = ({ defaultValue = {}, onChange, ifLoadImgCountry = false, }) => {
         setStates([]);
         setCitys([]);
         if (country) {
-            const states = await (0, exports.loadStatesByCountry)(country);
+            const states = await (0, index_1.getDataStatesByCountry)(country);
             setStates(states);
         }
     };
     const onLoadCitys = async (country, state) => {
         setCitys([]);
         if (country && state) {
-            const citys = await (0, exports.loadCitysByStateAndCountry)(country, state);
+            const citys = await (0, index_1.getDataCitysByStateAndCountry)(country, state);
             setCitys(citys);
         }
     };

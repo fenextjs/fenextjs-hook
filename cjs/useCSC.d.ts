@@ -1,16 +1,5 @@
 import { countryProps as CountryProps, stateProps as StateProps, cityProps as CityProps } from "country-state-city-nextjs/cjs/index";
 import { CSCProps } from "fenextjs-interface/cjs/CSC";
-export declare const loadStatesByCountry: (country: {
-    text: string;
-    id: number;
-}) => Promise<StateProps[]>;
-export declare const loadCitysByStateAndCountry: (country: {
-    text: string;
-    id: number;
-}, state: {
-    text: string;
-    id: number;
-}) => Promise<CityProps[]>;
 /**
  * Represents the properties for the useCSC hook.
  */
