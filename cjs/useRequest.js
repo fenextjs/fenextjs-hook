@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useRequestLite = exports.useRequestFunction = exports.useRequest = void 0;
 const react_1 = require("react");
-const Request_1 = require("fenextjs-interface/cjs/Request");
 /**
  * A hook that sends an HTTP request.
  * @template Q Query parameter type.
@@ -66,10 +65,7 @@ const useRequestFunction = ({ f, parseError = (e) => e, }) => {
             const error = parseError?.(err) ?? err;
             setError(error);
             options?.onError?.(error);
-            return {
-                type: Request_1.RequestResultTypeProps.ERROR,
-                error,
-            };
+            return error;
         }
         finally {
             setLoader(false);
