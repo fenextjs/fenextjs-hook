@@ -143,13 +143,13 @@ export const useRequestFunction = <FP = any, FR = any, PE = any>({
     };
 };
 
-export interface useRequestLiteProps<FP, FR, FE = ErrorFenextjs> {
-    f: (data: FP) => Promise<FR | FE>;
+export interface useRequestLiteProps<FP, FR> {
+    f: (data: FP) => Promise<FR>;
 }
 
 export const useRequestLite = <FP, FR, FE = ErrorFenextjs>({
     f,
-}: useRequestLiteProps<FP, FR, FE>) => {
+}: useRequestLiteProps<FP, FR>) => {
     const [loader, setLoader] = useState(false);
     const [error, setError] = useState<FE | undefined>(undefined);
     const [result, setResult] = useState<FR | undefined>(undefined);
