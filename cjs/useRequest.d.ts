@@ -44,10 +44,12 @@ export declare const useRequestFunction: <FP = any, FR = any, PE = any>({ f, par
     }>;
     onClear: () => void;
 };
-export interface useRequestLiteProps<FP, FR> {
+export interface useRequestLiteProps<FP, FR, FE = ErrorFenextjs> {
     f: (data: FP) => Promise<FR>;
+    onResult?: (data: FR) => void;
+    onError?: (data: FE) => void;
 }
-export declare const useRequestLite: <FP, FR, FE = ErrorFenextjs<any>>({ f, }: useRequestLiteProps<FP, FR>) => {
+export declare const useRequestLite: <FP, FR, FE = ErrorFenextjs<any>>({ f, onError, onResult, }: useRequestLiteProps<FP, FR, FE>) => {
     loader: boolean;
     error: FE | undefined;
     result: FR | undefined;

@@ -100,7 +100,7 @@ const useRequestFunction = ({ f, parseError = (e) => e, }) => {
     };
 };
 exports.useRequestFunction = useRequestFunction;
-const useRequestLite = ({ f, }) => {
+const useRequestLite = ({ f, onError, onResult, }) => {
     const [loader, setLoader] = (0, react_1.useState)(false);
     const [error, setError] = (0, react_1.useState)(undefined);
     const [result, setResult] = (0, react_1.useState)(undefined);
@@ -111,10 +111,12 @@ const useRequestLite = ({ f, }) => {
         try {
             const r = await f(props);
             setResult(r);
+            onResult?.(r);
             return r;
         }
         catch (err) {
             setError(err);
+            onError?.(err);
             return err;
         }
         finally {
