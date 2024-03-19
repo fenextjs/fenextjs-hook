@@ -109,7 +109,10 @@ export const useRequestFunction = <FP = any, FR = any, PE = any>({
             const error = parseError?.(err) ?? err;
             setError(error);
             options?.onError?.(error);
-            return error;
+            return {
+                type: RequestResultTypeProps.ERROR,
+                error,
+            };
         } finally {
             setLoader(false);
         }
