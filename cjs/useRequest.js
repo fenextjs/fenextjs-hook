@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useRequestFunction = exports.useRequest = void 0;
+exports.useRequestLite = exports.useRequestFunction = exports.useRequest = void 0;
 const react_1 = require("react");
 const Request_1 = require("fenextjs-interface/cjs/Request");
 /**
@@ -100,4 +100,39 @@ const useRequestFunction = ({ f, parseError = (e) => e, }) => {
     };
 };
 exports.useRequestFunction = useRequestFunction;
+const useRequestLite = ({ f, }) => {
+    const [loader, setLoader] = (0, react_1.useState)(false);
+    const [error, setError] = (0, react_1.useState)(undefined);
+    const [result, setResult] = (0, react_1.useState)(undefined);
+    const onRequest = async (props) => {
+        setLoader(true);
+        setError(undefined);
+        setResult(undefined);
+        try {
+            const r = await f(props);
+            setResult(r);
+            return r;
+        }
+        catch (err) {
+            setError(err);
+            return err;
+        }
+        finally {
+            setLoader(false);
+        }
+    };
+    const onClear = () => {
+        setLoader(false);
+        setError(undefined);
+        setResult(undefined);
+    };
+    return {
+        loader,
+        error,
+        result,
+        onRequest,
+        onClear,
+    };
+};
+exports.useRequestLite = useRequestLite;
 //# sourceMappingURL=useRequest.js.map
