@@ -143,13 +143,17 @@ export const useRequestFunction = <FP = any, FR = any, PE = any>({
     };
 };
 
-export interface useRequestLiteProps<FP, FR> {
+export interface useRequestLiteProps<FP, FR, FE = ErrorFenextjs> {
     f: (data: FP) => Promise<FR>;
+    onResult?: (data: FR) => void;
+    onError?: (data: FE) => void;
 }
 
 export const useRequestLite = <FP, FR, FE = ErrorFenextjs>({
     f,
-}: useRequestLiteProps<FP, FR>) => {
+    onError,
+    onResult,
+}: useRequestLiteProps<FP, FR, FE>) => {
     const [loader, setLoader] = useState(false);
     const [error, setError] = useState<FE | undefined>(undefined);
     const [result, setResult] = useState<FR | undefined>(undefined);
@@ -161,9 +165,11 @@ export const useRequestLite = <FP, FR, FE = ErrorFenextjs>({
         try {
             const r = await f(props);
             setResult(r as FR);
+            onResult?.(r as FR);
             return r;
         } catch (err: any) {
             setError(err as FE);
+            onError?.(err as FE);
             return err as FE;
         } finally {
             setLoader(false);
