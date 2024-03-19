@@ -4,6 +4,7 @@ import {
     RequestResultDataProps,
     RequestResultTypeProps,
 } from "fenextjs-interface/cjs/Request";
+import { ErrorFenextjs } from "fenextjs-error";
 
 /**
  * Properties for the `useRequest` hook.
@@ -138,6 +139,46 @@ export const useRequestFunction = <FP = any, FR = any, PE = any>({
         result,
         onRequest,
         onRequestWithThrow,
+        onClear,
+    };
+};
+
+export interface useRequestLiteProps<FP, FR, FE = ErrorFenextjs> {
+    f: (data: FP) => Promise<FR | FE>;
+}
+
+export const useRequestLite = <FP, FR, FE = ErrorFenextjs>({
+    f,
+}: useRequestLiteProps<FP, FR, FE>) => {
+    const [loader, setLoader] = useState(false);
+    const [error, setError] = useState<FE | undefined>(undefined);
+    const [result, setResult] = useState<FR | undefined>(undefined);
+
+    const onRequest = async (props: FP) => {
+        setLoader(true);
+        setError(undefined);
+        setResult(undefined);
+        try {
+            const r = await f(props);
+            setResult(r as FR);
+            return r;
+        } catch (err: any) {
+            setError(err as FE);
+            return err as FE;
+        } finally {
+            setLoader(false);
+        }
+    };
+    const onClear = () => {
+        setLoader(false);
+        setError(undefined);
+        setResult(undefined);
+    };
+    return {
+        loader,
+        error,
+        result,
+        onRequest,
         onClear,
     };
 };
