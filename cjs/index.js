@@ -18,4 +18,5 @@ tslib_1.__exportStar(require("./useTheme"), exports);
 tslib_1.__exportStar(require("./usePrint"), exports);
 tslib_1.__exportStar(require("./useAlert"), exports);
 tslib_1.__exportStar(require("./useAction"), exports);
+tslib_1.__exportStar(require("./useRender"), exports);
 //# sourceMappingURL=index.js.map
