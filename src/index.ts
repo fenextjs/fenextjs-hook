@@ -15,3 +15,4 @@ export * from "./useTheme";
 export * from "./usePrint";
 export * from "./useAlert";
 export * from "./useAction";
+export * from "./useRender";
