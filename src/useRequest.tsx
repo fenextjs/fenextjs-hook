@@ -19,9 +19,9 @@ export interface useRequestProps<
     request: RequestProps<Q, R, E, T>;
     autoRequest?: boolean;
 
-    defaultResult?:RequestResultDataProps<R, E, T> 
-    defaultResultValue?:R
-    defaultError?:E
+    defaultResult?: RequestResultDataProps<R, E, T>;
+    defaultResultValue?: R;
+    defaultError?: E;
 }
 
 /**
@@ -44,15 +44,17 @@ export const useRequest = <
     query,
     request,
     autoRequest = false,
-    defaultError=undefined,
-    defaultResult=undefined,
-    defaultResultValue=undefined,
+    defaultError = undefined,
+    defaultResult = undefined,
+    defaultResultValue = undefined,
 }: useRequestProps<Q, R, E, T>) => {
     const [error, setError] = useState<E | undefined>(defaultError);
     const [result, setResult] = useState<
         RequestResultDataProps<R, E, T> | undefined
     >(defaultResult);
-    const [resultValue, setResultValue] = useState<R | undefined>(defaultResultValue);
+    const [resultValue, setResultValue] = useState<R | undefined>(
+        defaultResultValue,
+    );
     const [loader, setLoader] = useState(false);
 
     const onRequest = useCallback(async () => {
@@ -87,16 +89,15 @@ export interface useRequestFunctionProps<FP, FR, PE = any> {
     f: RequestProps<FP, FR>;
     parseError?: (errors: any) => PE;
 
-
-    defaultResult?:FR
-    defaultError?:PE
+    defaultResult?: FR;
+    defaultError?: PE;
 }
 
 export const useRequestFunction = <FP = any, FR = any, PE = any>({
     f,
     parseError = (e) => e,
-    defaultError=undefined,
-    defaultResult=undefined
+    defaultError = undefined,
+    defaultResult = undefined,
 }: useRequestFunctionProps<FP, FR, PE>) => {
     const [loader, setLoader] = useState(false);
     const [error, setError] = useState<PE | undefined>(defaultError);
@@ -158,8 +159,8 @@ export interface useRequestLiteProps<FP, FR, FE = ErrorFenextjs> {
     onResult?: (data: FR) => void;
     onError?: (data: FE) => void;
 
-    defaultResult?:FR
-    defaultError?:FE
+    defaultResult?: FR;
+    defaultError?: FE;
 }
 
 export const useRequestLite = <FP, FR, FE = ErrorFenextjs>({
@@ -167,8 +168,8 @@ export const useRequestLite = <FP, FR, FE = ErrorFenextjs>({
     onError,
     onResult,
 
-    defaultError=undefined,
-    defaultResult=undefined
+    defaultError = undefined,
+    defaultResult = undefined,
 }: useRequestLiteProps<FP, FR, FE>) => {
     const [loader, setLoader] = useState(false);
     const [error, setError] = useState<FE | undefined>(defaultError);
