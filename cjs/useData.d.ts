@@ -98,4 +98,8 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     resultSubmitDataMemo: RM | undefined;
     dataError: ET | undefined;
     dataErrorMemo: EM | undefined;
+    setResultSubmitData: import("react").Dispatch<import("react").SetStateAction<RT | undefined>>;
+    setResultSubmitDataMemo: import("react").Dispatch<import("react").SetStateAction<RM | undefined>>;
+    setDataError: import("react").Dispatch<import("react").SetStateAction<ET | undefined>>;
+    setDataErrorMemo: import("react").Dispatch<import("react").SetStateAction<EM | undefined>>;
 };

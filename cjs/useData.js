@@ -273,6 +273,10 @@ const useData = (defaultData, options) => {
         resultSubmitDataMemo,
         dataError,
         dataErrorMemo,
+        setResultSubmitData,
+        setResultSubmitDataMemo,
+        setDataError,
+        setDataErrorMemo,
     };
 };
 exports.useData = useData;

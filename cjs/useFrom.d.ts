@@ -49,4 +49,8 @@ export declare const useForm: <T, M = any>({ defaultValue, onChangeDisabled, onC
     resultSubmitDataMemo: void | undefined;
     dataError: any;
     dataErrorMemo: any;
+    setResultSubmitData: import("react").Dispatch<import("react").SetStateAction<void | undefined>>;
+    setResultSubmitDataMemo: import("react").Dispatch<import("react").SetStateAction<void | undefined>>;
+    setDataError: import("react").Dispatch<any>;
+    setDataErrorMemo: import("react").Dispatch<any>;
 };
