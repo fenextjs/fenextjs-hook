@@ -372,5 +372,11 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
 
         dataError,
         dataErrorMemo,
+
+        setResultSubmitData,
+        setResultSubmitDataMemo,
+
+        setDataError,
+        setDataErrorMemo
     };
 };
