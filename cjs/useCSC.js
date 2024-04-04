@@ -38,7 +38,7 @@ const useCSC = ({ defaultValue = {}, onChange, ifLoadImgCountry = false, }) => {
      */
     const [citys, setCitys] = (0, react_1.useState)([]);
     const onLoadCountrys = async () => {
-        const countrys = await (ifLoadImgCountry ? index_1.loadCountrysWidthImg : index_1.loadCountrys)();
+        const countrys = await (ifLoadImgCountry ? index_1.getDataCountrysWithImg : index_1.getDataCountrys)();
         setCountrys(countrys);
         if (defaultValue?.country) {
             await onLoadStates(defaultValue?.country);
