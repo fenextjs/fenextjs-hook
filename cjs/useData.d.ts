@@ -85,12 +85,12 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     isValidData: true | import("fenextjs-error").ErrorFenextjs<any>;
     isValidDataMemo: true | import("fenextjs-error").ErrorFenextjs<any>;
     onSubmitData: (optionsSubmitData?: {
-        data?: T | undefined;
-        onSaveData?: ((p: {
+        data?: T;
+        onSaveData?: (p: {
             data: T;
             result: RT;
-        }) => T) | undefined;
-    } | undefined) => Promise<RT | undefined>;
+        }) => T;
+    }) => Promise<RT | undefined>;
     onSubmitDataMemo: () => Promise<RM | undefined>;
     loaderSubmit: boolean;
     loaderSubmitMemo: boolean;
