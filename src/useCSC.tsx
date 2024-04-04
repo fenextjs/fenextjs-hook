@@ -1,11 +1,11 @@
 import {
-    loadCountrysWidthImg,
-    loadCountrys,
     countryProps as CountryProps,
     stateProps as StateProps,
     cityProps as CityProps,
     getDataStatesByCountry,
     getDataCitysByStateAndCountry,
+    getDataCountrysWithImg,
+    getDataCountrys,
 } from "country-state-city-nextjs/cjs/index";
 import { useEffect, useState } from "react";
 import { useData } from "./useData";
@@ -69,7 +69,7 @@ export const useCSC = ({
 
     const onLoadCountrys = async () => {
         const countrys: CountryProps[] = await (
-            ifLoadImgCountry ? loadCountrysWidthImg : loadCountrys
+            ifLoadImgCountry ? getDataCountrysWithImg : getDataCountrys
         )();
         setCountrys(countrys);
         if (defaultValue?.country) {
