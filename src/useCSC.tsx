@@ -50,17 +50,17 @@ export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
      * An array of countries loaded by the hook.
      */
     const [countrys, setCountrys] = useState<CountryProps[]>([]);
-    const [loadCountrys, setLoadCountrys] = useState(false);
+    const [loadCountrys, setLoadCountrys] = useState(true);
     /**
      * An array of states loaded by the hook.
      */
     const [states, setStates] = useState<StateProps[]>([]);
-    const [loadStates, setLoadStates] = useState(false);
+    const [loadStates, setLoadStates] = useState(true);
     /**
      * An array of cities loaded by the hook.
      */
     const [citys, setCitys] = useState<CityProps[]>([]);
-    const [loadCitys, setLoadCitys] = useState(false);
+    const [loadCitys, setLoadCitys] = useState(true);
 
     const onLoadCountrys = async () => {
         setLoadCountrys(false);
