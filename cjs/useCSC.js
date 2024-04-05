@@ -29,17 +29,17 @@ const useCSC = ({ defaultValue = {}, onChange }) => {
      * An array of countries loaded by the hook.
      */
     const [countrys, setCountrys] = (0, react_1.useState)([]);
-    const [loadCountrys, setLoadCountrys] = (0, react_1.useState)(false);
+    const [loadCountrys, setLoadCountrys] = (0, react_1.useState)(true);
     /**
      * An array of states loaded by the hook.
      */
     const [states, setStates] = (0, react_1.useState)([]);
-    const [loadStates, setLoadStates] = (0, react_1.useState)(false);
+    const [loadStates, setLoadStates] = (0, react_1.useState)(true);
     /**
      * An array of cities loaded by the hook.
      */
     const [citys, setCitys] = (0, react_1.useState)([]);
-    const [loadCitys, setLoadCitys] = (0, react_1.useState)(false);
+    const [loadCitys, setLoadCitys] = (0, react_1.useState)(true);
     const onLoadCountrys = async () => {
         setLoadCountrys(false);
         const countrys = await (0, country_state_city_nextjs_1.getDataCountrys)();
