@@ -29,15 +29,19 @@ const useCSC = ({ defaultValue = {}, onChange }) => {
      * An array of countries loaded by the hook.
      */
     const [countrys, setCountrys] = (0, react_1.useState)([]);
+    const [loadCountrys, setLoadCountrys] = (0, react_1.useState)(false);
     /**
      * An array of states loaded by the hook.
      */
     const [states, setStates] = (0, react_1.useState)([]);
+    const [loadStates, setLoadStates] = (0, react_1.useState)(false);
     /**
      * An array of cities loaded by the hook.
      */
     const [citys, setCitys] = (0, react_1.useState)([]);
+    const [loadCitys, setLoadCitys] = (0, react_1.useState)(false);
     const onLoadCountrys = async () => {
+        setLoadCountrys(false);
         const countrys = await (0, country_state_city_nextjs_1.getDataCountrys)();
         setCountrys(countrys.map((e) => {
             return {
@@ -45,6 +49,7 @@ const useCSC = ({ defaultValue = {}, onChange }) => {
                 img: `${(0, country_state_city_nextjs_1.getRuteCountryImg)(e)}`,
             };
         }));
+        setLoadCountrys(true);
         if (defaultValue?.country) {
             await onLoadStates(defaultValue?.country);
             if (defaultValue?.state) {
@@ -56,16 +61,20 @@ const useCSC = ({ defaultValue = {}, onChange }) => {
         setStates([]);
         setCitys([]);
         if (country) {
+            setLoadStates(false);
             const states = await (0, country_state_city_nextjs_1.getDataStatesByCountry)(country);
             setStates(states);
         }
+        setLoadStates(true);
     };
     const onLoadCitys = async (country, state) => {
         setCitys([]);
         if (country && state) {
+            setLoadCitys(false);
             const citys = await (0, country_state_city_nextjs_1.getDataCitysByStateAndCountry)(country, state);
             setCitys(citys);
         }
+        setLoadCitys(true);
     };
     /**
      * A memoized version of the `value` property returned by the `useData` hook.
@@ -129,6 +138,9 @@ const useCSC = ({ defaultValue = {}, onChange }) => {
         citys,
         onChangeCSC,
         value,
+        loadCountrys,
+        loadStates,
+        loadCitys,
     };
 };
 exports.useCSC = useCSC;

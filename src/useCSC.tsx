@@ -50,20 +50,20 @@ export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
      * An array of countries loaded by the hook.
      */
     const [countrys, setCountrys] = useState<CountryProps[]>([]);
-    const [loadCountrys, setLoadCountrys] = useState(false)
+    const [loadCountrys, setLoadCountrys] = useState(false);
     /**
      * An array of states loaded by the hook.
      */
     const [states, setStates] = useState<StateProps[]>([]);
-    const [loadStates, setLoadStates] = useState(false)
+    const [loadStates, setLoadStates] = useState(false);
     /**
      * An array of cities loaded by the hook.
      */
     const [citys, setCitys] = useState<CityProps[]>([]);
-    const [loadCitys, setLoadCitys] = useState(false)
+    const [loadCitys, setLoadCitys] = useState(false);
 
     const onLoadCountrys = async () => {
-        setLoadCountrys(false)
+        setLoadCountrys(false);
         const countrys: CountryProps[] = await getDataCountrys();
 
         setCountrys(
@@ -74,7 +74,7 @@ export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
                 };
             }),
         );
-        setLoadCountrys(true)
+        setLoadCountrys(true);
         if (defaultValue?.country) {
             await onLoadStates(defaultValue?.country);
             if (defaultValue?.state) {
@@ -86,11 +86,11 @@ export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
         setStates([]);
         setCitys([]);
         if (country) {
-            setLoadStates(false)
+            setLoadStates(false);
             const states: StateProps[] = await getDataStatesByCountry(country);
             setStates(states);
         }
-        setLoadStates(true)
+        setLoadStates(true);
     };
     const onLoadCitys = async (
         country?: { text: string; id: number },
@@ -101,14 +101,14 @@ export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
     ) => {
         setCitys([]);
         if (country && state) {
-            setLoadCitys(false)
+            setLoadCitys(false);
             const citys: CityProps[] = await getDataCitysByStateAndCountry(
                 country,
                 state,
             );
             setCitys(citys);
         }
-        setLoadCitys(true)
+        setLoadCitys(true);
     };
 
     /**
@@ -185,7 +185,7 @@ export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
         value,
         loadCountrys,
         loadStates,
-        loadCitys
+        loadCitys,
     };
 };
 export const useCountryStateCity = useCSC;
