@@ -24,7 +24,7 @@ const useData_1 = require("./useData");
  * @returns {Array} statesForCountrySelected - Array containing all loaded state objects that belong to the currently selected country.
  * @returns {Array} citysForStateSelected - Array containing all loaded city objects that belong to the currently selected state.
  */
-const useCSC = ({ defaultValue = {}, onChange, ifLoadImgCountry = false, }) => {
+const useCSC = ({ defaultValue = {}, onChange }) => {
     /**
      * An array of countries loaded by the hook.
      */
@@ -38,8 +38,13 @@ const useCSC = ({ defaultValue = {}, onChange, ifLoadImgCountry = false, }) => {
      */
     const [citys, setCitys] = (0, react_1.useState)([]);
     const onLoadCountrys = async () => {
-        const countrys = await (ifLoadImgCountry ? index_1.getDataCountrysWithImg : index_1.getDataCountrys)();
-        setCountrys(countrys);
+        const countrys = await (0, index_1.getDataCountrys)();
+        setCountrys(countrys.map((e) => {
+            return {
+                ...e,
+                img: `${(0, index_1.getRuteDir)()}`,
+            };
+        }));
         if (defaultValue?.country) {
             await onLoadStates(defaultValue?.country);
             if (defaultValue?.state) {

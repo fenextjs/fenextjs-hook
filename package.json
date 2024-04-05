@@ -19,7 +19,7 @@
         "remove-bun-lockb": "rm -r bun.lockb",
         "remove-node-module": "rm -r node_modules",
         "remove": "npm run remove-node-module && npm run remove-bun-lockb",
-        "update-package": "ncu -u !next",
+        "update-package": "ncu -u '/^fenextjs.*$/' country-state-city-nextjs uselocalstoragenextjs",
         "update": "npm run update-package && npm run remove && npm run bun-i && npm run flb",
         "u": "npm run update",
         "test": "bun ./test"
@@ -49,7 +49,7 @@
     },
     "homepage": "https://github.com/franciscoblancojn/fenextjs-hook#readme",
     "dependencies": {
-        "country-state-city-nextjs": "^7.0.0",
+        "country-state-city-nextjs": "^8.1.0",
         "fenextjs-error": "^2.0.0",
         "fenextjs-interface": "^2.5.0",
         "fenextjs-validator": "^2.0.1",

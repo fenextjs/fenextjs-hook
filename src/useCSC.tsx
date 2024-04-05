@@ -4,9 +4,9 @@ import {
     cityProps as CityProps,
     getDataStatesByCountry,
     getDataCitysByStateAndCountry,
-    getDataCountrysWithImg,
     getDataCountrys,
-} from "country-state-city-nextjs/cjs/index";
+    getRuteCountryImg,
+} from "country-state-city-nextjs";
 import { useEffect, useState } from "react";
 import { useData } from "./useData";
 import { CSCProps } from "fenextjs-interface/cjs/CSC";
@@ -24,10 +24,6 @@ export interface useCSCProps {
      * onChangeDataAfter value for the CSC object.
      */
     onChange?: (data: CSCProps) => void;
-    /**
-     * The ifLoadImgCountry.
-     */
-    ifLoadImgCountry?: boolean;
 }
 /**
  * Hook that provides a CSC (Country, State, City) selector functionality.
@@ -49,11 +45,7 @@ export interface useCSCProps {
  * @returns {Array} statesForCountrySelected - Array containing all loaded state objects that belong to the currently selected country.
  * @returns {Array} citysForStateSelected - Array containing all loaded city objects that belong to the currently selected state.
  */
-export const useCSC = ({
-    defaultValue = {},
-    onChange,
-    ifLoadImgCountry = false,
-}: useCSCProps) => {
+export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
     /**
      * An array of countries loaded by the hook.
      */
@@ -68,10 +60,16 @@ export const useCSC = ({
     const [citys, setCitys] = useState<CityProps[]>([]);
 
     const onLoadCountrys = async () => {
-        const countrys: CountryProps[] = await (
-            ifLoadImgCountry ? getDataCountrysWithImg : getDataCountrys
-        )();
-        setCountrys(countrys);
+        const countrys: CountryProps[] = await getDataCountrys();
+
+        setCountrys(
+            countrys.map((e) => {
+                return {
+                    ...e,
+                    img: `${getRuteCountryImg(e)}`,
+                };
+            }),
+        );
         if (defaultValue?.country) {
             await onLoadStates(defaultValue?.country);
             if (defaultValue?.state) {
@@ -113,7 +111,13 @@ export const useCSC = ({
         data: value,
         onConcatData,
         setDataFunction,
-    } = useData<CSCProps, CSCProps>(defaultValue, {
+    } = useData<CSCProps, CSCProps>({
+        ...defaultValue,
+        ...(defaultValue?.country ? {
+            ...defaultValue?.country,
+            img: `${getRuteCountryImg(defaultValue?.country)}`,
+        } :{})
+    }, {
         onChangeDataAfter: onChange,
     });
     const onChangeCSC =

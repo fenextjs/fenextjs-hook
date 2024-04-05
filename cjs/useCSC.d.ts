@@ -12,10 +12,6 @@ export interface useCSCProps {
      * onChangeDataAfter value for the CSC object.
      */
     onChange?: (data: CSCProps) => void;
-    /**
-     * The ifLoadImgCountry.
-     */
-    ifLoadImgCountry?: boolean;
 }
 /**
  * Hook that provides a CSC (Country, State, City) selector functionality.
@@ -37,14 +33,14 @@ export interface useCSCProps {
  * @returns {Array} statesForCountrySelected - Array containing all loaded state objects that belong to the currently selected country.
  * @returns {Array} citysForStateSelected - Array containing all loaded city objects that belong to the currently selected state.
  */
-export declare const useCSC: ({ defaultValue, onChange, ifLoadImgCountry, }: useCSCProps) => {
+export declare const useCSC: ({ defaultValue, onChange }: useCSCProps) => {
     countrys: CountryProps[];
     states: StateProps[];
     citys: CityProps[];
     onChangeCSC: (id: keyof CSCProps) => (value: CountryProps | StateProps | CityProps | undefined) => void;
     value: CSCProps;
 };
-export declare const useCountryStateCity: ({ defaultValue, onChange, ifLoadImgCountry, }: useCSCProps) => {
+export declare const useCountryStateCity: ({ defaultValue, onChange }: useCSCProps) => {
     countrys: CountryProps[];
     states: StateProps[];
     citys: CityProps[];
