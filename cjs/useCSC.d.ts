@@ -1,4 +1,4 @@
-import { countryProps as CountryProps, stateProps as StateProps, cityProps as CityProps } from "country-state-city-nextjs/cjs/index";
+import { countryProps as CountryProps, stateProps as StateProps, cityProps as CityProps } from "country-state-city-nextjs";
 import { CSCProps } from "fenextjs-interface/cjs/CSC";
 /**
  * Represents the properties for the useCSC hook.

@@ -111,15 +111,20 @@ export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
         data: value,
         onConcatData,
         setDataFunction,
-    } = useData<CSCProps, CSCProps>({
-        ...defaultValue,
-        ...(defaultValue?.country ? {
-            ...defaultValue?.country,
-            img: `${getRuteCountryImg(defaultValue?.country)}`,
-        } :{})
-    }, {
-        onChangeDataAfter: onChange,
-    });
+    } = useData<CSCProps, CSCProps>(
+        {
+            ...defaultValue,
+            ...(defaultValue?.country
+                ? {
+                      ...defaultValue?.country,
+                      img: `${getRuteCountryImg(defaultValue?.country)}`,
+                  }
+                : {}),
+        },
+        {
+            onChangeDataAfter: onChange,
+        },
+    );
     const onChangeCSC =
         (id: keyof CSCProps) =>
         (value: CountryProps | StateProps | CityProps | undefined) => {

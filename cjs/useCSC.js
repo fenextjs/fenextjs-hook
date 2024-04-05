@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useCountryStateCity = exports.useCSC = void 0;
-const index_1 = require("country-state-city-nextjs/cjs/index");
+const country_state_city_nextjs_1 = require("country-state-city-nextjs");
 const react_1 = require("react");
 const useData_1 = require("./useData");
 /**
@@ -38,11 +38,11 @@ const useCSC = ({ defaultValue = {}, onChange }) => {
      */
     const [citys, setCitys] = (0, react_1.useState)([]);
     const onLoadCountrys = async () => {
-        const countrys = await (0, index_1.getDataCountrys)();
+        const countrys = await (0, country_state_city_nextjs_1.getDataCountrys)();
         setCountrys(countrys.map((e) => {
             return {
                 ...e,
-                img: `${(0, index_1.getRuteDir)()}`,
+                img: `${(0, country_state_city_nextjs_1.getRuteCountryImg)(e)}`,
             };
         }));
         if (defaultValue?.country) {
@@ -56,14 +56,14 @@ const useCSC = ({ defaultValue = {}, onChange }) => {
         setStates([]);
         setCitys([]);
         if (country) {
-            const states = await (0, index_1.getDataStatesByCountry)(country);
+            const states = await (0, country_state_city_nextjs_1.getDataStatesByCountry)(country);
             setStates(states);
         }
     };
     const onLoadCitys = async (country, state) => {
         setCitys([]);
         if (country && state) {
-            const citys = await (0, index_1.getDataCitysByStateAndCountry)(country, state);
+            const citys = await (0, country_state_city_nextjs_1.getDataCitysByStateAndCountry)(country, state);
             setCitys(citys);
         }
     };
@@ -72,7 +72,15 @@ const useCSC = ({ defaultValue = {}, onChange }) => {
      * The `onChangeData` function returned by the `useData` hook is used to
      * convert the input CSC data to the correct format.
      */
-    const { data: value, onConcatData, setDataFunction, } = (0, useData_1.useData)(defaultValue, {
+    const { data: value, onConcatData, setDataFunction, } = (0, useData_1.useData)({
+        ...defaultValue,
+        ...(defaultValue?.country
+            ? {
+                ...defaultValue?.country,
+                img: `${(0, country_state_city_nextjs_1.getRuteCountryImg)(defaultValue?.country)}`,
+            }
+            : {}),
+    }, {
         onChangeDataAfter: onChange,
     });
     const onChangeCSC = (id) => (value) => {
