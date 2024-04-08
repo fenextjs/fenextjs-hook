@@ -1,5 +1,7 @@
+import { ErrorFenextjs } from "fenextjs-error";
 import { FenextjsValidatorClass } from "fenextjs-validator";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useDataValidator } from "./useDataValidator";
 
 export interface useDataOptionsRefreshDataIfChangeDefaultDataOptions {
     active?: boolean;
@@ -54,6 +56,7 @@ export interface useDataOptions<
     onAfterSubmitParseErrorMemo?: (error: any) => EM;
     onAfterSubmitDataMemoError?: (d: { dataMemo: M; error: EM }) => void;
     afterSubmitDataMemoSetIsChangeFalse?: boolean;
+    autoOnValidate?: boolean;
 }
 export interface onChangeDataOptionsProps<T> {
     onCallback?: (data: T) => void;
@@ -243,23 +246,18 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         options?.onChangeDataMemoAfter?.(dataMemo);
     }, [dataMemo]);
 
-    /**
-     * if is valida data with validator options
-     *
-     * @returns {true | ErrorFenextjs<any>} - A true if is valida data, else return ErrorFenextjs
-     */
-    const isValidData = useMemo(() => {
-        return options?.validator?.onValidate?.(data) ?? true;
-    }, [data, options?.validator]);
+    const { isValidData, onValidateData } = useDataValidator<T>({
+        data,
+        validator: options?.validator,
+        autoOnValidate: options?.autoOnValidate ?? true,
+    });
 
-    /**
-     * if is valida data with validator options
-     *
-     * @returns {true | ErrorFenextjs<any>} - A true if is valida data, else return ErrorFenextjs
-     */
-    const isValidDataMemo = useMemo(() => {
-        return options?.validatorMemo?.onValidate?.(dataMemo) ?? true;
-    }, [dataMemo, options?.validatorMemo]);
+    const { isValidData: isValidDataMemo, onValidateData: onValidateDataMemo } =
+        useDataValidator<M>({
+            data: dataMemo,
+            validator: options?.validatorMemo,
+            autoOnValidate: options?.autoOnValidate ?? true,
+        });
 
     const onSubmitData = useCallback(
         async (optionsSubmitData?: {
@@ -360,6 +358,9 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
 
         isValidData,
         isValidDataMemo,
+
+        onValidateData,
+        onValidateDataMemo,
 
         onSubmitData,
         onSubmitDataMemo,
