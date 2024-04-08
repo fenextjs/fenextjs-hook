@@ -16,3 +16,4 @@ export * from "./usePrint";
 export * from "./useAlert";
 export * from "./useAction";
 export * from "./useRender";
+export * from "./useDataValidator";
