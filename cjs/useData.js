@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useData = void 0;
 const react_1 = require("react");
+const useDataValidator_1 = require("./useDataValidator");
 /**
  * A custom hook to manage data state and changes.
  *
@@ -157,22 +158,16 @@ const useData = (defaultData, options) => {
     (0, react_1.useEffect)(() => {
         options?.onChangeDataMemoAfter?.(dataMemo);
     }, [dataMemo]);
-    /**
-     * if is valida data with validator options
-     *
-     * @returns {true | ErrorFenextjs<any>} - A true if is valida data, else return ErrorFenextjs
-     */
-    const isValidData = (0, react_1.useMemo)(() => {
-        return options?.validator?.onValidate?.(data) ?? true;
-    }, [data, options?.validator]);
-    /**
-     * if is valida data with validator options
-     *
-     * @returns {true | ErrorFenextjs<any>} - A true if is valida data, else return ErrorFenextjs
-     */
-    const isValidDataMemo = (0, react_1.useMemo)(() => {
-        return options?.validatorMemo?.onValidate?.(dataMemo) ?? true;
-    }, [dataMemo, options?.validatorMemo]);
+    const { isValidData, onValidateData } = (0, useDataValidator_1.useDataValidator)({
+        data,
+        validator: options?.validator,
+        autoOnValidate: options?.autoOnValidate ?? true,
+    });
+    const { isValidData: isValidDataMemo, onValidateData: onValidateDataMemo } = (0, useDataValidator_1.useDataValidator)({
+        data: dataMemo,
+        validator: options?.validatorMemo,
+        autoOnValidate: options?.autoOnValidate ?? true,
+    });
     const onSubmitData = (0, react_1.useCallback)(async (optionsSubmitData) => {
         const dataUse = optionsSubmitData?.data ?? data;
         const isValidDataUse = optionsSubmitData?.data
@@ -265,6 +260,8 @@ const useData = (defaultData, options) => {
         onReloadKeyData,
         isValidData,
         isValidDataMemo,
+        onValidateData,
+        onValidateDataMemo,
         onSubmitData,
         onSubmitDataMemo,
         loaderSubmit,

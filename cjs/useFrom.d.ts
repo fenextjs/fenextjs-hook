@@ -33,8 +33,10 @@ export declare const useForm: <T, M = any>({ defaultValue, onChangeDisabled, onC
     keyData: number;
     setKeyData: import("react").Dispatch<import("react").SetStateAction<number>>;
     onReloadKeyData: () => void;
-    isValidData: true | ErrorFenextjs<any>;
-    isValidDataMemo: true | ErrorFenextjs<any>;
+    isValidData: true | ErrorFenextjs<any> | undefined;
+    isValidDataMemo: true | ErrorFenextjs<any> | undefined;
+    onValidateData: () => void;
+    onValidateDataMemo: () => void;
     onSubmitData: (optionsSubmitData?: {
         data?: T | undefined;
         onSaveData?: ((p: {

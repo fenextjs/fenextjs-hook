@@ -1,4 +1,3 @@
-import { ErrorFenextjs } from "fenextjs-error";
 import { FenextjsValidatorClass } from "fenextjs-validator";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDataValidator } from "./useDataValidator";

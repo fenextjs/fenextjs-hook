@@ -56,6 +56,7 @@ export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM =
         error: EM;
     }) => void;
     afterSubmitDataMemoSetIsChangeFalse?: boolean;
+    autoOnValidate?: boolean;
 }
 export interface onChangeDataOptionsProps<T> {
     onCallback?: (data: T) => void;
@@ -82,8 +83,10 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     keyData: number;
     setKeyData: import("react").Dispatch<import("react").SetStateAction<number>>;
     onReloadKeyData: () => void;
-    isValidData: true | import("fenextjs-error").ErrorFenextjs<any>;
-    isValidDataMemo: true | import("fenextjs-error").ErrorFenextjs<any>;
+    isValidData: true | import("fenextjs-error").ErrorFenextjs<any> | undefined;
+    isValidDataMemo: true | import("fenextjs-error").ErrorFenextjs<any> | undefined;
+    onValidateData: () => void;
+    onValidateDataMemo: () => void;
     onSubmitData: (optionsSubmitData?: {
         data?: T;
         onSaveData?: (p: {
