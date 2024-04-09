@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useModal = void 0;
 const react_1 = require("react");
 const useAction_1 = require("./useAction");
-const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, }) => {
+const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, disabled = false, }) => {
     const [active, setActive] = (0, react_1.useState)(defaultActiveProps ?? false);
     const { onAction } = (0, useAction_1.useAction)({
         name: name ?? "fenext-modal",
@@ -14,15 +14,24 @@ const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps
             : undefined,
     });
     const onChange = (d) => {
+        if (disabled) {
+            return;
+        }
         onChangeProps?.(d);
         setActive(d);
         onAction(d);
     };
     const onActive = () => {
+        if (disabled) {
+            return;
+        }
         onChange(true);
         onActiveProps?.();
     };
     const onClose = () => {
+        if (disabled) {
+            return;
+        }
         onChange(false);
         onCloseProps?.();
     };

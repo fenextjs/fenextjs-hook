@@ -8,7 +8,7 @@ export interface useModalProps {
     onActive?: () => void;
     onClose?: () => void;
     onChange?: (d: boolean) => void;
-    disabled?:boolean
+    disabled?: boolean;
 }
 
 export const useModal = ({
@@ -18,7 +18,7 @@ export const useModal = ({
     onActive: onActiveProps,
     onChange: onChangeProps,
     onClose: onCloseProps,
-    disabled =false,
+    disabled = false,
 }: useModalProps) => {
     const [active, setActive] = useState<boolean>(defaultActiveProps ?? false);
 
@@ -31,8 +31,8 @@ export const useModal = ({
             : undefined,
     });
     const onChange = (d: boolean) => {
-        if(disabled){
-            return
+        if (disabled) {
+            return;
         }
         onChangeProps?.(d);
         setActive(d);
@@ -40,15 +40,15 @@ export const useModal = ({
     };
 
     const onActive = () => {
-        if(disabled){
-            return
+        if (disabled) {
+            return;
         }
         onChange(true);
         onActiveProps?.();
     };
     const onClose = () => {
-        if(disabled){
-            return
+        if (disabled) {
+            return;
         }
         onChange(false);
         onCloseProps?.();
