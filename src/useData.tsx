@@ -355,6 +355,9 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         setKeyData,
         onReloadKeyData,
 
+        validator:options?.validator,
+        validatorMemo:options?.validatorMemo,
+
         isValidData,
         isValidDataMemo,
 
