@@ -258,6 +258,8 @@ const useData = (defaultData, options) => {
         keyData,
         setKeyData,
         onReloadKeyData,
+        validator: options?.validator,
+        validatorMemo: options?.validatorMemo,
         isValidData,
         isValidDataMemo,
         onValidateData,
