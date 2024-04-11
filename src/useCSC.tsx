@@ -51,7 +51,11 @@ export const useCSC = ({
     parseJson_to_String,
     parseString_to_Json,
 }: useCSCProps) => {
-    const {defaultValue,onChange,value:valueJson} = useJsonString<CSCProps, CSCStringProps>({
+    const {
+        defaultValue,
+        onChange,
+        value: valueJson,
+    } = useJsonString<CSCProps, CSCStringProps>({
         defaultValue: defaultValueProps,
         value: valueProps,
         onChange: onChangeProps,
@@ -133,7 +137,7 @@ export const useCSC = ({
      * convert the input CSC data to the correct format.
      */
     const {
-        data:valueData,
+        data: valueData,
         onConcatData,
         setDataFunction,
     } = useData<CSCProps, CSCProps>(
@@ -198,7 +202,7 @@ export const useCSC = ({
         states,
         citys,
         onChangeCSC,
-        value : (valueProps ? valueJson : valueData) ??valueData ,
+        value: (valueProps ? valueJson : valueData) ?? valueData,
         loadCountrys,
         loadStates,
         loadCitys,

@@ -27,14 +27,14 @@ const useJsonString_1 = require("./useJsonString");
  * @returns {Array} citysForStateSelected - Array containing all loaded city objects that belong to the currently selected state.
  */
 const useCSC = ({ defaultValue: defaultValueProps, value: valueProps, onChange: onChangeProps, defaultValueJsonString, valueJsonString, onChangeJsonString, parseJson_to_String, parseString_to_Json, }) => {
-    const {} = (0, useJsonString_1.useJsonString)({
+    const { defaultValue, onChange, value: valueJson, } = (0, useJsonString_1.useJsonString)({
         defaultValue: defaultValueProps,
         value: valueProps,
         onChange: onChangeProps,
         defaultValueJsonString,
         valueJsonString,
         onChangeJsonString,
-        parseJson_to_String: parseJson_to_String ?? CSC_1.parseCSC_to_String,
+        parseJson_to_String: parseJson_to_String ?? CSC_1.parseCSC_to_CSCString,
         parseString_to_Json: parseString_to_Json ?? CSC_1.parseCSCString_to_CSC,
     });
     /**
@@ -93,7 +93,7 @@ const useCSC = ({ defaultValue: defaultValueProps, value: valueProps, onChange: 
      * The `onChangeData` function returned by the `useData` hook is used to
      * convert the input CSC data to the correct format.
      */
-    const { data: value, onConcatData, setDataFunction, } = (0, useData_1.useData)({
+    const { data: valueData, onConcatData, setDataFunction, } = (0, useData_1.useData)({
         ...defaultValue,
         ...(defaultValue?.country
             ? {
@@ -149,7 +149,7 @@ const useCSC = ({ defaultValue: defaultValueProps, value: valueProps, onChange: 
         states,
         citys,
         onChangeCSC,
-        value,
+        value: (valueProps ? valueJson : valueData) ?? valueData,
         loadCountrys,
         loadStates,
         loadCitys,
