@@ -1,4 +1,4 @@
-export interface useJsonStringProps<T = any> {
+export interface useJsonStringProps<T = any, P = string> {
     /**
      * Default Value =
      */
@@ -14,25 +14,25 @@ export interface useJsonStringProps<T = any> {
     /**
      * Default Value
      */
-    defaultValueJsonString?: string;
+    defaultValueJsonString?: P;
     /**
      * Value
      */
-    valueJsonString?: string;
+    valueJsonString?: P;
     /**
      * onChange
      */
-    onChangeJsonString?: (data: string) => void;
+    onChangeJsonString?: (data: P) => void;
     /**
      * parse
      */
-    parseString_to_Json?: (data: string) => T;
+    parseString_to_Json?: (data: P) => T;
     /**
      * parse
      */
-    parseJson_to_String?: (data: T) => string;
+    parseJson_to_String?: (data: T) => P;
 }
-export declare const useJsonString: <T = any>({ defaultValueJsonString, onChangeJsonString, parseJson_to_String, parseString_to_Json, valueJsonString, defaultValue, onChange, value, }: useJsonStringProps<T>) => {
+export declare const useJsonString: <T = any, P = string>({ defaultValueJsonString, onChangeJsonString, parseJson_to_String, parseString_to_Json, valueJsonString, defaultValue, onChange, value, }: useJsonStringProps<T, P>) => {
     value: T | undefined;
     defaultValue: T | undefined;
     onChange: (e: T) => void;

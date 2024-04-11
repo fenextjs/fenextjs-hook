@@ -1,79 +1,80 @@
 {
-    "name": "fenextjs-hook",
-    "version": "7.5.0",
-    "description": "",
-    "main": "./cjs/index.js",
-    "module": "./cjs/index.js",
-    "types": "./cjs/index.d.ts",
-    "scripts": {
-        "build": "npm run build:esm && npm run build:cjs",
-        "build:esm": "echo 'esm'",
-        "build:cjs": "tsc --module commonjs --outDir cjs",
-        "lint": "npx eslint src",
-        "lint:fix": "npm run lint -- --fix",
-        "prettier": "npx prettier src --check",
-        "prettier:fix": "npm run prettier -- --write",
-        "format": "npm run prettier:fix && npm run lint:fix",
-        "flb": "npm run format && npm run lint && npm run build",
-        "bun-i": "bun i",
-        "remove-bun-lockb": "rm -r bun.lockb",
-        "remove-node-module": "rm -r node_modules",
-        "remove": "npm run remove-node-module && npm run remove-bun-lockb",
-        "update-package": "ncu -u '/^fenextjs.*$/' country-state-city-nextjs uselocalstoragenextjs",
-        "update": "npm run update-package && npm run remove && npm run bun-i && npm run flb",
-        "u": "npm run update",
-        "test": "bun ./test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/franciscoblancojn/fenextjs-hook.git"
-    },
-    "keywords": [
-        "fenextjs",
-        "ts",
-        "hook",
-        "nextjs",
-        "useData",
-        "useRequest",
-        "useModal",
-        "useNotification",
-        "useQuery",
-        "useUser",
-        "usePhone",
-        "useValidator"
-    ],
-    "author": "franciscoblancojn",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/franciscoblancojn/fenextjs-hook/issues"
-    },
-    "homepage": "https://github.com/franciscoblancojn/fenextjs-hook#readme",
-    "dependencies": {
-        "country-state-city-nextjs": "^8.1.0",
-        "fenextjs-error": "^2.0.0",
-        "fenextjs-interface": "^2.5.0",
-        "fenextjs-validator": "^2.0.1",
-        "jwt-decode": "^4.0.0",
-        "next": "13.5.1",
-        "react": "18.2.0",
-        "react-dom": "18.2.0",
-        "uselocalstoragenextjs": "^2.0.0",
-        "world-phones": "^1.0.2"
-    },
-    "files": [
-        "cjs",
-        "esm"
-    ],
-    "devDependencies": {
-        "@types/node": "20.12.4",
-        "@types/react": "18.2.74",
-        "@types/react-dom": "18.2.24",
-        "@typescript-eslint/eslint-plugin": "^7.5.0",
-        "@typescript-eslint/parser": "^7.5.0",
-        "eslint": "8.57.0",
-        "npm-check-updates": "^16.14.18",
-        "prettier": "^3.2.5",
-        "ts-loader": "^9.5.1",
-        "typescript": "^5.4.4"
-    }
+  "name": "fenextjs-hook",
+  "version": "7.5.0",
+  "description": "",
+  "main": "./cjs/index.js",
+  "module": "./cjs/index.js",
+  "types": "./cjs/index.d.ts",
+  "scripts": {
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "echo 'esm'",
+    "build:cjs": "tsc --module commonjs --outDir cjs",
+    "lint": "npx eslint src",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier src --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run prettier:fix && npm run lint:fix",
+    "flb": "npm run format && npm run lint && npm run build",
+    "bun-i": "bun i",
+    "remove-bun-lockb": "rm -r bun.lockb",
+    "remove-node-module": "rm -r node_modules",
+    "remove": "npm run remove-node-module && npm run remove-bun-lockb",
+    "update-package": "ncu -u '/^fenextjs.*$/' country-state-city-nextjs uselocalstoragenextjs",
+    "update": "npm run update-package && npm run remove && npm run bun-i && npm run flb",
+    "u": "npm run update",
+    "test": "bun ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franciscoblancojn/fenextjs-hook.git"
+  },
+  "keywords": [
+    "fenextjs",
+    "ts",
+    "hook",
+    "nextjs",
+    "useData",
+    "useRequest",
+    "useModal",
+    "useNotification",
+    "useQuery",
+    "useUser",
+    "usePhone",
+    "useValidator"
+  ],
+  "author": "franciscoblancojn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/franciscoblancojn/fenextjs-hook/issues"
+  },
+  "homepage": "https://github.com/franciscoblancojn/fenextjs-hook#readme",
+  "dependencies": {
+    "country-state-city-nextjs": "^8.1.0",
+    "fenextjs-error": "^2.0.0",
+    "fenextjs-functions": "^3.3.1",
+    "fenextjs-interface": "^2.7.0",
+    "fenextjs-validator": "^2.0.1",
+    "jwt-decode": "^4.0.0",
+    "next": "13.5.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "uselocalstoragenextjs": "^2.0.0",
+    "world-phones": "^1.0.2"
+  },
+  "files": [
+    "cjs",
+    "esm"
+  ],
+  "devDependencies": {
+    "@types/node": "20.12.4",
+    "@types/react": "18.2.74",
+    "@types/react-dom": "18.2.24",
+    "@typescript-eslint/eslint-plugin": "^7.5.0",
+    "@typescript-eslint/parser": "^7.5.0",
+    "eslint": "8.57.0",
+    "npm-check-updates": "^16.14.18",
+    "prettier": "^3.2.5",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.4"
+  }
 }

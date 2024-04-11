@@ -9,22 +9,18 @@ import {
 } from "country-state-city-nextjs";
 import { useEffect, useState } from "react";
 import { useData } from "./useData";
-import { CSCProps } from "fenextjs-interface/cjs/CSC";
+import { CSCProps, CSCStringProps } from "fenextjs-interface/cjs/CSC";
+import {
+    parseCSCString_to_CSC,
+    parseCSC_to_CSCString,
+} from "fenextjs-functions/cjs/parse/CSC";
+import { useJsonString, useJsonStringProps } from "./useJsonString";
 
 /**
  * Represents the properties for the useCSC hook.
  */
-export interface useCSCProps {
-    /**
-     * The default value for the CSC object.
-     */
-    defaultValue?: CSCProps;
-
-    /**
-     * onChangeDataAfter value for the CSC object.
-     */
-    onChange?: (data: CSCProps) => void;
-}
+export interface useCSCProps
+    extends useJsonStringProps<CSCProps, CSCStringProps> {}
 /**
  * Hook that provides a CSC (Country, State, City) selector functionality.
  *
@@ -45,7 +41,27 @@ export interface useCSCProps {
  * @returns {Array} statesForCountrySelected - Array containing all loaded state objects that belong to the currently selected country.
  * @returns {Array} citysForStateSelected - Array containing all loaded city objects that belong to the currently selected state.
  */
-export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
+export const useCSC = ({
+    defaultValue: defaultValueProps,
+    value: valueProps,
+    onChange: onChangeProps,
+    defaultValueJsonString,
+    valueJsonString,
+    onChangeJsonString,
+    parseJson_to_String,
+    parseString_to_Json,
+}: useCSCProps) => {
+    const {defaultValue,onChange,value:valueJson} = useJsonString<CSCProps, CSCStringProps>({
+        defaultValue: defaultValueProps,
+        value: valueProps,
+        onChange: onChangeProps,
+        defaultValueJsonString,
+        valueJsonString,
+        onChangeJsonString,
+        parseJson_to_String: parseJson_to_String ?? parseCSC_to_CSCString,
+        parseString_to_Json: parseString_to_Json ?? parseCSCString_to_CSC,
+    });
+
     /**
      * An array of countries loaded by the hook.
      */
@@ -117,7 +133,7 @@ export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
      * convert the input CSC data to the correct format.
      */
     const {
-        data: value,
+        data:valueData,
         onConcatData,
         setDataFunction,
     } = useData<CSCProps, CSCProps>(
@@ -182,7 +198,7 @@ export const useCSC = ({ defaultValue = {}, onChange }: useCSCProps) => {
         states,
         citys,
         onChangeCSC,
-        value,
+        value : (valueProps ? valueJson : valueData) ??valueData ,
         loadCountrys,
         loadStates,
         loadCitys,

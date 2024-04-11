@@ -1,17 +1,10 @@
 import { countryProps as CountryProps, stateProps as StateProps, cityProps as CityProps } from "country-state-city-nextjs";
-import { CSCProps } from "fenextjs-interface/cjs/CSC";
+import { CSCProps, CSCStringProps } from "fenextjs-interface/cjs/CSC";
+import { useJsonStringProps } from "./useJsonString";
 /**
  * Represents the properties for the useCSC hook.
  */
-export interface useCSCProps {
-    /**
-     * The default value for the CSC object.
-     */
-    defaultValue?: CSCProps;
-    /**
-     * onChangeDataAfter value for the CSC object.
-     */
-    onChange?: (data: CSCProps) => void;
+export interface useCSCProps extends useJsonStringProps<CSCProps, CSCStringProps> {
 }
 /**
  * Hook that provides a CSC (Country, State, City) selector functionality.
@@ -33,7 +26,7 @@ export interface useCSCProps {
  * @returns {Array} statesForCountrySelected - Array containing all loaded state objects that belong to the currently selected country.
  * @returns {Array} citysForStateSelected - Array containing all loaded city objects that belong to the currently selected state.
  */
-export declare const useCSC: ({ defaultValue, onChange }: useCSCProps) => {
+export declare const useCSC: ({ defaultValue: defaultValueProps, value: valueProps, onChange: onChangeProps, defaultValueJsonString, valueJsonString, onChangeJsonString, parseJson_to_String, parseString_to_Json, }: useCSCProps) => {
     countrys: CountryProps[];
     states: StateProps[];
     citys: CityProps[];
@@ -43,7 +36,7 @@ export declare const useCSC: ({ defaultValue, onChange }: useCSCProps) => {
     loadStates: boolean;
     loadCitys: boolean;
 };
-export declare const useCountryStateCity: ({ defaultValue, onChange }: useCSCProps) => {
+export declare const useCountryStateCity: ({ defaultValue: defaultValueProps, value: valueProps, onChange: onChangeProps, defaultValueJsonString, valueJsonString, onChangeJsonString, parseJson_to_String, parseString_to_Json, }: useCSCProps) => {
     countrys: CountryProps[];
     states: StateProps[];
     citys: CityProps[];

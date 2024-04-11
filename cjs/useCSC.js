@@ -4,6 +4,8 @@ exports.useCountryStateCity = exports.useCSC = void 0;
 const country_state_city_nextjs_1 = require("country-state-city-nextjs");
 const react_1 = require("react");
 const useData_1 = require("./useData");
+const CSC_1 = require("fenextjs-functions/cjs/parse/CSC");
+const useJsonString_1 = require("./useJsonString");
 /**
  * Hook that provides a CSC (Country, State, City) selector functionality.
  *
@@ -24,7 +26,17 @@ const useData_1 = require("./useData");
  * @returns {Array} statesForCountrySelected - Array containing all loaded state objects that belong to the currently selected country.
  * @returns {Array} citysForStateSelected - Array containing all loaded city objects that belong to the currently selected state.
  */
-const useCSC = ({ defaultValue = {}, onChange }) => {
+const useCSC = ({ defaultValue: defaultValueProps, value: valueProps, onChange: onChangeProps, defaultValueJsonString, valueJsonString, onChangeJsonString, parseJson_to_String, parseString_to_Json, }) => {
+    const {} = (0, useJsonString_1.useJsonString)({
+        defaultValue: defaultValueProps,
+        value: valueProps,
+        onChange: onChangeProps,
+        defaultValueJsonString,
+        valueJsonString,
+        onChangeJsonString,
+        parseJson_to_String: parseJson_to_String ?? CSC_1.parseCSC_to_String,
+        parseString_to_Json: parseString_to_Json ?? CSC_1.parseCSCString_to_CSC,
+    });
     /**
      * An array of countries loaded by the hook.
      */
