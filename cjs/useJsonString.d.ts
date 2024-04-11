@@ -22,15 +22,15 @@ export interface useJsonStringProps<T = any, P = string> {
     /**
      * onChange
      */
-    onChangeJsonString?: (data: P) => void;
+    onChangeJsonString?: (data: P | undefined) => void;
     /**
      * parse
      */
-    parseString_to_Json?: (data: P) => T;
+    parseString_to_Json?: (data: P) => T | undefined;
     /**
      * parse
      */
-    parseJson_to_String?: (data: T) => P;
+    parseJson_to_String?: (data: T) => P | undefined;
 }
 export declare const useJsonString: <T = any, P = string>({ defaultValueJsonString, onChangeJsonString, parseJson_to_String, parseString_to_Json, valueJsonString, defaultValue, onChange, value, }: useJsonStringProps<T, P>) => {
     value: T | undefined;
