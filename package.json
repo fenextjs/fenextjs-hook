@@ -51,7 +51,7 @@
   "dependencies": {
     "country-state-city-nextjs": "^8.1.0",
     "fenextjs-error": "^2.0.0",
-    "fenextjs-functions": "^3.3.1",
+    "fenextjs-functions": "^3.3.2",
     "fenextjs-interface": "^2.7.0",
     "fenextjs-validator": "^2.0.1",
     "jwt-decode": "^4.0.0",

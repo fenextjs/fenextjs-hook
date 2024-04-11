@@ -30,7 +30,7 @@ export declare const useCSC: ({ defaultValue: defaultValueProps, value: valuePro
     countrys: CountryProps[];
     states: StateProps[];
     citys: CityProps[];
-    onChangeCSC: (id: keyof CSCProps) => (value: CountryProps | StateProps | CityProps | undefined) => void;
+    onChangeCSC: (id: keyof CSCProps) => (v: CountryProps | StateProps | CityProps | undefined) => void;
     value: CSCProps;
     loadCountrys: boolean;
     loadStates: boolean;
@@ -40,7 +40,7 @@ export declare const useCountryStateCity: ({ defaultValue: defaultValueProps, va
     countrys: CountryProps[];
     states: StateProps[];
     citys: CityProps[];
-    onChangeCSC: (id: keyof CSCProps) => (value: CountryProps | StateProps | CityProps | undefined) => void;
+    onChangeCSC: (id: keyof CSCProps) => (v: CountryProps | StateProps | CityProps | undefined) => void;
     value: CSCProps;
     loadCountrys: boolean;
     loadStates: boolean;

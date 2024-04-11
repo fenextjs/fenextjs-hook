@@ -156,22 +156,22 @@ export const useCSC = ({
     );
     const onChangeCSC =
         (id: keyof CSCProps) =>
-        (value: CountryProps | StateProps | CityProps | undefined) => {
+        (v: CountryProps | StateProps | CityProps | undefined) => {
             if (id == "country") {
                 onConcatData({
-                    country: value as CountryProps,
+                    country: v as CountryProps,
                     state: undefined,
                     city: undefined,
                 });
-                onLoadStates(value);
+                onLoadStates(v);
             }
             if (id == "state") {
                 setDataFunction((old) => {
                     if (old?.country) {
-                        onLoadCitys(old?.country, value);
+                        onLoadCitys(old?.country, v);
                         return {
                             ...old,
-                            state: value as StateProps,
+                            state: v as StateProps,
                             city: undefined,
                         };
                     }
@@ -183,7 +183,7 @@ export const useCSC = ({
                     if (old?.country && old?.state) {
                         return {
                             ...old,
-                            city: value as CityProps,
+                            city: v as CityProps,
                         };
                     }
                     return old;

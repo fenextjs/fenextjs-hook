@@ -104,22 +104,22 @@ const useCSC = ({ defaultValue: defaultValueProps, value: valueProps, onChange: 
     }, {
         onChangeDataAfter: onChange,
     });
-    const onChangeCSC = (id) => (value) => {
+    const onChangeCSC = (id) => (v) => {
         if (id == "country") {
             onConcatData({
-                country: value,
+                country: v,
                 state: undefined,
                 city: undefined,
             });
-            onLoadStates(value);
+            onLoadStates(v);
         }
         if (id == "state") {
             setDataFunction((old) => {
                 if (old?.country) {
-                    onLoadCitys(old?.country, value);
+                    onLoadCitys(old?.country, v);
                     return {
                         ...old,
-                        state: value,
+                        state: v,
                         city: undefined,
                     };
                 }
@@ -131,7 +131,7 @@ const useCSC = ({ defaultValue: defaultValueProps, value: valueProps, onChange: 
                 if (old?.country && old?.state) {
                     return {
                         ...old,
-                        city: value,
+                        city: v,
                     };
                 }
                 return old;
