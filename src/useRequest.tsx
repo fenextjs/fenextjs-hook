@@ -124,7 +124,7 @@ export const useRequestFunction = <FP = any, FR = any, PE = any>({
             const error = parseError?.(err) ?? err;
             setError(error);
             options?.onError?.(error);
-            return error;
+            return error as PE;
         } finally {
             setLoader(false);
         }
