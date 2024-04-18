@@ -1,5 +1,5 @@
-/// <reference types="react" />
 import { FenextjsValidatorClass } from "fenextjs-validator";
+import { Dispatch, SetStateAction } from "react";
 export interface useDataOptionsRefreshDataIfChangeDefaultDataOptions {
     active?: boolean;
     useReloadKeyData?: boolean;
@@ -28,8 +28,8 @@ export interface setDataOptions {
 export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM = any> {
     data?: T;
     refreshDataIfChangeDefaultData?: useDataOptionsRefreshDataIfChangeDefaultDataOptions;
-    onChangeDataAfter?: (data: T) => void;
-    onDeleteDataAfter?: (data: T) => void;
+    onChangeDataAfter?: (data: T, set?: Dispatch<SetStateAction<T>>) => void;
+    onDeleteDataAfter?: (data: T, set?: Dispatch<SetStateAction<T>>) => void;
     onChangeDataMemoAfter?: (data: M) => void;
     onMemo?: (data: T) => M;
     validator?: FenextjsValidatorClass<T>;
@@ -77,11 +77,11 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     setData: (nData: T, optionsData?: setDataOptions) => void;
     setDataFunction: (f: (p: T) => T, optionsData?: setDataOptions) => void;
     dataMemo: M;
-    setIsChange: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    setIsChange: Dispatch<SetStateAction<boolean>>;
     onRestart: () => void;
     onConcatData: (v: Partial<T> | Array<T>) => void;
     keyData: number;
-    setKeyData: import("react").Dispatch<import("react").SetStateAction<number>>;
+    setKeyData: Dispatch<SetStateAction<number>>;
     onReloadKeyData: () => void;
     validator: FenextjsValidatorClass<T> | undefined;
     validatorMemo: FenextjsValidatorClass<M> | undefined;
@@ -103,8 +103,8 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     resultSubmitDataMemo: RM | undefined;
     dataError: ET | undefined;
     dataErrorMemo: EM | undefined;
-    setResultSubmitData: import("react").Dispatch<import("react").SetStateAction<RT | undefined>>;
-    setResultSubmitDataMemo: import("react").Dispatch<import("react").SetStateAction<RM | undefined>>;
-    setDataError: import("react").Dispatch<import("react").SetStateAction<ET | undefined>>;
-    setDataErrorMemo: import("react").Dispatch<import("react").SetStateAction<EM | undefined>>;
+    setResultSubmitData: Dispatch<SetStateAction<RT | undefined>>;
+    setResultSubmitDataMemo: Dispatch<SetStateAction<RM | undefined>>;
+    setDataError: Dispatch<SetStateAction<ET | undefined>>;
+    setDataErrorMemo: Dispatch<SetStateAction<EM | undefined>>;
 };

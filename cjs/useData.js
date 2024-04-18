@@ -44,12 +44,12 @@ const useData = (defaultData, options) => {
             if (Array.isArray(pre)) {
                 const nData = [...pre];
                 nData[id] = value;
-                options?.onChangeDataAfter?.(nData);
+                options?.onChangeDataAfter?.(nData, setDataD);
                 _options?.onCallback?.(nData);
                 return nData;
             }
             const nData = { ...pre, [id]: value };
-            options?.onChangeDataAfter?.(nData);
+            options?.onChangeDataAfter?.(nData, setDataD);
             _options?.onCallback?.(nData);
             return nData;
         });
@@ -65,14 +65,14 @@ const useData = (defaultData, options) => {
         setDataD((pre) => {
             if (Array.isArray(pre)) {
                 const nData = [...pre].filter((v, i) => i !== id && (v || !v));
-                options?.onChangeDataAfter?.(nData);
-                options?.onDeleteDataAfter?.(nData);
+                options?.onChangeDataAfter?.(nData, setDataD);
+                options?.onDeleteDataAfter?.(nData, setDataD);
                 return nData;
             }
             const nData = { ...pre };
             delete nData[id];
-            options?.onChangeDataAfter?.(nData);
-            options?.onDeleteDataAfter?.(nData);
+            options?.onChangeDataAfter?.(nData, setDataD);
+            options?.onDeleteDataAfter?.(nData, setDataD);
             return nData;
         });
         setIsChange(true);
@@ -87,7 +87,7 @@ const useData = (defaultData, options) => {
         setDataD((p) => {
             const n = f(p);
             if (!(optionsData?.useOptionsOnChangeDataAfter === false)) {
-                options?.onChangeDataAfter?.(n);
+                options?.onChangeDataAfter?.(n, setDataD);
             }
             return n;
         });
@@ -103,7 +103,7 @@ const useData = (defaultData, options) => {
      */
     const setData = (nData, optionsData) => {
         if (!(optionsData?.useOptionsOnChangeDataAfter === false)) {
-            options?.onChangeDataAfter?.(nData);
+            options?.onChangeDataAfter?.(nData, setDataD);
         }
         setDataD(nData);
         if (!(optionsData?.useSetIsChange === false)) {
@@ -119,7 +119,7 @@ const useData = (defaultData, options) => {
         setDataD((pre) => {
             if (Array.isArray(pre)) {
                 const nData = [...pre, ...v];
-                options?.onChangeDataAfter?.(nData);
+                options?.onChangeDataAfter?.(nData, setDataD);
                 return nData;
             }
             if (typeof pre === "object") {
@@ -127,12 +127,12 @@ const useData = (defaultData, options) => {
                     ...pre,
                     ...v,
                 };
-                options?.onChangeDataAfter?.(nData);
+                options?.onChangeDataAfter?.(nData, setDataD);
                 return nData;
             }
             if (typeof pre === "string" || typeof pre === "number") {
                 const nData = `${pre}${v}`;
-                options?.onChangeDataAfter?.(nData);
+                options?.onChangeDataAfter?.(nData, setDataD);
                 return nData;
             }
             return pre;
