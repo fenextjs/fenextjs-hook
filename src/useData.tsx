@@ -1,5 +1,5 @@
 import { FenextjsValidatorClass } from "fenextjs-validator";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { useDataValidator } from "./useDataValidator";
 
 export interface useDataOptionsRefreshDataIfChangeDefaultDataOptions {
@@ -38,8 +38,8 @@ export interface useDataOptions<
 > {
     data?: T;
     refreshDataIfChangeDefaultData?: useDataOptionsRefreshDataIfChangeDefaultDataOptions;
-    onChangeDataAfter?: (data: T) => void;
-    onDeleteDataAfter?: (data: T) => void;
+    onChangeDataAfter?: (data: T, set?:Dispatch<SetStateAction<T>>) => void;
+    onDeleteDataAfter?: (data: T, set?:Dispatch<SetStateAction<T>>) => void;
     onChangeDataMemoAfter?: (data: M) => void;
     onMemo?: (data: T) => M;
     validator?: FenextjsValidatorClass<T>;
@@ -122,12 +122,12 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 if (Array.isArray(pre)) {
                     const nData = [...pre] as T;
                     nData[id] = value;
-                    options?.onChangeDataAfter?.(nData);
+                    options?.onChangeDataAfter?.(nData,setDataD);
                     _options?.onCallback?.(nData);
                     return nData;
                 }
                 const nData = { ...pre, [id]: value };
-                options?.onChangeDataAfter?.(nData);
+                options?.onChangeDataAfter?.(nData,setDataD);
                 _options?.onCallback?.(nData);
                 return nData;
             });
@@ -146,14 +146,14 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 const nData = [...pre].filter(
                     (v, i) => i !== (id as number) && (v || !v),
                 ) as T;
-                options?.onChangeDataAfter?.(nData);
-                options?.onDeleteDataAfter?.(nData);
+                options?.onChangeDataAfter?.(nData,setDataD);
+                options?.onDeleteDataAfter?.(nData,setDataD);
                 return nData;
             }
             const nData = { ...pre };
             delete nData[id];
-            options?.onChangeDataAfter?.(nData);
-            options?.onDeleteDataAfter?.(nData);
+            options?.onChangeDataAfter?.(nData,setDataD);
+            options?.onDeleteDataAfter?.(nData,setDataD);
             return nData;
         });
         setIsChange(true);
@@ -169,7 +169,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         setDataD((p) => {
             const n = f(p);
             if (!(optionsData?.useOptionsOnChangeDataAfter === false)) {
-                options?.onChangeDataAfter?.(n);
+                options?.onChangeDataAfter?.(n,setDataD);
             }
             return n;
         });
@@ -186,7 +186,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
      */
     const setData = (nData: T, optionsData?: setDataOptions) => {
         if (!(optionsData?.useOptionsOnChangeDataAfter === false)) {
-            options?.onChangeDataAfter?.(nData);
+            options?.onChangeDataAfter?.(nData,setDataD);
         }
         setDataD(nData);
         if (!(optionsData?.useSetIsChange === false)) {
@@ -202,7 +202,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         setDataD((pre: T) => {
             if (Array.isArray(pre)) {
                 const nData = [...pre, ...(v as Array<T>)] as T;
-                options?.onChangeDataAfter?.(nData);
+                options?.onChangeDataAfter?.(nData,setDataD);
                 return nData;
             }
             if (typeof pre === "object") {
@@ -210,12 +210,12 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                     ...pre,
                     ...v,
                 };
-                options?.onChangeDataAfter?.(nData);
+                options?.onChangeDataAfter?.(nData,setDataD);
                 return nData;
             }
             if (typeof pre === "string" || typeof pre === "number") {
                 const nData = `${pre}${v}` as T;
-                options?.onChangeDataAfter?.(nData);
+                options?.onChangeDataAfter?.(nData,setDataD);
                 return nData;
             }
             return pre;
