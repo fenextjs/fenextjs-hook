@@ -1,32 +1,35 @@
 import { FenextjsDate, FenextjsDateProps } from "fenextjs-date";
 import { useEffect, useState } from "react";
 
-export interface useDateProps extends FenextjsDateProps{
+export interface useDateProps extends FenextjsDateProps {}
+export const useDate = ({ ...props }: useDateProps) => {
+    const [dateValue, setDateValue] = useState<Date | undefined>(
+        props.defaultDate,
+    );
+    const [date, setDate] = useState(
+        new FenextjsDate({
+            ...props,
+            onCallback: (a) => {
+                setDateValue(() => new Date(a));
+                props?.onCallback?.(a);
+            },
+        }),
+    );
 
-}
-export const useDate = ({...props}:useDateProps) => {
-    const [dateValue, setDateValue] = useState<Date | undefined>(props.defaultDate);
-    const [date, setDate] = useState(new FenextjsDate({
-        ...props,
-        onCallback:(a)=>{
-            setDateValue(()=>new Date(a))
-            props?.onCallback?.(a)
-        }
-    }));
-    
     useEffect(() => {
-        if(dateValue){
-                setDate(new FenextjsDate({
+        if (dateValue) {
+            setDate(
+                new FenextjsDate({
                     ...props,
-                    defaultDate:dateValue,
-                    onCallback:(a)=>{
-                        setDateValue(()=>new Date(a))
-                        props?.onCallback?.(a)
-                    }
-                }))
+                    defaultDate: dateValue,
+                    onCallback: (a) => {
+                        setDateValue(() => new Date(a));
+                        props?.onCallback?.(a);
+                    },
+                }),
+            );
         }
-    }, [dateValue])
-    
+    }, [dateValue]);
 
-    return date
-}
+    return date;
+};

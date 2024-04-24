@@ -18,4 +18,4 @@ export * from "./useAction";
 export * from "./useRender";
 export * from "./useDataValidator";
 export * from "./useJsonString";
-export * from "./useDate"
+export * from "./useDate";
