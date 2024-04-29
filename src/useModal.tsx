@@ -25,12 +25,32 @@ export const useModal = ({
 }: useModalProps) => {
     const [active, setActive] = useState<boolean>(defaultActiveProps ?? false);
 
-    const { value: nameLocalStorage, setLocalStorage } =
-        useLocalStorage<string>({
-            name: "fenext-modal-active-name",
-            parse: (e) => e,
-            defaultValue: "-1",
-        });
+    const { value: namesLocalStorage, setLocalStorage } = useLocalStorage<
+        string[]
+    >({
+        name: "fenext-modal-active-name",
+        parse: (e) => {
+            try {
+                return JSON.parse(e ?? "[]");
+            } catch {
+                return [];
+            }
+        },
+        defaultValue: [],
+    });
+
+    const onPush = (name?: string) => {
+        if (name) {
+            const n = [...(namesLocalStorage ?? []), name];
+            setLocalStorage(n);
+        }
+    };
+    const onPop = (name?: string) => {
+        if (name) {
+            const n = [...(namesLocalStorage ?? [])].filter((e) => e != name);
+            setLocalStorage(n);
+        }
+    };
     const { onAction } = useAction<boolean>({
         name: name ?? "fenext-modal",
         onActionExecute: name
@@ -43,7 +63,11 @@ export const useModal = ({
         if (disabled) {
             return;
         }
-        setLocalStorage(d ? name : "-1");
+        if (d) {
+            onPush(name);
+        } else {
+            onPop(name);
+        }
         onChangeProps?.(d);
         setActive(d);
         onAction(d);
@@ -65,7 +89,7 @@ export const useModal = ({
 
     return {
         active: activeByNameLocalStorage
-            ? nameLocalStorage == name
+            ? (namesLocalStorage ?? []).at(-1) == name
             : activeProps ?? active,
         onChange,
         onActive,
