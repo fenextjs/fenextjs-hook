@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAction } from "./useAction";
 import { useLocalStorage } from "uselocalstoragenextjs";
 
@@ -25,9 +25,7 @@ export const useModal = ({
 }: useModalProps) => {
     const [active, setActive] = useState<boolean>(defaultActiveProps ?? false);
 
-    const { value: namesLocalStorage, setLocalStorage } = useLocalStorage<
-        string[]
-    >({
+    const { value, setLocalStorage } = useLocalStorage<string[]>({
         name: "fenext-modal-active-name",
         parse: (e) => {
             try {
@@ -38,6 +36,11 @@ export const useModal = ({
         },
         defaultValue: [],
     });
+
+    const namesLocalStorage = useMemo(
+        () => (value ? [value].flat(2) : []),
+        [value],
+    );
 
     const onPush = (name?: string) => {
         if (name && activeByNameLocalStorage) {
@@ -89,7 +92,7 @@ export const useModal = ({
 
     return {
         active: activeByNameLocalStorage
-            ? (namesLocalStorage ?? []).at(-1) == name
+            ? namesLocalStorage.at(-1) == name
             : activeProps ?? active,
         onChange,
         onActive,
