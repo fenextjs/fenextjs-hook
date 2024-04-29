@@ -40,13 +40,13 @@ export const useModal = ({
     });
 
     const onPush = (name?: string) => {
-        if (name) {
+        if (name && activeByNameLocalStorage) {
             const n = [...(namesLocalStorage ?? []), name];
             setLocalStorage(n);
         }
     };
     const onPop = (name?: string) => {
-        if (name) {
+        if (name && activeByNameLocalStorage) {
             const n = [...(namesLocalStorage ?? [])].filter((e) => e != name);
             setLocalStorage(n);
         }

@@ -19,13 +19,13 @@ const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps
         defaultValue: [],
     });
     const onPush = (name) => {
-        if (name) {
+        if (name && activeByNameLocalStorage) {
             const n = [...(namesLocalStorage ?? []), name];
             setLocalStorage(n);
         }
     };
     const onPop = (name) => {
-        if (name) {
+        if (name && activeByNameLocalStorage) {
             const n = [...(namesLocalStorage ?? [])].filter((e) => e != name);
             setLocalStorage(n);
         }
