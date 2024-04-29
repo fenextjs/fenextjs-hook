@@ -67,10 +67,20 @@ const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps
         onChange(false);
         onCloseProps?.();
     };
+    const activeFinal = (0, react_1.useMemo)(() => {
+        if (activeByNameLocalStorage && name && namesLocalStorage.at(-1)) {
+            return namesLocalStorage.at(-1) == name;
+        }
+        return activeProps ?? active;
+    }, [
+        activeByNameLocalStorage,
+        namesLocalStorage,
+        name,
+        activeProps,
+        active,
+    ]);
     return {
-        active: activeByNameLocalStorage
-            ? namesLocalStorage.at(-1) == name
-            : activeProps ?? active,
+        active: activeFinal,
         onChange,
         onActive,
         onClose,
