@@ -90,10 +90,21 @@ export const useModal = ({
         onCloseProps?.();
     };
 
+    const activeFinal = useMemo(() => {
+        if (activeByNameLocalStorage && name && namesLocalStorage.at(-1)) {
+            return namesLocalStorage.at(-1) == name;
+        }
+        return activeProps ?? active;
+    }, [
+        activeByNameLocalStorage,
+        namesLocalStorage,
+        name,
+        activeProps,
+        active,
+    ]);
+
     return {
-        active: activeByNameLocalStorage
-            ? namesLocalStorage.at(-1) == name
-            : activeProps ?? active,
+        active: activeFinal,
         onChange,
         onActive,
         onClose,
