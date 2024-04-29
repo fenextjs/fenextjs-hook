@@ -6,7 +6,7 @@ const useAction_1 = require("./useAction");
 const uselocalstoragenextjs_1 = require("uselocalstoragenextjs");
 const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, disabled = false, activeByNameLocalStorage = false, }) => {
     const [active, setActive] = (0, react_1.useState)(defaultActiveProps ?? false);
-    const { value: namesLocalStorage, setLocalStorage } = (0, uselocalstoragenextjs_1.useLocalStorage)({
+    const { value, setLocalStorage } = (0, uselocalstoragenextjs_1.useLocalStorage)({
         name: "fenext-modal-active-name",
         parse: (e) => {
             try {
@@ -18,6 +18,7 @@ const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps
         },
         defaultValue: [],
     });
+    const namesLocalStorage = (0, react_1.useMemo)(() => (value ? [value].flat(2) : []), [value]);
     const onPush = (name) => {
         if (name && activeByNameLocalStorage) {
             const n = [...(namesLocalStorage ?? []), name];
@@ -68,7 +69,7 @@ const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps
     };
     return {
         active: activeByNameLocalStorage
-            ? (namesLocalStorage ?? []).at(-1) == name
+            ? namesLocalStorage.at(-1) == name
             : activeProps ?? active,
         onChange,
         onActive,
