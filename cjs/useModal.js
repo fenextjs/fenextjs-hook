@@ -6,11 +6,30 @@ const useAction_1 = require("./useAction");
 const uselocalstoragenextjs_1 = require("uselocalstoragenextjs");
 const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, disabled = false, activeByNameLocalStorage = false, }) => {
     const [active, setActive] = (0, react_1.useState)(defaultActiveProps ?? false);
-    const { value: nameLocalStorage, setLocalStorage } = (0, uselocalstoragenextjs_1.useLocalStorage)({
+    const { value: namesLocalStorage, setLocalStorage } = (0, uselocalstoragenextjs_1.useLocalStorage)({
         name: "fenext-modal-active-name",
-        parse: (e) => e,
-        defaultValue: "-1",
+        parse: (e) => {
+            try {
+                return JSON.parse(e ?? "[]");
+            }
+            catch {
+                return [];
+            }
+        },
+        defaultValue: [],
     });
+    const onPush = (name) => {
+        if (name) {
+            const n = [...(namesLocalStorage ?? []), name];
+            setLocalStorage(n);
+        }
+    };
+    const onPop = (name) => {
+        if (name) {
+            const n = [...(namesLocalStorage ?? [])].filter((e) => e != name);
+            setLocalStorage(n);
+        }
+    };
     const { onAction } = (0, useAction_1.useAction)({
         name: name ?? "fenext-modal",
         onActionExecute: name
@@ -23,7 +42,12 @@ const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps
         if (disabled) {
             return;
         }
-        setLocalStorage(d ? name : "-1");
+        if (d) {
+            onPush(name);
+        }
+        else {
+            onPop(name);
+        }
         onChangeProps?.(d);
         setActive(d);
         onAction(d);
@@ -44,7 +68,7 @@ const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps
     };
     return {
         active: activeByNameLocalStorage
-            ? nameLocalStorage == name
+            ? (namesLocalStorage ?? []).at(-1) == name
             : activeProps ?? active,
         onChange,
         onActive,
