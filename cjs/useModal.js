@@ -18,6 +18,15 @@ const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps
         },
         defaultValue: [],
     });
+    const onLoadWindows = () => {
+        if (!(window && typeof window != "undefined")) {
+            return;
+        }
+        window.addEventListener("beforeunload", () => {
+            setLocalStorage([]);
+        });
+    };
+    (0, react_1.useEffect)(onLoadWindows, []);
     const namesLocalStorage = (0, react_1.useMemo)(() => (value ? [value].flat(2) : []), [value]);
     const onPush = (name) => {
         if (name && activeByNameLocalStorage) {
