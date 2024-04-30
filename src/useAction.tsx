@@ -13,6 +13,9 @@ export const useAction = <T = any,>({
     const id = useMemo(() => `fenext-action-element-${name}`, [name]);
     const onChange = useCallback(
         (actionElement: HTMLInputElement) => {
+            if (!(window && typeof window != "undefined")) {
+                return;
+            }
             if (actionElement && onActionExecute) {
                 let data: any = actionElement.getAttribute("data-action") ?? "";
                 try {
@@ -28,6 +31,10 @@ export const useAction = <T = any,>({
     );
 
     const onLoad = () => {
+        if (!(window && typeof window != "undefined")) {
+            setTimeout(onLoad, 500);
+            return;
+        }
         let actionElement: HTMLInputElement | null = document.getElementById(
             id,
         ) as HTMLInputElement;
