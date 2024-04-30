@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAction } from "./useAction";
 import { useLocalStorage } from "uselocalstoragenextjs";
 
@@ -36,6 +36,15 @@ export const useModal = ({
         },
         defaultValue: [],
     });
+    const onLoadWindows = () => {
+        if (!(window && typeof window != "undefined")) {
+            return;
+        }
+        window.addEventListener("beforeunload", () => {
+            setLocalStorage([]);
+        });
+    };
+    useEffect(onLoadWindows, []);
 
     const namesLocalStorage = useMemo(
         () => (value ? [value].flat(2) : []),
