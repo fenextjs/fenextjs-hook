@@ -33,8 +33,7 @@ export interface useUserProps<
 
     urlRedirectInLogut?: string;
 
-
-    onLogOut?:()=>void
+    onLogOut?: () => void;
 }
 
 /**
@@ -49,7 +48,7 @@ export const useUser = <U = UserProps,>({
     varName = "fenextjs-user",
     onValidateUser,
     urlRedirectInLogut,
-    onLogOut:onLogOutProps
+    onLogOut: onLogOutProps,
 }: useUserProps<U>) => {
     const validateTokenUserDefault = async (user: U) => {
         const { token } = user as any;
@@ -138,7 +137,7 @@ export const useUser = <U = UserProps,>({
      */
     const onLogOut = () => {
         setUser(null);
-        onLogOutProps?.()
+        onLogOutProps?.();
         if (urlRedirectInLogut && typeof window != "undefined") {
             window.location.href = urlRedirectInLogut;
         }

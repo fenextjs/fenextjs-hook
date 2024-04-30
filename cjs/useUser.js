@@ -13,7 +13,7 @@ const react_1 = require("react");
  * You can replace it with your own custom validation function.
  * @returns An object with the user data and authentication methods.
  */
-const useUser = ({ validateTokenUser: validateTokenUserProps, varName = "fenextjs-user", onValidateUser, urlRedirectInLogut, }) => {
+const useUser = ({ validateTokenUser: validateTokenUserProps, varName = "fenextjs-user", onValidateUser, urlRedirectInLogut, onLogOut: onLogOutProps, }) => {
     const validateTokenUserDefault = async (user) => {
         const { token } = user;
         if (!token) {
@@ -95,6 +95,7 @@ const useUser = ({ validateTokenUser: validateTokenUserProps, varName = "fenextj
      */
     const onLogOut = () => {
         setUser(null);
+        onLogOutProps?.();
         if (urlRedirectInLogut && typeof window != "undefined") {
             window.location.href = urlRedirectInLogut;
         }

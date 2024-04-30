@@ -16,6 +16,7 @@ export interface useUserProps<Q = UserProps, R = any, E = any, T = RequestResult
     varName?: string;
     onValidateUser?: (user: Q | null | undefined) => boolean;
     urlRedirectInLogut?: string;
+    onLogOut?: () => void;
 }
 /**
  * Hook to manage user data and authentication.
@@ -24,7 +25,7 @@ export interface useUserProps<Q = UserProps, R = any, E = any, T = RequestResult
  * You can replace it with your own custom validation function.
  * @returns An object with the user data and authentication methods.
  */
-export declare const useUser: <U = UserProps>({ validateTokenUser: validateTokenUserProps, varName, onValidateUser, urlRedirectInLogut, }: useUserProps<U>) => {
+export declare const useUser: <U = UserProps>({ validateTokenUser: validateTokenUserProps, varName, onValidateUser, urlRedirectInLogut, onLogOut: onLogOutProps, }: useUserProps<U>) => {
     load: boolean;
     user: U | null | undefined;
     setUser: (newValue: any) => void;
