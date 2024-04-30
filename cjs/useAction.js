@@ -6,6 +6,9 @@ const useAction = ({ name, onActionExecute, }) => {
     const uuid = (0, react_1.useMemo)(() => new Date().getTime() + "" + Math.random(), []);
     const id = (0, react_1.useMemo)(() => `fenext-action-element-${name}`, [name]);
     const onChange = (0, react_1.useCallback)((actionElement) => {
+        if (!(window && typeof window != "undefined")) {
+            return;
+        }
         if (actionElement && onActionExecute) {
             let data = actionElement.getAttribute("data-action") ?? "";
             try {
@@ -19,6 +22,10 @@ const useAction = ({ name, onActionExecute, }) => {
         }
     }, [onActionExecute]);
     const onLoad = () => {
+        if (!(window && typeof window != "undefined")) {
+            setTimeout(onLoad, 500);
+            return;
+        }
         let actionElement = document.getElementById(id);
         if (!actionElement) {
             actionElement = document.createElement("input");
