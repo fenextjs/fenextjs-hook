@@ -1,6 +1,6 @@
 {
   "name": "fenextjs-hook",
-  "version": "8.5.0",
+  "version": "8.6.0",
   "description": "",
   "main": "./cjs/index.js",
   "module": "./cjs/index.js",
@@ -49,10 +49,10 @@
   },
   "homepage": "https://github.com/franciscoblancojn/fenextjs-hook#readme",
   "dependencies": {
-    "country-state-city-nextjs": "^8.1.0",
+    "country-state-city-nextjs": "^8.2.0",
     "fenextjs-date": "^2.0.0",
     "fenextjs-error": "^2.0.0",
-    "fenextjs-functions": "^3.3.2",
+    "fenextjs-functions": "^3.4.0",
     "fenextjs-interface": "^2.7.0",
     "fenextjs-validator": "^3.1.0",
     "jwt-decode": "^4.0.0",
