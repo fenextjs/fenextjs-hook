@@ -5,7 +5,6 @@ export * from "./useRequest";
 export * from "./useNotification";
 export * from "./useQuery";
 export * from "./useUser";
-export * from "./usePhone";
 export * from "./useCSC";
 export * from "./useValidator";
 export * from "./useLocalStorageCache";

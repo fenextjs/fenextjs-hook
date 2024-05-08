@@ -54,13 +54,10 @@
     "fenextjs-error": "^2.0.0",
     "fenextjs-functions": "^3.5.1",
     "fenextjs-interface": "^3.1.0",
+    "fenextjs-nextjs-dependencies": "^1.0.0",
     "fenextjs-validator": "^3.1.0",
     "jwt-decode": "^4.0.0",
-    "next": "13.5.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "uselocalstoragenextjs": "^2.0.0",
-    "world-phones": "^1.0.2"
+    "uselocalstoragenextjs": "^2.0.0"
   },
   "files": [
     "cjs",
