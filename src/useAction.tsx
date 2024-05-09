@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo } from "react";
-import {stringifyCircular} from 'fenextjs-functions';
+import { stringifyCircular } from "fenextjs-functions";
 
 export interface useActionProps<T = any> {
     name: string;
@@ -70,7 +70,10 @@ export const useAction = <T = any,>({
             id,
         ) as HTMLInputElement;
         if (actionElement) {
-            actionElement.setAttribute("data-action", stringifyCircular({ data }));
+            actionElement.setAttribute(
+                "data-action",
+                stringifyCircular({ data }),
+            );
             actionElement.click();
         }
     };

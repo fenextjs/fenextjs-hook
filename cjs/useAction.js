@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useAction = void 0;
 const react_1 = require("react");
+const fenextjs_functions_1 = require("fenextjs-functions");
 const useAction = ({ name, onActionExecute, }) => {
     const uuid = (0, react_1.useMemo)(() => new Date().getTime() + "" + Math.random(), []);
     const id = (0, react_1.useMemo)(() => `fenext-action-element-${name}`, [name]);
@@ -53,7 +54,7 @@ const useAction = ({ name, onActionExecute, }) => {
     const onAction = (data) => {
         const actionElement = document.getElementById(id);
         if (actionElement) {
-            actionElement.setAttribute("data-action", JSON.stringify({ data }));
+            actionElement.setAttribute("data-action", (0, fenextjs_functions_1.stringifyCircular)({ data }));
             actionElement.click();
         }
     };
