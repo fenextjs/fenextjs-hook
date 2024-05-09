@@ -1,6 +1,6 @@
 {
   "name": "fenextjs-hook",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "description": "",
   "main": "./cjs/index.js",
   "module": "./cjs/index.js",
