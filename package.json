@@ -52,7 +52,7 @@
     "country-state-city-nextjs": "^9.0.0",
     "fenextjs-date": "^2.0.0",
     "fenextjs-error": "^2.0.0",
-    "fenextjs-functions": "^4.0.0",
+    "fenextjs-functions": "^4.1.0",
     "fenextjs-interface": "^3.1.0",
     "fenextjs-nextjs-dependencies": "^1.0.0",
     "fenextjs-validator": "^3.1.0",
