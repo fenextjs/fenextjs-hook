@@ -1,6 +1,6 @@
 {
   "name": "fenextjs-hook",
-  "version": "9.0.2",
+  "version": "10.0.0",
   "description": "",
   "main": "./cjs/index.js",
   "module": "./cjs/index.js",
@@ -19,7 +19,7 @@
     "remove-bun-lockb": "rm -r bun.lockb",
     "remove-node-module": "rm -r node_modules",
     "remove": "npm run remove-node-module && npm run remove-bun-lockb",
-    "update-package": "ncu -u '/^fenextjs.*$/' country-state-city-nextjs uselocalstoragenextjs",
+    "update-package": "ncu -u '/fenextjs.*$/' country-state-city-nextjs uselocalstoragenextjs",
     "update": "npm run update-package && npm run remove && npm run bun-i && npm run flb",
     "u": "npm run update",
     "test": "bun ./test"
@@ -49,15 +49,15 @@
   },
   "homepage": "https://github.com/franciscoblancojn/fenextjs-hook#readme",
   "dependencies": {
-    "country-state-city-nextjs": "^9.0.0",
-    "fenextjs-date": "^2.0.0",
-    "fenextjs-error": "^2.0.0",
-    "fenextjs-functions": "^4.1.0",
-    "fenextjs-interface": "^3.1.0",
-    "fenextjs-nextjs-dependencies": "^1.0.0",
-    "fenextjs-validator": "^3.1.0",
-    "jwt-decode": "^4.0.0",
-    "uselocalstoragenextjs": "^2.0.0"
+    "country-state-city-nextjs": "9.0.0",
+    "fenextjs-date": "3.0.0",
+    "fenextjs-error": "3.0.0",
+    "fenextjs-functions": "5.0.0",
+    "fenextjs-interface": "4.0.0",
+    "fenextjs-nextjs-dependencies": "2.0.0",
+    "fenextjs-validator": "4.0.0",
+    "jwt-decode": "4.0.0",
+    "uselocalstoragenextjs": "2.0.0"
   },
   "files": [
     "cjs",
@@ -67,12 +67,12 @@
     "@types/node": "20.12.4",
     "@types/react": "18.2.74",
     "@types/react-dom": "18.2.24",
-    "@typescript-eslint/eslint-plugin": "^7.5.0",
-    "@typescript-eslint/parser": "^7.5.0",
+    "@typescript-eslint/eslint-plugin": "7.5.0",
+    "@typescript-eslint/parser": "7.5.0",
     "eslint": "8.57.0",
-    "npm-check-updates": "^16.14.18",
-    "prettier": "^3.2.5",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.4.4"
+    "npm-check-updates": "16.14.18",
+    "prettier": "3.2.5",
+    "ts-loader": "9.5.1",
+    "typescript": "5.4.4"
   }
 }
