@@ -158,6 +158,7 @@ export interface useRequestLiteProps<FP, FR, FE = ErrorFenextjs> {
     f: (data: FP) => Promise<FR>;
     onResult?: (data: FR) => void;
     onError?: (data: FE) => void;
+    parseError?: (errors: any) => FE;
 
     defaultResult?: FR;
     defaultError?: FE;
@@ -167,6 +168,7 @@ export const useRequestLite = <FP, FR, FE = ErrorFenextjs>({
     f,
     onError,
     onResult,
+    parseError,
 
     defaultError = undefined,
     defaultResult = undefined,
@@ -185,6 +187,9 @@ export const useRequestLite = <FP, FR, FE = ErrorFenextjs>({
             onResult?.(r as FR);
             return r;
         } catch (err: any) {
+            if(parseError){
+                err = parseError(err)
+            }
             setError(err as FE);
             onError?.(err as FE);
             return err as FE;
