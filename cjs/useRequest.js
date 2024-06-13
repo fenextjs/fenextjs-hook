@@ -96,7 +96,7 @@ const useRequestFunction = ({ f, parseError = (e) => e, defaultError = undefined
     };
 };
 exports.useRequestFunction = useRequestFunction;
-const useRequestLite = ({ f, onError, onResult, defaultError = undefined, defaultResult = undefined, }) => {
+const useRequestLite = ({ f, onError, onResult, parseError, defaultError = undefined, defaultResult = undefined, }) => {
     const [loader, setLoader] = (0, react_1.useState)(false);
     const [error, setError] = (0, react_1.useState)(defaultError);
     const [result, setResult] = (0, react_1.useState)(defaultResult);
@@ -110,7 +110,11 @@ const useRequestLite = ({ f, onError, onResult, defaultError = undefined, defaul
             onResult?.(r);
             return r;
         }
-        catch (err) {
+        catch (error) {
+            let err = error;
+            if (parseError) {
+                err = parseError(error);
+            }
             setError(err);
             onError?.(err);
             return err;

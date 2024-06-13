@@ -186,9 +186,10 @@ export const useRequestLite = <FP, FR, FE = ErrorFenextjs>({
             setResult(r as FR);
             onResult?.(r as FR);
             return r;
-        } catch (err: any) {
-            if(parseError){
-                err = parseError(err)
+        } catch (error: any) {
+            let err = error;
+            if (parseError) {
+                err = parseError(error);
             }
             setError(err as FE);
             onError?.(err as FE);
