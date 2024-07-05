@@ -21,4 +21,5 @@ tslib_1.__exportStar(require("./useRender"), exports);
 tslib_1.__exportStar(require("./useDataValidator"), exports);
 tslib_1.__exportStar(require("./useJsonString"), exports);
 tslib_1.__exportStar(require("./useDate"), exports);
+tslib_1.__exportStar(require("./use_T"), exports);
 //# sourceMappingURL=index.js.map
