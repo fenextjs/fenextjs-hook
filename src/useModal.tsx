@@ -4,6 +4,7 @@ import { useLocalStorage } from "uselocalstoragenextjs";
 
 export interface useModalProps {
     name?: string;
+    nameLocalStorage?: string;
     activeByNameLocalStorage?: boolean;
     active?: boolean;
     defaultActive?: boolean;
@@ -15,6 +16,7 @@ export interface useModalProps {
 
 export const useModal = ({
     name,
+    nameLocalStorage,
     active: activeProps,
     defaultActive: defaultActiveProps,
     onActive: onActiveProps,
@@ -26,7 +28,7 @@ export const useModal = ({
     const [active, setActive] = useState<boolean>(defaultActiveProps ?? false);
 
     const { value, setLocalStorage } = useLocalStorage<string[]>({
-        name: "fenext-modal-active-name",
+        name: nameLocalStorage ?? "fenext-modal-active-name",
         parse: (e) => {
             try {
                 return JSON.parse(e ?? "[]");

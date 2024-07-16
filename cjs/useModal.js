@@ -4,10 +4,10 @@ exports.useModal = void 0;
 const react_1 = require("react");
 const useAction_1 = require("./useAction");
 const uselocalstoragenextjs_1 = require("uselocalstoragenextjs");
-const useModal = ({ name, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, disabled = false, activeByNameLocalStorage = false, }) => {
+const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, disabled = false, activeByNameLocalStorage = false, }) => {
     const [active, setActive] = (0, react_1.useState)(defaultActiveProps ?? false);
     const { value, setLocalStorage } = (0, uselocalstoragenextjs_1.useLocalStorage)({
-        name: "fenext-modal-active-name",
+        name: nameLocalStorage ?? "fenext-modal-active-name",
         parse: (e) => {
             try {
                 return JSON.parse(e ?? "[]");
