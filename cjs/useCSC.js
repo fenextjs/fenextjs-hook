@@ -94,7 +94,9 @@ const useCSC = ({ defaultValue: defaultValueProps, value: valueProps, onChange: 
      * convert the input CSC data to the correct format.
      */
     const { data: valueData, onConcatData, setDataFunction, } = (0, useData_1.useData)({
-        ...defaultValue,
+        country: defaultValue?.country,
+        state: defaultValue?.state,
+        city: defaultValue?.city,
         ...(defaultValue?.country
             ? {
                 ...defaultValue?.country,

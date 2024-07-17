@@ -142,7 +142,9 @@ export const useCSC = ({
         setDataFunction,
     } = useData<CSCProps, CSCProps>(
         {
-            ...defaultValue,
+            country: defaultValue?.country,
+            state: defaultValue?.state,
+            city: defaultValue?.city,
             ...(defaultValue?.country
                 ? {
                       ...defaultValue?.country,
