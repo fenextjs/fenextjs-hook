@@ -346,6 +346,9 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
             }
         }
     }, [defaultData, options]);
+
+    const validatorData = useMemo(() => options?.validator?.getObjectValidator?.(), [options?.validator])
+
     return {
         data,
         onChangeData,
@@ -363,6 +366,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         onReloadKeyData,
 
         validator: options?.validator,
+        validatorData,
         validatorMemo: options?.validatorMemo,
 
         isValidData,
