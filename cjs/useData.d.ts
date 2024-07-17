@@ -85,6 +85,7 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     setKeyData: import("react").Dispatch<import("react").SetStateAction<number>>;
     onReloadKeyData: () => void;
     validator: FenextjsValidatorClass<T> | undefined;
+    validatorData: { [id in keyof T]?: FenextjsValidatorClass<any> | undefined; } | undefined;
     validatorMemo: FenextjsValidatorClass<M> | undefined;
     isValidData: true | import("fenextjs-error").ErrorFenextjs<any> | undefined;
     isValidDataMemo: true | import("fenextjs-error").ErrorFenextjs<any> | undefined;

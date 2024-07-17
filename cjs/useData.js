@@ -250,6 +250,7 @@ const useData = (defaultData, options) => {
             }
         }
     }, [defaultData, options]);
+    const validatorData = (0, react_1.useMemo)(() => options?.validator?.getObjectValidator?.(), [options?.validator]);
     return {
         data,
         onChangeData,
@@ -265,6 +266,7 @@ const useData = (defaultData, options) => {
         setKeyData,
         onReloadKeyData,
         validator: options?.validator,
+        validatorData,
         validatorMemo: options?.validatorMemo,
         isValidData,
         isValidDataMemo,

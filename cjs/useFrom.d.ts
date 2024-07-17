@@ -34,6 +34,7 @@ export declare const useForm: <T, M = any>({ defaultValue, onChangeDisabled, onC
     setKeyData: import("react").Dispatch<import("react").SetStateAction<number>>;
     onReloadKeyData: () => void;
     validator: FenextjsValidatorClass<T> | undefined;
+    validatorData: { [id in keyof T]?: FenextjsValidatorClass<any> | undefined; } | undefined;
     validatorMemo: FenextjsValidatorClass<M> | undefined;
     isValidData: true | ErrorFenextjs<any> | undefined;
     isValidDataMemo: true | ErrorFenextjs<any> | undefined;
