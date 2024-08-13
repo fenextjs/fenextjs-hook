@@ -101,7 +101,9 @@ const useCSC = ({ defaultValue: defaultValueProps, value: valueProps, onChange: 
             ? {
                 country: {
                     ...defaultValue?.country,
-                    img: `${(0, country_state_city_nextjs_1.getRuteCountryImg)(defaultValue?.country)}`,
+                    img: defaultValue?.country?.text != ""
+                        ? `${(0, country_state_city_nextjs_1.getRuteCountryImg)(defaultValue?.country)}`
+                        : undefined,
                 },
             }
             : {}),

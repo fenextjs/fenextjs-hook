@@ -149,7 +149,10 @@ export const useCSC = ({
                 ? {
                       country: {
                           ...defaultValue?.country,
-                          img: `${getRuteCountryImg(defaultValue?.country)}`,
+                          img:
+                              defaultValue?.country?.text != ""
+                                  ? `${getRuteCountryImg(defaultValue?.country)}`
+                                  : undefined,
                       },
                   }
                 : {}),
