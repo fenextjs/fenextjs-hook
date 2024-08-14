@@ -57,7 +57,11 @@ export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM =
     }) => void;
     afterSubmitDataMemoSetIsChangeFalse?: boolean;
     autoOnValidate?: boolean;
+    env_log?: {
+        [id in useDataOptionsEnvLog]?: boolean;
+    };
 }
+export type useDataOptionsEnvLog = "data" | "dataMemo" | "isValidData" | "isValidDataMemo" | "dataError" | "dataErrorMemo" | "loaderSubmit" | "loaderSubmitMemo" | "keyData" | "isChange";
 export interface onChangeDataOptionsProps<T> {
     onCallback?: (data: T) => void;
     parseDataBeforeOnChangeData?: (id: keyof T, data: T) => T;

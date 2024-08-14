@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useData = void 0;
 const react_1 = require("react");
 const useDataValidator_1 = require("./useDataValidator");
+const fenextjs_functions_1 = require("fenextjs-functions");
 /**
  * A custom hook to manage data state and changes.
  *
@@ -251,6 +252,68 @@ const useData = (defaultData, options) => {
         }
     }, [defaultData, options]);
     const validatorData = (0, react_1.useMemo)(() => options?.validator?.getObjectValidator?.(), [options?.validator]);
+    if (options?.env_log) {
+        if (options?.env_log?.data == true) {
+            (0, fenextjs_functions_1.env_log)(data, {
+                name: "useData - data",
+                color: "#22cc8c",
+            });
+        }
+        if (options?.env_log?.dataMemo == true) {
+            (0, fenextjs_functions_1.env_log)(dataMemo, {
+                name: "useData - dataMemo",
+                color: "#22cc8c",
+            });
+        }
+        if (options?.env_log?.isValidData == true) {
+            (0, fenextjs_functions_1.env_log)(isValidData, {
+                name: "useData - isValidData",
+                color: "#f96161",
+            });
+        }
+        if (options?.env_log?.isValidDataMemo == true) {
+            (0, fenextjs_functions_1.env_log)(isValidDataMemo, {
+                name: "useData - isValidDataMemo",
+                color: "#f96161",
+            });
+        }
+        if (options?.env_log?.dataError == true) {
+            (0, fenextjs_functions_1.env_log)(dataError, {
+                name: "useData - dataError",
+                color: "#e84275",
+            });
+        }
+        if (options?.env_log?.dataErrorMemo == true) {
+            (0, fenextjs_functions_1.env_log)(dataErrorMemo, {
+                name: "useData - dataErrorMemo",
+                color: "#e84275",
+            });
+        }
+        if (options?.env_log?.loaderSubmit == true) {
+            (0, fenextjs_functions_1.env_log)(loaderSubmit, {
+                name: "useData - loaderSubmit",
+                color: "#f96161",
+            });
+        }
+        if (options?.env_log?.loaderSubmitMemo == true) {
+            (0, fenextjs_functions_1.env_log)(loaderSubmitMemo, {
+                name: "useData - loaderSubmitMemo",
+                color: "#f96161",
+            });
+        }
+        if (options?.env_log?.keyData == true) {
+            (0, fenextjs_functions_1.env_log)(keyData, {
+                name: "useData - keyData",
+                color: "#8d63e9",
+            });
+        }
+        if (options?.env_log?.isChange == true) {
+            (0, fenextjs_functions_1.env_log)(isChange, {
+                name: "useData - isChange",
+                color: "#8d63e9",
+            });
+        }
+    }
     return {
         data,
         onChangeData,

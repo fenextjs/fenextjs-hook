@@ -60,11 +60,21 @@ export interface useDataOptions<
     autoOnValidate?: boolean;
 
     env_log?: {
-        [id in useDataOptionsEnvLog]?: boolean
-    }
+        [id in useDataOptionsEnvLog]?: boolean;
+    };
 }
 
-export type useDataOptionsEnvLog = "data" | "dataMemo" | "isValidData" | "isValidDataMemo" | 'dataError' | 'dataErrorMemo' | 'loaderSubmit' | 'loaderSubmitMemo' | 'keyData' | 'isChange'
+export type useDataOptionsEnvLog =
+    | "data"
+    | "dataMemo"
+    | "isValidData"
+    | "isValidDataMemo"
+    | "dataError"
+    | "dataErrorMemo"
+    | "loaderSubmit"
+    | "loaderSubmitMemo"
+    | "keyData"
+    | "isChange";
 export interface onChangeDataOptionsProps<T> {
     onCallback?: (data: T) => void;
     parseDataBeforeOnChangeData?: (id: keyof T, data: T) => T;
@@ -120,34 +130,34 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
      */
     const onChangeData =
         (id: keyof T) =>
-            (
-                value: (typeof data)[keys],
-                _options?: onChangeDataOptionsProps<T>,
-            ) => {
-                if (value === data[id]) {
-                    return;
-                }
-                setDataD((pre: T) => {
-                    if (Array.isArray(pre)) {
-                        const nData = [...pre] as T;
-                        nData[id] = value;
-                        options?.onChangeDataAfter?.(nData);
-                        _options?.onCallback?.(nData);
-                        if (_options?.parseDataBeforeOnChangeData) {
-                            return _options?.parseDataBeforeOnChangeData(id, nData);
-                        }
-                        return nData;
-                    }
-                    const nData = { ...pre, [id]: value };
+        (
+            value: (typeof data)[keys],
+            _options?: onChangeDataOptionsProps<T>,
+        ) => {
+            if (value === data[id]) {
+                return;
+            }
+            setDataD((pre: T) => {
+                if (Array.isArray(pre)) {
+                    const nData = [...pre] as T;
+                    nData[id] = value;
                     options?.onChangeDataAfter?.(nData);
                     _options?.onCallback?.(nData);
                     if (_options?.parseDataBeforeOnChangeData) {
                         return _options?.parseDataBeforeOnChangeData(id, nData);
                     }
                     return nData;
-                });
-                setIsChange(true);
-            };
+                }
+                const nData = { ...pre, [id]: value };
+                options?.onChangeDataAfter?.(nData);
+                _options?.onCallback?.(nData);
+                if (_options?.parseDataBeforeOnChangeData) {
+                    return _options?.parseDataBeforeOnChangeData(id, nData);
+                }
+                return nData;
+            });
+            setIsChange(true);
+        };
 
     /**
      * Delete a single property of the data.
@@ -281,7 +291,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
             const dataUse = optionsSubmitData?.data ?? data;
             const isValidDataUse = optionsSubmitData?.data
                 ? options?.validator?.onValidate?.(optionsSubmitData?.data) ??
-                true
+                  true
                 : isValidData;
             if (options?.onSubmitData && isValidDataUse === true) {
                 try {
@@ -360,69 +370,68 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         [options?.validator],
     );
 
-    if(options?.env_log){
-        if(options?.env_log?.data == true){
-            env_log(data ,{
-                name:"useData - data",
-                color:"#22cc8c"
-            })
+    if (options?.env_log) {
+        if (options?.env_log?.data == true) {
+            env_log(data, {
+                name: "useData - data",
+                color: "#22cc8c",
+            });
         }
-        if(options?.env_log?.dataMemo == true){
-            env_log(dataMemo,{
-                name:"useData - dataMemo",
-                color:"#22cc8c"
-            })
+        if (options?.env_log?.dataMemo == true) {
+            env_log(dataMemo, {
+                name: "useData - dataMemo",
+                color: "#22cc8c",
+            });
         }
-        if(options?.env_log?.isValidData == true){
-            env_log(isValidData,{
-                name:"useData - isValidData",
-                color:"#f96161"
-            })
+        if (options?.env_log?.isValidData == true) {
+            env_log(isValidData, {
+                name: "useData - isValidData",
+                color: "#f96161",
+            });
         }
-        if(options?.env_log?.isValidDataMemo == true){
-            env_log(isValidDataMemo,{
-                name:"useData - isValidDataMemo",
-                color:"#f96161"
-            })
+        if (options?.env_log?.isValidDataMemo == true) {
+            env_log(isValidDataMemo, {
+                name: "useData - isValidDataMemo",
+                color: "#f96161",
+            });
         }
-        if(options?.env_log?.dataError == true){
-            env_log(dataError,{
-                name:"useData - dataError",
-                color:"#e84275"
-            })
+        if (options?.env_log?.dataError == true) {
+            env_log(dataError, {
+                name: "useData - dataError",
+                color: "#e84275",
+            });
         }
-        if(options?.env_log?.dataErrorMemo == true){
-            env_log(dataErrorMemo,{
-                name:"useData - dataErrorMemo",
-                color:"#e84275"
-            })
+        if (options?.env_log?.dataErrorMemo == true) {
+            env_log(dataErrorMemo, {
+                name: "useData - dataErrorMemo",
+                color: "#e84275",
+            });
         }
-        if(options?.env_log?.loaderSubmit == true){
-            env_log(loaderSubmit,{
-                name:"useData - loaderSubmit",
-                color:"#f96161"
-            })
+        if (options?.env_log?.loaderSubmit == true) {
+            env_log(loaderSubmit, {
+                name: "useData - loaderSubmit",
+                color: "#f96161",
+            });
         }
-        if(options?.env_log?.loaderSubmitMemo == true){
-            env_log(loaderSubmitMemo,{
-                name:"useData - loaderSubmitMemo",
-                color:"#f96161"
-            })
+        if (options?.env_log?.loaderSubmitMemo == true) {
+            env_log(loaderSubmitMemo, {
+                name: "useData - loaderSubmitMemo",
+                color: "#f96161",
+            });
         }
-        if(options?.env_log?.keyData == true){
-            env_log(keyData,{
-                name:"useData - keyData",
-                color:"#8d63e9"
-            })
+        if (options?.env_log?.keyData == true) {
+            env_log(keyData, {
+                name: "useData - keyData",
+                color: "#8d63e9",
+            });
         }
-        if(options?.env_log?.isChange == true){
-            env_log(isChange,{
-                name:"useData - isChange",
-                color:"#8d63e9"
-            })
+        if (options?.env_log?.isChange == true) {
+            env_log(isChange, {
+                name: "useData - isChange",
+                color: "#8d63e9",
+            });
         }
     }
-
 
     return {
         data,
