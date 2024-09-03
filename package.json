@@ -1,6 +1,6 @@
 {
   "name": "fenextjs-hook",
-  "version": "10.6.12",
+  "version": "10.6.13",
   "description": "",
   "main": "./cjs/index.js",
   "module": "./cjs/index.js",
@@ -50,7 +50,7 @@
   "homepage": "https://github.com/franciscoblancojn/fenextjs-hook#readme",
   "dependencies": {
     "country-state-city-nextjs": "9.1.0",
-    "fenextjs-date": "3.1.0",
+    "fenextjs-date": "3.2.0",
     "fenextjs-error": "3.1.2",
     "fenextjs-functions": "5.3.2",
     "fenextjs-interface": "4.2.1",
