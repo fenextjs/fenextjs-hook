@@ -82,16 +82,14 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
         onCloseProps?.();
     };
     const { activeFinal, activeNameLast, activeName } = (0, react_1.useMemo)(() => {
-        let ACTIVE = null;
-        let ACTIVENAME = null;
-        let ACTIVENAMELAST = null;
+        let ACTIVE = undefined;
+        const ACTIVENAME = namesLocalStorage.includes(name ?? "");
+        const ACTIVENAMELAST = namesLocalStorage.at(-1) == name;
         if (activeByNameContentLocalStorage && name) {
-            ACTIVE = namesLocalStorage.includes(name);
-            ACTIVENAME = namesLocalStorage.includes(name);
+            ACTIVE = ACTIVENAME;
         }
         if (activeByNameLocalStorage && name && namesLocalStorage.at(-1)) {
-            ACTIVE = namesLocalStorage.at(-1) == name;
-            ACTIVENAMELAST = namesLocalStorage.at(-1) == name;
+            ACTIVE = ACTIVENAMELAST;
         }
         return {
             activeFinal: ACTIVE ?? activeProps ?? active,

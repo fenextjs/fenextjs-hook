@@ -12,8 +12,8 @@ export interface useModalProps {
 }
 export declare const useModal: ({ name, nameLocalStorage, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, disabled, activeByNameLocalStorage, activeByNameContentLocalStorage, }: useModalProps) => {
     active: boolean;
-    activeNameLast: boolean | null;
-    activeName: boolean | null;
+    activeNameLast: boolean;
+    activeName: boolean;
     onChange: (d: boolean) => void;
     onActive: () => void;
     onClose: () => void;
