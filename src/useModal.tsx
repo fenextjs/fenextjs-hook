@@ -80,8 +80,8 @@ export const useModal = ({
         name: name ?? "fenext-modal",
         onActionExecute: name
             ? (e) => {
-                  setActive(e ?? false);
-              }
+                setActive(e ?? false);
+            }
             : undefined,
     });
     const onChange = (d: boolean) => {
@@ -112,14 +112,23 @@ export const useModal = ({
         onCloseProps?.();
     };
 
-    const activeFinal = useMemo(() => {
+    const { activeFinal, activeLast, activeName } = useMemo(() => {
+        let ACTIVE: boolean | null = null
+        let ACTIVENAME: boolean | null = null
+        let ACTIVENAMELAST: boolean | null = null
         if (activeByNameContentLocalStorage && name) {
-            return namesLocalStorage.includes(name);
+            ACTIVE = namesLocalStorage.includes(name);
+            ACTIVENAME = namesLocalStorage.includes(name);
         }
         if (activeByNameLocalStorage && name && namesLocalStorage.at(-1)) {
-            return namesLocalStorage.at(-1) == name;
+            ACTIVE = namesLocalStorage.at(-1) == name;
+            ACTIVENAMELAST = namesLocalStorage.at(-1) == name;
         }
-        return activeProps ?? active;
+        return {
+            activeFinal: ACTIVE ?? activeProps ?? active,
+            activeName: ACTIVENAME,
+            activeLast: ACTIVENAMELAST
+        };
     }, [
         activeByNameContentLocalStorage,
         activeByNameLocalStorage,
@@ -131,6 +140,8 @@ export const useModal = ({
 
     return {
         active: activeFinal,
+        activeLast,
+        activeName,
         onChange,
         onActive,
         onClose,
