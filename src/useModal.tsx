@@ -113,16 +113,15 @@ export const useModal = ({
     };
 
     const { activeFinal, activeNameLast, activeName } = useMemo(() => {
-        let ACTIVE: boolean | null = null;
-        let ACTIVENAME: boolean | null = null;
-        let ACTIVENAMELAST: boolean | null = null;
+        let ACTIVE: boolean | undefined = undefined;
+        let ACTIVENAME = namesLocalStorage.includes(name ?? '')
+        let ACTIVENAMELAST = namesLocalStorage.at(-1) == name
+
         if (activeByNameContentLocalStorage && name) {
-            ACTIVE = namesLocalStorage.includes(name);
-            ACTIVENAME = namesLocalStorage.includes(name);
+            ACTIVE = ACTIVENAME
         }
         if (activeByNameLocalStorage && name && namesLocalStorage.at(-1)) {
-            ACTIVE = namesLocalStorage.at(-1) == name;
-            ACTIVENAMELAST = namesLocalStorage.at(-1) == name;
+            ACTIVE = ACTIVENAMELAST
         }
         return {
             activeFinal: ACTIVE ?? activeProps ?? active,
