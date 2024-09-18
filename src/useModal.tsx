@@ -6,6 +6,7 @@ export interface useModalProps {
     name?: string;
     nameLocalStorage?: string;
     activeByNameLocalStorage?: boolean;
+    activeByNameContentLocalStorage?: boolean;
     active?: boolean;
     defaultActive?: boolean;
     onActive?: () => void;
@@ -24,6 +25,7 @@ export const useModal = ({
     onClose: onCloseProps,
     disabled = false,
     activeByNameLocalStorage = false,
+    activeByNameContentLocalStorage = false,
 }: useModalProps) => {
     const [active, setActive] = useState<boolean>(defaultActiveProps ?? false);
 
@@ -54,14 +56,17 @@ export const useModal = ({
     );
 
     const onPush = (name?: string) => {
-        if (name && activeByNameLocalStorage) {
+        if (name && (activeByNameLocalStorage || activeByNameContentLocalStorage)) {
             const n = [...(namesLocalStorage ?? []), name];
             setLocalStorage(n);
         }
     };
     const onPop = (name?: string) => {
-        if (name && activeByNameLocalStorage) {
-            const n = [...(namesLocalStorage ?? [])].filter((e) => e != name);
+        if (name && (activeByNameLocalStorage || activeByNameContentLocalStorage)) {
+            const n = [...(namesLocalStorage ?? [])]
+            if(n.at(-1)===name){
+                n.pop()
+            }
             setLocalStorage(n);
         }
     };
@@ -102,11 +107,15 @@ export const useModal = ({
     };
 
     const activeFinal = useMemo(() => {
+        if (activeByNameContentLocalStorage && name) {
+            return namesLocalStorage.includes(name);
+        }
         if (activeByNameLocalStorage && name && namesLocalStorage.at(-1)) {
             return namesLocalStorage.at(-1) == name;
         }
         return activeProps ?? active;
     }, [
+        activeByNameContentLocalStorage,
         activeByNameLocalStorage,
         namesLocalStorage,
         name,
