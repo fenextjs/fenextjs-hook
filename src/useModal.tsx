@@ -56,16 +56,22 @@ export const useModal = ({
     );
 
     const onPush = (name?: string) => {
-        if (name && (activeByNameLocalStorage || activeByNameContentLocalStorage)) {
+        if (
+            name &&
+            (activeByNameLocalStorage || activeByNameContentLocalStorage)
+        ) {
             const n = [...(namesLocalStorage ?? []), name];
             setLocalStorage(n);
         }
     };
     const onPop = (name?: string) => {
-        if (name && (activeByNameLocalStorage || activeByNameContentLocalStorage)) {
-            const n = [...(namesLocalStorage ?? [])]
-            if(n.at(-1)===name){
-                n.pop()
+        if (
+            name &&
+            (activeByNameLocalStorage || activeByNameContentLocalStorage)
+        ) {
+            const n = [...(namesLocalStorage ?? [])];
+            if (n.at(-1) === name) {
+                n.pop();
             }
             setLocalStorage(n);
         }

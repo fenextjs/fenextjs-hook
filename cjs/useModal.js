@@ -4,7 +4,7 @@ exports.useModal = void 0;
 const react_1 = require("react");
 const useAction_1 = require("./useAction");
 const uselocalstoragenextjs_1 = require("uselocalstoragenextjs");
-const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, disabled = false, activeByNameLocalStorage = false, }) => {
+const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, disabled = false, activeByNameLocalStorage = false, activeByNameContentLocalStorage = false, }) => {
     const [active, setActive] = (0, react_1.useState)(defaultActiveProps ?? false);
     const { value, setLocalStorage } = (0, uselocalstoragenextjs_1.useLocalStorage)({
         name: nameLocalStorage ?? "fenext-modal-active-name",
@@ -29,14 +29,19 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
     (0, react_1.useEffect)(onLoadWindows, []);
     const namesLocalStorage = (0, react_1.useMemo)(() => (value ? [value].flat(2) : []), [value]);
     const onPush = (name) => {
-        if (name && activeByNameLocalStorage) {
+        if (name &&
+            (activeByNameLocalStorage || activeByNameContentLocalStorage)) {
             const n = [...(namesLocalStorage ?? []), name];
             setLocalStorage(n);
         }
     };
     const onPop = (name) => {
-        if (name && activeByNameLocalStorage) {
-            const n = [...(namesLocalStorage ?? [])].filter((e) => e != name);
+        if (name &&
+            (activeByNameLocalStorage || activeByNameContentLocalStorage)) {
+            const n = [...(namesLocalStorage ?? [])];
+            if (n.at(-1) === name) {
+                n.pop();
+            }
             setLocalStorage(n);
         }
     };
@@ -77,11 +82,15 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
         onCloseProps?.();
     };
     const activeFinal = (0, react_1.useMemo)(() => {
+        if (activeByNameContentLocalStorage && name) {
+            return namesLocalStorage.includes(name);
+        }
         if (activeByNameLocalStorage && name && namesLocalStorage.at(-1)) {
             return namesLocalStorage.at(-1) == name;
         }
         return activeProps ?? active;
     }, [
+        activeByNameContentLocalStorage,
         activeByNameLocalStorage,
         namesLocalStorage,
         name,
