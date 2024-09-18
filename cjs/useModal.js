@@ -81,14 +81,23 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
         onChange(false);
         onCloseProps?.();
     };
-    const activeFinal = (0, react_1.useMemo)(() => {
+    const { activeFinal, activeNameLast, activeName } = (0, react_1.useMemo)(() => {
+        let ACTIVE = null;
+        let ACTIVENAME = null;
+        let ACTIVENAMELAST = null;
         if (activeByNameContentLocalStorage && name) {
-            return namesLocalStorage.includes(name);
+            ACTIVE = namesLocalStorage.includes(name);
+            ACTIVENAME = namesLocalStorage.includes(name);
         }
         if (activeByNameLocalStorage && name && namesLocalStorage.at(-1)) {
-            return namesLocalStorage.at(-1) == name;
+            ACTIVE = namesLocalStorage.at(-1) == name;
+            ACTIVENAMELAST = namesLocalStorage.at(-1) == name;
         }
-        return activeProps ?? active;
+        return {
+            activeFinal: ACTIVE ?? activeProps ?? active,
+            activeName: ACTIVENAME,
+            activeNameLast: ACTIVENAMELAST,
+        };
     }, [
         activeByNameContentLocalStorage,
         activeByNameLocalStorage,
@@ -99,6 +108,8 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
     ]);
     return {
         active: activeFinal,
+        activeNameLast,
+        activeName,
         onChange,
         onActive,
         onClose,
