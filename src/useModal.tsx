@@ -50,7 +50,7 @@ export const useModal = ({
     };
     useEffect(onLoadWindows, []);
 
-    const namesLocalStorage = useMemo(
+    const listNamesLocalStorage = useMemo(
         () => (value ? [value].flat(2) : []),
         [value],
     );
@@ -60,7 +60,7 @@ export const useModal = ({
             name &&
             (activeByNameLocalStorage || activeByNameContentLocalStorage)
         ) {
-            const n = [...(namesLocalStorage ?? []), name];
+            const n = [...(listNamesLocalStorage ?? []), name];
             setLocalStorage(n);
         }
     };
@@ -69,7 +69,7 @@ export const useModal = ({
             name &&
             (activeByNameLocalStorage || activeByNameContentLocalStorage)
         ) {
-            const n = [...(namesLocalStorage ?? [])];
+            const n = [...(listNamesLocalStorage ?? [])];
             if (n.at(-1) === name) {
                 n.pop();
             }
@@ -114,13 +114,13 @@ export const useModal = ({
 
     const { activeFinal, activeNameLast, activeName } = useMemo(() => {
         let ACTIVE: boolean | undefined = undefined;
-        const ACTIVENAME = namesLocalStorage.includes(name ?? "");
-        const ACTIVENAMELAST = namesLocalStorage.at(-1) == name;
+        const ACTIVENAME = listNamesLocalStorage.includes(name ?? "");
+        const ACTIVENAMELAST = listNamesLocalStorage.at(-1) == name;
 
         if (activeByNameContentLocalStorage && name) {
             ACTIVE = ACTIVENAME;
         }
-        if (activeByNameLocalStorage && name && namesLocalStorage.at(-1)) {
+        if (activeByNameLocalStorage && name && listNamesLocalStorage.at(-1)) {
             ACTIVE = ACTIVENAMELAST;
         }
         return {
@@ -131,7 +131,7 @@ export const useModal = ({
     }, [
         activeByNameContentLocalStorage,
         activeByNameLocalStorage,
-        namesLocalStorage,
+        listNamesLocalStorage,
         name,
         activeProps,
         active,
@@ -141,6 +141,7 @@ export const useModal = ({
         active: activeFinal,
         activeNameLast,
         activeName,
+        listNamesLocalStorage,
         onChange,
         onActive,
         onClose,
