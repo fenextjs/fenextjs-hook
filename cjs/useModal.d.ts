@@ -14,6 +14,7 @@ export declare const useModal: ({ name, nameLocalStorage, active: activeProps, d
     active: boolean;
     activeNameLast: boolean;
     activeName: boolean;
+    listNamesLocalStorage: string[];
     onChange: (d: boolean) => void;
     onActive: () => void;
     onClose: () => void;

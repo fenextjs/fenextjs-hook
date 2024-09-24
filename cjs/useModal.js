@@ -27,18 +27,18 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
         });
     };
     (0, react_1.useEffect)(onLoadWindows, []);
-    const namesLocalStorage = (0, react_1.useMemo)(() => (value ? [value].flat(2) : []), [value]);
+    const listNamesLocalStorage = (0, react_1.useMemo)(() => (value ? [value].flat(2) : []), [value]);
     const onPush = (name) => {
         if (name &&
             (activeByNameLocalStorage || activeByNameContentLocalStorage)) {
-            const n = [...(namesLocalStorage ?? []), name];
+            const n = [...(listNamesLocalStorage ?? []), name];
             setLocalStorage(n);
         }
     };
     const onPop = (name) => {
         if (name &&
             (activeByNameLocalStorage || activeByNameContentLocalStorage)) {
-            const n = [...(namesLocalStorage ?? [])];
+            const n = [...(listNamesLocalStorage ?? [])];
             if (n.at(-1) === name) {
                 n.pop();
             }
@@ -83,12 +83,12 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
     };
     const { activeFinal, activeNameLast, activeName } = (0, react_1.useMemo)(() => {
         let ACTIVE = undefined;
-        const ACTIVENAME = namesLocalStorage.includes(name ?? "");
-        const ACTIVENAMELAST = namesLocalStorage.at(-1) == name;
+        const ACTIVENAME = listNamesLocalStorage.includes(name ?? "");
+        const ACTIVENAMELAST = listNamesLocalStorage.at(-1) == name;
         if (activeByNameContentLocalStorage && name) {
             ACTIVE = ACTIVENAME;
         }
-        if (activeByNameLocalStorage && name && namesLocalStorage.at(-1)) {
+        if (activeByNameLocalStorage && name && listNamesLocalStorage.at(-1)) {
             ACTIVE = ACTIVENAMELAST;
         }
         return {
@@ -99,7 +99,7 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
     }, [
         activeByNameContentLocalStorage,
         activeByNameLocalStorage,
-        namesLocalStorage,
+        listNamesLocalStorage,
         name,
         activeProps,
         active,
@@ -108,6 +108,7 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
         active: activeFinal,
         activeNameLast,
         activeName,
+        listNamesLocalStorage,
         onChange,
         onActive,
         onClose,
