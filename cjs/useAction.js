@@ -1,62 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useAction = void 0;
-const react_1 = require("react");
 const fenextjs_functions_1 = require("fenextjs-functions");
-const useAction = ({ name, onActionExecute, }) => {
-    const uuid = (0, react_1.useMemo)(() => new Date().getTime() + "" + Math.random(), []);
-    const id = (0, react_1.useMemo)(() => `fenext-action-element-${name}`, [name]);
-    const onChange = (0, react_1.useCallback)((actionElement) => {
-        if (!(window && typeof window != "undefined")) {
-            return;
-        }
-        if (actionElement && onActionExecute) {
-            let data = actionElement.getAttribute("data-action") ?? "";
-            try {
-                data = JSON.parse(data);
-                data = data?.data;
-            }
-            catch {
-                data = {};
-            }
-            onActionExecute?.(data);
-        }
-    }, [onActionExecute]);
+const react_1 = require("react");
+const useAction = ({ name, onActionExecute, env_log: env_log_boolean, }) => {
     const onLoad = () => {
         if (!(window && typeof window != "undefined")) {
             setTimeout(onLoad, 500);
             return;
         }
-        let actionElement = document.getElementById(id);
-        if (!actionElement) {
-            actionElement = document.createElement("input");
-            actionElement.id = id;
-            actionElement.type = "checkbox";
-            actionElement.setAttribute("style", "position: fixed;scale: 0;");
-            document.body.append(actionElement);
-        }
-        actionElement = document.getElementById(id);
         if (onActionExecute) {
-            actionElement.onchangeuuid ??= {};
-            actionElement.onchangeuuid[uuid] = (e) => {
-                onChange(e.target);
-            };
-            actionElement.onchange = (e) => {
-                const ele = e.target;
-                Object.values(ele?.onchangeuuid ?? {}).map((f) => {
-                    f?.(e);
-                });
-                actionElement?.removeAttribute("data-action");
-            };
+            window.addEventListener(`fenext-action-element-${name}`, (e) => {
+                const data = e?.detail;
+                if (env_log_boolean?.onActionExecute === true) {
+                    (0, fenextjs_functions_1.env_log)(data, {
+                        name: `fenext-action-element-${name}-onActionExecute`,
+                    });
+                }
+                onActionExecute?.(data);
+            }, false);
         }
     };
-    (0, react_1.useEffect)(onLoad, [name, onActionExecute, uuid]);
-    const onAction = (data) => {
-        const actionElement = document.getElementById(id);
-        if (actionElement) {
-            actionElement.setAttribute("data-action", (0, fenextjs_functions_1.stringifyCircular)({ data }));
-            actionElement.click();
+    (0, react_1.useEffect)(onLoad, [onActionExecute]);
+    const onAction = (detail) => {
+        if (env_log_boolean?.onAction === true) {
+            (0, fenextjs_functions_1.env_log)(detail, {
+                name: `fenext-action-element-${name}-onAction`,
+            });
         }
+        window.dispatchEvent(new CustomEvent(`fenext-action-element-${name}`, {
+            bubbles: true,
+            detail,
+        }));
     };
     return {
         onAction,

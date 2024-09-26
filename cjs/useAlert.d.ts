@@ -4,6 +4,6 @@ export interface useAlertProps {
 }
 export declare const useAlert: <T = any>({ name, }: useAlertProps) => {
     alert: AlertProps<T> | undefined;
-    setAlert: (data?: AlertProps<T> | undefined) => void;
+    setAlert: (detail?: AlertProps<T> | undefined) => void;
     onClearAlert: () => void;
 };
