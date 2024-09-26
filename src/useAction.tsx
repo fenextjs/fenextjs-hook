@@ -1,81 +1,57 @@
-import { useCallback, useEffect, useMemo } from "react";
-import { stringifyCircular } from "fenextjs-functions";
+import { env_log } from "fenextjs-functions";
+import { useEffect } from "react";
 
 export interface useActionProps<T = any> {
     name: string;
     onActionExecute?: (d?: T) => void;
+    env_log?:{
+        onActionExecute?:boolean
+        onAction?:boolean
+    }
 }
 
 export const useAction = <T = any,>({
     name,
     onActionExecute,
+    env_log : env_log_boolean
 }: useActionProps<T>) => {
-    const uuid = useMemo(() => new Date().getTime() + "" + Math.random(), []);
-    const id = useMemo(() => `fenext-action-element-${name}`, [name]);
-    const onChange = useCallback(
-        (actionElement: HTMLInputElement) => {
-            if (!(window && typeof window != "undefined")) {
-                return;
-            }
-            if (actionElement && onActionExecute) {
-                let data: any = actionElement.getAttribute("data-action") ?? "";
-                try {
-                    data = JSON.parse(data);
-                    data = data?.data;
-                } catch {
-                    data = {};
-                }
-                onActionExecute?.(data);
-            }
-        },
-        [onActionExecute],
-    );
-
     const onLoad = () => {
         if (!(window && typeof window != "undefined")) {
             setTimeout(onLoad, 500);
             return;
         }
-        let actionElement: HTMLInputElement | null = document.getElementById(
-            id,
-        ) as HTMLInputElement;
-        if (!actionElement) {
-            actionElement = document.createElement("input");
-            actionElement.id = id;
-            actionElement.type = "checkbox";
-            actionElement.setAttribute("style", "position: fixed;scale: 0;");
-            document.body.append(actionElement);
-        }
-        actionElement = document.getElementById(id) as HTMLInputElement;
-        if (onActionExecute) {
-            (actionElement as any).onchangeuuid ??= {} as any;
-            (actionElement as any).onchangeuuid[uuid] = (e: any) => {
-                onChange(e.target as HTMLInputElement);
-            };
-            actionElement.onchange = (e) => {
-                const ele = e.target as HTMLInputElement;
-                Object.values((ele as any)?.onchangeuuid ?? {}).map(
-                    (f: any) => {
-                        f?.(e);
-                    },
-                );
-                actionElement?.removeAttribute("data-action");
-            };
-        }
-    };
-    useEffect(onLoad, [name, onActionExecute, uuid]);
-
-    const onAction = (data?: T) => {
-        const actionElement: HTMLInputElement | null = document.getElementById(
-            id,
-        ) as HTMLInputElement;
-        if (actionElement) {
-            actionElement.setAttribute(
-                "data-action",
-                stringifyCircular({ data }),
+        if(onActionExecute){
+            window.addEventListener(
+                `fenext-action-element-${name}`,
+                (e) => {
+                    const data = (e as any)?.detail
+                    if(env_log_boolean?.onActionExecute === true){
+                        env_log(data,{
+                            name:`fenext-action-element-${name}-onActionExecute`
+                        })
+                    }
+                    onActionExecute?.(data);
+                },
+                false,
             );
-            actionElement.click();
         }
+
+    };
+    useEffect(onLoad, [onActionExecute]);
+
+    const onAction = (detail?: T) => {
+        if(env_log_boolean?.onAction === true){
+            env_log(detail,{
+                name:`fenext-action-element-${name}-onAction`
+            })
+        }
+        window.dispatchEvent(
+            new CustomEvent(
+            `fenext-action-element-${name}`, {
+                bubbles: true,
+                detail,
+            }),
+        );
     };
 
     return {
