@@ -46,6 +46,7 @@ export const useModal = ({
         }
         window.addEventListener("beforeunload", () => {
             setLocalStorage([]);
+            setActive(false)
         });
     };
     useEffect(onLoadWindows, []);
