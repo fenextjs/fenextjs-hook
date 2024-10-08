@@ -24,6 +24,7 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
         }
         window.addEventListener("beforeunload", () => {
             setLocalStorage([]);
+            setActive(false);
         });
     };
     (0, react_1.useEffect)(onLoadWindows, []);
