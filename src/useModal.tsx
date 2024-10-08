@@ -48,7 +48,7 @@ export const useModal = ({
         window.addEventListener("beforeunload", () => {
             setLocalStorage([]);
             setActive(false);
-            setIfReload(true)
+            setIfReload(true);
         });
     };
     useEffect(onLoadWindows, []);
@@ -83,8 +83,8 @@ export const useModal = ({
         name: name ?? "fenext-modal",
         onActionExecute: name
             ? (e) => {
-                setActive(e ?? false);
-            }
+                  setActive(e ?? false);
+              }
             : undefined,
     });
     const onChange = (d: boolean) => {

@@ -5,6 +5,7 @@ const react_1 = require("react");
 const useAction_1 = require("./useAction");
 const uselocalstoragenextjs_1 = require("uselocalstoragenextjs");
 const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, disabled = false, activeByNameLocalStorage = false, activeByNameContentLocalStorage = false, }) => {
+    const [ifReload, setIfReload] = (0, react_1.useState)(false);
     const [active, setActive] = (0, react_1.useState)(defaultActiveProps ?? false);
     const { value, setLocalStorage } = (0, uselocalstoragenextjs_1.useLocalStorage)({
         name: nameLocalStorage ?? "fenext-modal-active-name",
@@ -25,6 +26,7 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
         window.addEventListener("beforeunload", () => {
             setLocalStorage([]);
             setActive(false);
+            setIfReload(true);
         });
     };
     (0, react_1.useEffect)(onLoadWindows, []);
@@ -106,7 +108,7 @@ const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: 
         active,
     ]);
     return {
-        active: activeFinal,
+        active: !ifReload && activeFinal,
         activeNameLast,
         activeName,
         listNamesLocalStorage,
