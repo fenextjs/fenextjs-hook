@@ -1,6 +1,6 @@
 import { FenextjsValidatorClass } from "fenextjs-validator";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useDataValidator } from "./useDataValidator";
+import { useDataValidator } from "../useDataValidator";
 import { env_log } from "fenextjs-functions";
 
 export interface useDataOptionsRefreshDataIfChangeDefaultDataOptions {
