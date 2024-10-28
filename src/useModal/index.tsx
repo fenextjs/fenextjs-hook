@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useAction } from "./useAction";
+import { useAction } from "../useAction";
 import { useLocalStorage } from "uselocalstoragenextjs";
 
 export interface useModalProps {
