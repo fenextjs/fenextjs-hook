@@ -34,14 +34,21 @@ export default {
                 {
                     Nombre: "onActionExecute",
                     Descripcion: "Muestra en consola al ejecutar onActionExecute.",
-                    Default:false
+                    Default: false,
                 },
                 {
                     Nombre: "onAction",
                     Descripcion: "Muestra en consola al ejecutar onAction.",
-                    Default:false
+                    Default: false,
                 }
             ]
+        }
+    ],
+    returns: [
+        {
+            id: "onAction",
+            type: "(detail?: T) => void",
+            description: "Función que se usa para ejecutar la acción, se le puede pasar parámetros si lo necesita.",
         }
     ],
     useExample: [
