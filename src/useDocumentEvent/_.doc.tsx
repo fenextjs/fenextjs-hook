@@ -1,61 +1,38 @@
 export default {
     id: "useDocumentEvent",
     name: "useDocumentEvent",
-    description: "El hook useDocumentEvent permite manejar eventos del documento de manera sencilla, registrando funciones que se ejecutan cuando ocurren ciertos eventos.",
+    description: "El hook useDocumentEvent permite agregar y eliminar eventos del documento de forma dinámica según las propiedades especificadas.",
     props: [
         {
-            id: "props",
-            type: "useDocumentEventProps<K>",
-            require: true,
-            description: "Objeto que contiene las funciones que se ejecutarán en respuesta a los eventos del documento.",
-        },
+            id: "useDocumentEventProps",
+            type: "{ [key in TypeListenerKeyFunctions]?: TypeListenerFunctions<key> }",
+            require: false,
+            description: "Objeto donde las claves son nombres de eventos del documento y los valores son funciones a ejecutar cuando el evento ocurre.",
+        }
     ],
-    extras: [
+    returns: [
         {
-            id: "TypeListenerKeyFunctions",
-            title: "TypeListenerKeyFunctions",
-            description: "Tipos de eventos que se pueden escuchar en el documento.",
-            tableItems: [
-                {
-                    Nombre: "click",
-                    Descripcion: "Se dispara cuando el usuario hace clic en el documento.",
-                },
-                {
-                    Nombre: "keydown",
-                    Descripcion: "Se dispara cuando se presiona una tecla.",
-                },
-                {
-                    Nombre: "resize",
-                    Descripcion: "Se dispara cuando se cambia el tamaño de la ventana.",
-                },
-                // Agrega otros eventos según sea necesario
-            ],
-        },
+            id: "onReload",
+            type: "() => void",
+            description: "Función que elimina y vuelve a agregar los eventos, útil para actualizar los listeners en tiempo real.",
+        }
     ],
     useExample: [
         {
-            text: "Escuchar clics en el documento",
-            content: `useDocumentEvent({
-    click: (ev) => {
-        console.log("Clic en el documento", ev);
-    }
-});`,
+            text: "Uso básico con evento 'click'",
+            content: `useDocumentEvent({ click: (e) => console.log("Documento clickeado:", e) });`
         },
         {
-            text: "Escuchar cambios de tamaño de ventana",
-            content: `useDocumentEvent({
-    resize: (ev) => {
-        console.log("Cambio de tamaño de ventana", ev);
-    }
-});`,
+            text: "Múltiples eventos con diferentes funciones",
+            content: `useDocumentEvent({ 
+                    click: (e) => console.log("Click en el documento:", e), 
+                    keydown: (e) => console.log("Tecla presionada:", e.key) 
+                });`
         },
         {
-            text: "Escuchar eventos de teclado",
-            content: `useDocumentEvent({
-    keydown: (ev) => {
-        console.log("Tecla presionada", ev.key);
-    }
-});`,
-        },
-    ],
+            text: "Recargar listeners manualmente",
+            content: `const { onReload } = useDocumentEvent({ mousemove: (e) => console.log("Movimiento del mouse:", e) });
+                onReload(); // Vuelve a cargar los listeners manualmente.`
+        }
+    ]
 };
