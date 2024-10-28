@@ -1,57 +1,56 @@
 export default {
     id: "useDataLayer",
     name: "useDataLayer",
-    description: "El hook useDataLayer permite interactuar con la capa de datos del navegador para enviar eventos y datos a herramientas de análisis.",
+    description: "El hook useDataLayer permite interactuar con el objeto global de `dataLayer` para enviar eventos y datos personalizados.",
     props: [
         {
-            id: "options",
-            type: "useDataLayerProps",
+            id: "useDataLayerProps",
+            type: "object",
             require: false,
-            description: "Opciones adicionales para el hook.",
-        },
+            description: "Propiedades de configuración para el hook. Actualmente no requiere ninguna propiedad específica.",
+        }
+    ],
+    returns: [
+        {
+            id: "push",
+            type: "(props: useDataLayerPushProps) => boolean",
+            description: "Función que envía un evento y datos al objeto `dataLayer`. Retorna `true` si el evento se ha enviado correctamente, `false` si `dataLayer` no está disponible.",
+        }
     ],
     extras: [
         {
             id: "useDataLayerPushProps",
             title: "useDataLayerPushProps",
-            description: "Opciones para el método push del hook:",
+            description: "Propiedades que pueden ser enviadas a `dataLayer` usando la función `push`.",
             tableItems: [
                 {
                     Nombre: "event",
-                    Descripcion: "Nombre del evento que se envía a la capa de datos.",
-                    Default: "undefined",
+                    Descripcion: "Nombre del evento que se va a enviar a `dataLayer`.",
+                    Default: "N/A",
                 },
                 {
                     Nombre: "value",
-                    Descripcion: "Valor adicional que se envía junto con el evento.",
+                    Descripcion: "Valor opcional asociado al evento.",
                     Default: "undefined",
                 },
                 {
-                    Nombre: "[id: string]",
-                    Descripcion: "Cualquier propiedad adicional que se quiera enviar.",
-                    Default: "undefined",
-                },
-            ],
-        },
+                    Nombre: "[id: string]: any",
+                    Descripcion: "Propiedades adicionales que se pueden incluir en el evento.",
+                    Default: "N/A",
+                }
+            ]
+        }
     ],
     useExample: [
         {
-            text: "Enviar un evento básico",
+            text: "Enviar evento básico",
             content: `const { push } = useDataLayer();
-push({ event: "pageView", value: { page: "home" } });`,
+                push({ event: "pageView" });`
         },
         {
-            text: "Enviar un evento con propiedades adicionales",
+            text: "Enviar evento con datos adicionales",
             content: `const { push } = useDataLayer();
-push({ event: "buttonClick", value: { buttonId: "submit" }, additionalData: "test" });`,
-        },
-        {
-            text: "Comprobar el envío exitoso",
-            content: `const { push } = useDataLayer();
-const success = push({ event: "formSubmit" });
-if (success) {
-    console.log("Evento enviado correctamente.");
-}`,
-        },
-    ],
+                push({ event: "userLogin", userId: "12345", value: "Inicio de sesión" });`
+        }
+    ]
 };
