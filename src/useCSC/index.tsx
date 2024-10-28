@@ -8,13 +8,13 @@ import {
     getRuteCountryImg,
 } from "country-state-city-nextjs";
 import { useEffect, useState } from "react";
-import { useData } from "./useData";
+import { useData } from "../useData";
 import { CSCProps, CSCStringProps } from "fenextjs-interface/cjs/CSC";
 import {
     parseCSCString_to_CSC,
     parseCSC_to_CSCString,
 } from "fenextjs-functions/cjs/parse/CSC";
-import { useJsonString, useJsonStringProps } from "./useJsonString";
+import { useJsonString, useJsonStringProps } from "../useJsonString";
 
 /**
  * Represents the properties for the useCSC hook.

@@ -1,6 +1,6 @@
 import { AlertProps } from "fenextjs-interface";
 import { useState } from "react";
-import { useAction } from "./useAction";
+import { useAction } from "../useAction";
 
 export interface useAlertProps {
     name?: string;
