@@ -1,6 +1,6 @@
 import { RequestResultTypeProps } from "fenextjs-interface/cjs/Request";
 import { useState } from "react";
-import { useAction } from "./useAction";
+import { useAction } from "../useAction";
 
 /**
  * Represents the properties of a notification
