@@ -1,7 +1,8 @@
 export default {
     id: "useAction",
     name: "useAction",
-    description: "El hook useAction permite enviar información o ejecutar acciones entre componentes que no están directamente conectados pero existen en el DOM.",
+    description:
+        "El hook useAction permite enviar información o ejecutar acciones entre componentes que no están directamente conectados pero existen en el DOM.",
     props: [
         {
             id: "name",
@@ -22,51 +23,55 @@ export default {
                     onAction?: boolean;
                 }`,
             require: false,
-            description: "Objeto que define qué eventos serán registrados en la consola.",
-        }
+            description:
+                "Objeto que define qué eventos serán registrados en la consola.",
+        },
     ],
     extras: [
         {
             id: "env_log",
             title: "env_log",
-            description: "Dependiendo de los valores en 'true', se mostrarán los eventos en la consola:",
+            description:
+                "Dependiendo de los valores en 'true', se mostrarán los eventos en la consola:",
             tableItems: [
                 {
                     Nombre: "onActionExecute",
-                    Descripcion: "Muestra en consola al ejecutar onActionExecute.",
+                    Descripcion:
+                        "Muestra en consola al ejecutar onActionExecute.",
                     Default: false,
                 },
                 {
                     Nombre: "onAction",
                     Descripcion: "Muestra en consola al ejecutar onAction.",
                     Default: false,
-                }
-            ]
-        }
+                },
+            ],
+        },
     ],
     returns: [
         {
             id: "onAction",
             type: "(detail?: T) => void",
-            description: "Función que se usa para ejecutar la acción, se le puede pasar parámetros si lo necesita.",
-        }
+            description:
+                "Función que se usa para ejecutar la acción, se le puede pasar parámetros si lo necesita.",
+        },
     ],
     useExample: [
         {
             text: "Detectar acción",
-            content: `useAction({ name: "name_action", onActionExecute: console.log })`
+            content: `useAction({ name: "name_action", onActionExecute: console.log })`,
         },
         {
             text: "Ejecutar acción",
             content: `const { onAction } = useAction({ name: "name_action" });
                 onAction()
-            `
+            `,
         },
         {
             text: "Definiendo interfaz",
             content: `const { onAction } = useAction<string>({ name: "name_action" });
                 onAction("Data")
-            `
-        }
-    ]
+            `,
+        },
+    ],
 };
