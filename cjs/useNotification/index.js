@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useNotification = void 0;
 const react_1 = require("react");
-const useAction_1 = require("./useAction");
+const useAction_1 = require("../useAction");
 /**
  * Hook to manage notification messages
  * @param time - Optional duration in milliseconds for the notification to be displayed
@@ -51,4 +51,4 @@ const useNotification = ({ time = 2000 }) => {
     };
 };
 exports.useNotification = useNotification;
-//# sourceMappingURL=useNotification.js.map
+//# sourceMappingURL=index.js.map

@@ -53,4 +53,4 @@ const usePrintIframe = ({ urlBase = "/print", url, data, delayForPrint = 1500, }
     };
 };
 exports.usePrintIframe = usePrintIframe;
-//# sourceMappingURL=usePrint.js.map
+//# sourceMappingURL=index.js.map
