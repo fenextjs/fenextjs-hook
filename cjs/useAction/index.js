@@ -5,7 +5,7 @@ const fenextjs_functions_1 = require("fenextjs-functions");
 const react_1 = require("react");
 const useAction = ({ name, onActionExecute, env_log: env_log_boolean, }) => {
     const NAME_ACTION = `fenext-action-element-${name}`;
-    const actionRef = (0, react_1.useRef)(onActionExecute);
+    // const actionRef = useRef(onActionExecute);
     const ACTION = (e) => {
         const data = e?.detail;
         if (env_log_boolean?.onActionExecute === true) {
@@ -13,7 +13,7 @@ const useAction = ({ name, onActionExecute, env_log: env_log_boolean, }) => {
                 name: `${NAME_ACTION}-onActionExecute`,
             });
         }
-        actionRef.current?.(data);
+        onActionExecute?.(data);
     };
     const onUnload = () => {
         if (!(window && typeof window != "undefined")) {

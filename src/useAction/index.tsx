@@ -1,5 +1,5 @@
 import { env_log } from "fenextjs-functions";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 export interface useActionProps<T = any> {
     name: string;
@@ -16,7 +16,7 @@ export const useAction = <T = any,>({
     env_log: env_log_boolean,
 }: useActionProps<T>) => {
     const NAME_ACTION = `fenext-action-element-${name}`;
-    const actionRef = useRef(onActionExecute);
+    // const actionRef = useRef(onActionExecute);
 
     const ACTION = (e: any) => {
         const data = (e as any)?.detail;
@@ -25,7 +25,7 @@ export const useAction = <T = any,>({
                 name: `${NAME_ACTION}-onActionExecute`,
             });
         }
-        actionRef.current?.(data);
+        onActionExecute?.(data);
     };
 
     const onUnload = () => {
