@@ -177,10 +177,10 @@ const useData = (defaultData, options) => {
     });
     const onSubmitData = (0, react_1.useCallback)(async (optionsSubmitData) => {
         const dataUse = optionsSubmitData?.data ?? data;
-        const isValidDataUse = optionsSubmitData?.data
-            ? options?.validator?.onValidate?.(optionsSubmitData?.data) ??
-                true
-            : isValidData;
+        const isValidDataUse = optionsSubmitData?.useValidator === false ||
+            (optionsSubmitData?.data
+                ? options?.validator?.onValidate?.(optionsSubmitData?.data) ?? true
+                : isValidData);
         if (options?.onSubmitData && isValidDataUse === true) {
             try {
                 setDataError(undefined);
