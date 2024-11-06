@@ -287,12 +287,13 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         async (optionsSubmitData?: {
             data?: T;
             onSaveData?: (p: { data: T; result: RT }) => T;
+            useValidator?:boolean
         }) => {
             const dataUse = optionsSubmitData?.data ?? data;
-            const isValidDataUse = optionsSubmitData?.data
+            const isValidDataUse = optionsSubmitData?.useValidator === false || ( optionsSubmitData?.data
                 ? options?.validator?.onValidate?.(optionsSubmitData?.data) ??
                   true
-                : isValidData;
+                : isValidData)
             if (options?.onSubmitData && isValidDataUse === true) {
                 try {
                     setDataError(undefined);
