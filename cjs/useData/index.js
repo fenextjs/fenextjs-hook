@@ -213,25 +213,35 @@ const useData = (defaultData, options) => {
         }
         return undefined;
     }, [data, isValidData, options?.onSubmitData]);
-    const onSubmitDataMemo = (0, react_1.useCallback)(async () => {
-        if (options?.onSubmitDataMemo && isValidDataMemo === true) {
+    const onSubmitDataMemo = (0, react_1.useCallback)(async (optionsSubmitDataMemo) => {
+        const dataUse = optionsSubmitDataMemo?.dataMemo ?? dataMemo;
+        const isValidDataUse = optionsSubmitDataMemo?.useValidatorMemo === false ||
+            (optionsSubmitDataMemo?.dataMemo
+                ? options?.validatorMemo?.onValidate?.(optionsSubmitDataMemo?.dataMemo) ?? true
+                : isValidDataMemo);
+        if (options?.onSubmitDataMemo && isValidDataUse === true) {
             try {
                 setDataErrorMemo(undefined);
                 setResultSubmitDataMemo(undefined);
                 setLoaderSubmitMemo(true);
-                const result = await options?.onSubmitDataMemo?.(dataMemo);
+                const result = await options?.onSubmitDataMemo?.(dataUse);
                 setResultSubmitDataMemo(result);
-                options?.onAfterSubmitDataMemoOk?.({ dataMemo, result });
+                options?.onAfterSubmitDataMemoOk?.({
+                    dataMemo: dataUse,
+                    result,
+                });
                 if (options?.afterSubmitDataMemoSetIsChangeFalse) {
                     setIsChange(false);
                 }
                 return result;
             }
             catch (err) {
-                const error = (options?.onAfterSubmitParseErrorMemo?.(err) ??
-                    err);
+                const error = (options?.onAfterSubmitParseErrorMemo?.(err) ?? err);
                 setDataErrorMemo(error);
-                options?.onAfterSubmitDataMemoError?.({ dataMemo, error });
+                options?.onAfterSubmitDataMemoError?.({
+                    dataMemo: dataUse,
+                    error,
+                });
             }
             finally {
                 setLoaderSubmitMemo(false);

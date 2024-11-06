@@ -336,35 +336,44 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         }) => {
             const dataUse = optionsSubmitDataMemo?.dataMemo ?? dataMemo;
             const isValidDataUse =
-            optionsSubmitDataMemo?.useValidatorMemo === false ||
+                optionsSubmitDataMemo?.useValidatorMemo === false ||
                 (optionsSubmitDataMemo?.dataMemo
                     ? options?.validatorMemo?.onValidate?.(
-                        optionsSubmitDataMemo?.dataMemo,
+                          optionsSubmitDataMemo?.dataMemo,
                       ) ?? true
                     : isValidDataMemo);
-        if (options?.onSubmitDataMemo && isValidDataUse === true) {
-            try {
-                setDataErrorMemo(undefined);
-                setResultSubmitDataMemo(undefined);
-                setLoaderSubmitMemo(true);
-                const result = await options?.onSubmitDataMemo?.(dataUse);
-                setResultSubmitDataMemo(result);
-                options?.onAfterSubmitDataMemoOk?.({ dataMemo: dataUse, result });
-                if (options?.afterSubmitDataMemoSetIsChangeFalse) {
-                    setIsChange(false);
+            if (options?.onSubmitDataMemo && isValidDataUse === true) {
+                try {
+                    setDataErrorMemo(undefined);
+                    setResultSubmitDataMemo(undefined);
+                    setLoaderSubmitMemo(true);
+                    const result = await options?.onSubmitDataMemo?.(dataUse);
+                    setResultSubmitDataMemo(result);
+                    options?.onAfterSubmitDataMemoOk?.({
+                        dataMemo: dataUse,
+                        result,
+                    });
+                    if (options?.afterSubmitDataMemoSetIsChangeFalse) {
+                        setIsChange(false);
+                    }
+                    return result;
+                } catch (err) {
+                    const error = (options?.onAfterSubmitParseErrorMemo?.(
+                        err,
+                    ) ?? (err as any)) as EM;
+                    setDataErrorMemo(error);
+                    options?.onAfterSubmitDataMemoError?.({
+                        dataMemo: dataUse,
+                        error,
+                    });
+                } finally {
+                    setLoaderSubmitMemo(false);
                 }
-                return result;
-            } catch (err) {
-                const error = (options?.onAfterSubmitParseErrorMemo?.(err) ??
-                    (err as any)) as EM;
-                setDataErrorMemo(error);
-                options?.onAfterSubmitDataMemoError?.({ dataMemo : dataUse, error });
-            } finally {
-                setLoaderSubmitMemo(false);
             }
-        }
-        return undefined;
-    }, [dataMemo, isValidDataMemo, options?.onSubmitDataMemo]);
+            return undefined;
+        },
+        [dataMemo, isValidDataMemo, options?.onSubmitDataMemo],
+    );
 
     useEffect(() => {
         if (options?.refreshDataIfChangeDefaultData?.active === true) {

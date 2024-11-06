@@ -103,7 +103,10 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
         }) => T;
         useValidator?: boolean;
     }) => Promise<RT | undefined>;
-    onSubmitDataMemo: () => Promise<RM | undefined>;
+    onSubmitDataMemo: (optionsSubmitDataMemo?: {
+        dataMemo?: M;
+        useValidatorMemo?: boolean;
+    }) => Promise<RM | undefined>;
     loaderSubmit: boolean;
     loaderSubmitMemo: boolean;
     resultSubmitData: RT | undefined;
