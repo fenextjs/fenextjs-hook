@@ -395,6 +395,11 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         [options?.validator],
     );
 
+    const validatorMemoData = useMemo(
+        () => options?.validatorMemo?.getObjectValidator?.(),
+        [options?.validatorMemo],
+    );
+
     if (options?.env_log) {
         if (options?.env_log?.data == true) {
             env_log(data, {
@@ -477,6 +482,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         validator: options?.validator,
         validatorData,
         validatorMemo: options?.validatorMemo,
+        validatorMemoData,
 
         isValidData,
         isValidDataMemo,
