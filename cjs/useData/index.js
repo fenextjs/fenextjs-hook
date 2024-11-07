@@ -262,6 +262,7 @@ const useData = (defaultData, options) => {
         }
     }, [defaultData, options]);
     const validatorData = (0, react_1.useMemo)(() => options?.validator?.getObjectValidator?.(), [options?.validator]);
+    const validatorMemoData = (0, react_1.useMemo)(() => options?.validatorMemo?.getObjectValidator?.(), [options?.validatorMemo]);
     if (options?.env_log) {
         if (options?.env_log?.data == true) {
             (0, fenextjs_functions_1.env_log)(data, {
@@ -341,6 +342,7 @@ const useData = (defaultData, options) => {
         validator: options?.validator,
         validatorData,
         validatorMemo: options?.validatorMemo,
+        validatorMemoData,
         isValidData,
         isValidDataMemo,
         onValidateData,

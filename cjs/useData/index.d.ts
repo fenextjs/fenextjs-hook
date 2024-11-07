@@ -91,6 +91,7 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     validator: FenextjsValidatorClass<T> | undefined;
     validatorData: { [id in keyof T]?: FenextjsValidatorClass<any> | undefined; } | undefined;
     validatorMemo: FenextjsValidatorClass<M> | undefined;
+    validatorMemoData: { [id_1 in keyof M]?: FenextjsValidatorClass<any> | undefined; } | undefined;
     isValidData: true | import("fenextjs-error").ErrorFenextjs<any> | undefined;
     isValidDataMemo: true | import("fenextjs-error").ErrorFenextjs<any> | undefined;
     onValidateData: () => void;
