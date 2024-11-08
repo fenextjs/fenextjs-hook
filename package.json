@@ -50,12 +50,12 @@
   "homepage": "https://github.com/franciscoblancojn/fenextjs-hook#readme",
   "dependencies": {
     "country-state-city-nextjs": "9.1.0",
-    "fenextjs-date": "3.2.4",
-    "fenextjs-error": "3.1.4",
-    "fenextjs-functions": "5.3.7",
-    "fenextjs-interface": "4.3.1",
-    "fenextjs-nextjs-dependencies": "2.0.1",
-    "fenextjs-validator": "4.6.0",
+    "fenextjs-date": "3.2.5",
+    "fenextjs-error": "3.1.5",
+    "fenextjs-functions": "5.3.8",
+    "fenextjs-interface": "4.3.2",
+    "fenextjs-nextjs-dependencies": "3.0.0",
+    "fenextjs-validator": "4.6.1",
     "jwt-decode": "4.0.0",
     "uselocalstoragenextjs": "2.0.2"
   },
