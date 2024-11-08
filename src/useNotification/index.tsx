@@ -56,9 +56,9 @@ export const useNotification = ({ time = 2000 }: useNotificationProps) => {
         options?: NotificationOptions,
     ) => {
         onAction(props);
-        Notification.requestPermission().then((permission) => {
+        window.Notification.requestPermission().then((permission) => {
             if (permission == "granted") {
-                new Notification(props.message, options);
+                new window.Notification(props.message, options);
             }
         });
         setTimeout(() => {
