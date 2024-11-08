@@ -1,5 +1,5 @@
 import { ErrorFenextjs } from "fenextjs-error";
-import { useData, useDataOptions } from "./useData";
+import { useData, useDataOptions } from "../useData";
 import {
     RequestProps,
     RequestResultProps,
