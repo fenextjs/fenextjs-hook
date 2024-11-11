@@ -1,62 +1,57 @@
 export default {
-    id: "useDataLayer",
-    name: "useDataLayer",
-    description:
-        "El hook useDataLayer permite interactuar con el objeto global de `dataLayer` para enviar eventos y datos personalizados.",
+    id: "useDataValidator",
+    name: "useDataValidator",
+    description: "El hook useDataValidator permite validar datos de entrada utilizando una clase de validación opcional, y proporciona el estado de validación.",
     props: [
         {
-            id: "useDataLayerProps",
-            type: "object",
-            require: false,
-            description:
-                "Propiedades de configuración para el hook. Actualmente no requiere ninguna propiedad específica.",
+            id: "data",
+            type: "T",
+            require: true,
+            description: "Los datos que se van a validar.",
         },
+        {
+            id: "validator",
+            type: "FenextjsValidatorClass<T>",
+            require: false,
+            description: "Instancia opcional de una clase de validación personalizada para validar los datos.",
+        },
+        {
+            id: "autoOnValidate",
+            type: "boolean",
+            require: false,
+            description: "Determina si la validación se debe ejecutar automáticamente al cambiar los datos.",
+            default: true,
+        }
     ],
     returns: [
         {
-            id: "push",
-            type: "(props: useDataLayerPushProps) => boolean",
-            description:
-                "Función que envía un evento y datos al objeto `dataLayer`. Retorna `true` si el evento se ha enviado correctamente, `false` si `dataLayer` no está disponible.",
+            id: "isValidData",
+            type: "true | ErrorFenextjs | undefined",
+            description: "Indica si los datos son válidos (`true`), si hay un error (`ErrorFenextjs`), o si aún no se ha validado (`undefined`).",
         },
-    ],
-    extras: [
         {
-            id: "useDataLayerPushProps",
-            title: "useDataLayerPushProps",
-            description:
-                "Propiedades que pueden ser enviadas a `dataLayer` usando la función `push`.",
-            tableItems: [
-                {
-                    Nombre: "event",
-                    Descripcion:
-                        "Nombre del evento que se va a enviar a `dataLayer`.",
-                    Default: "N/A",
-                },
-                {
-                    Nombre: "value",
-                    Descripcion: "Valor opcional asociado al evento.",
-                    Default: "undefined",
-                },
-                {
-                    Nombre: "[id: string]: any",
-                    Descripcion:
-                        "Propiedades adicionales que se pueden incluir en el evento.",
-                    Default: "N/A",
-                },
-            ],
-        },
+            id: "onValidateData",
+            type: "() => void",
+            description: "Función que ejecuta la validación de los datos de forma manual.",
+        }
     ],
     useExample: [
         {
-            text: "Enviar evento básico",
-            content: `const { push } = useDataLayer();
-                push({ event: "pageView" });`,
+            text: "Validación automática de datos",
+            content: `const { isValidData, onValidateData } = useDataValidator({
+    data: myData,
+    validator: new FenextjsValidatorClass(),
+});
+console.log(isValidData); // Muestra el estado de la validación`
         },
         {
-            text: "Enviar evento con datos adicionales",
-            content: `const { push } = useDataLayer();
-                push({ event: "userLogin", userId: "12345", value: "Inicio de sesión" });`,
-        },
-    ],
+            text: "Validación manual de datos",
+            content: `const { isValidData, onValidateData } = useDataValidator({
+    data: myData,
+    validator: new FenextjsValidatorClass(),
+    autoOnValidate: false,
+});
+onValidateData(); // Ejecuta la validación manualmente`
+        }
+    ]
 };

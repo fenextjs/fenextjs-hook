@@ -1,7 +1,7 @@
 export default {
     id: "use_T",
     name: "use_T",
-    description: "El hook use_T permite validar mensajes o transformar textos en base a la configuración proporcionada.",
+    description: "El hook use_T permite transformar textos en base a la configuración proporcionada.",
     props: [
         {
             id: "_t",
