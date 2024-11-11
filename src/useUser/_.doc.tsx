@@ -7,19 +7,22 @@ export default {
             id: "validateTokenUser",
             type: "RequestProps<Q, R, E, T>",
             require: false,
-            description: "Función para validar el token del usuario. Por defecto, verifica que el objeto del usuario tenga una propiedad 'token' y la decodifica utilizando JSON Web Tokens.",
+            description:
+                "Función para validar el token del usuario. Por defecto, verifica que el objeto del usuario tenga una propiedad 'token' y la decodifica utilizando JSON Web Tokens.",
         },
         {
             id: "varName",
             type: "string",
             require: false,
-            description: "Nombre de la variable de almacenamiento en `localStorage` para guardar el usuario.",
+            description:
+                "Nombre de la variable de almacenamiento en `localStorage` para guardar el usuario.",
         },
         {
             id: "onValidateUser",
             type: "(user: Q | null | undefined) => boolean",
             require: false,
-            description: "Función personalizada para validar el objeto de usuario.",
+            description:
+                "Función personalizada para validar el objeto de usuario.",
         },
         {
             id: "urlRedirectInLogut",
@@ -32,38 +35,44 @@ export default {
             type: "() => void",
             require: false,
             description: "Función que se ejecuta al cerrar sesión.",
-        }
+        },
     ],
     returns: [
         {
             id: "load",
             type: "boolean",
-            description: "Indica si el usuario se ha cargado desde `localStorage`.",
+            description:
+                "Indica si el usuario se ha cargado desde `localStorage`.",
         },
         {
             id: "user",
             type: "U | null",
-            description: "El usuario actual almacenado en `localStorage` o `null` si no hay usuario autenticado.",
+            description:
+                "El usuario actual almacenado en `localStorage` o `null` si no hay usuario autenticado.",
         },
         {
             id: "setUser",
             type: "(user: U | null) => void",
-            description: "Función para establecer los datos del usuario en `localStorage`.",
+            description:
+                "Función para establecer los datos del usuario en `localStorage`.",
         },
         {
             id: "onLogin",
             type: "(data: U) => Promise<RequestResultDataProps>",
-            description: "Función para iniciar sesión. Valida el token y guarda el usuario en `localStorage` si es válido.",
+            description:
+                "Función para iniciar sesión. Valida el token y guarda el usuario en `localStorage` si es válido.",
         },
         {
             id: "onLogOut",
             type: "() => void",
-            description: "Función para cerrar sesión y redireccionar si se especifica una URL de redirección.",
+            description:
+                "Función para cerrar sesión y redireccionar si se especifica una URL de redirección.",
         },
         {
             id: "isValidUser",
             type: "boolean",
-            description: "Indica si el usuario actual es válido, basado en la función `onValidateUser`.",
-        }
-    ]
+            description:
+                "Indica si el usuario actual es válido, basado en la función `onValidateUser`.",
+        },
+    ],
 };

@@ -1,7 +1,8 @@
 export default {
     id: "useRequestLite",
     name: "useRequestLite",
-    description: "Hook simplificado que permite ejecutar una función de solicitud con manejo de errores y estado de carga.",
+    description:
+        "Hook simplificado que permite ejecutar una función de solicitud con manejo de errores y estado de carga.",
     props: [
         {
             id: "f",
@@ -25,7 +26,8 @@ export default {
             id: "parseError",
             type: "(errors: any) => FE",
             require: false,
-            description: "Función para analizar y transformar el error, si ocurre.",
+            description:
+                "Función para analizar y transformar el error, si ocurre.",
         },
         {
             id: "defaultResult",
@@ -37,8 +39,9 @@ export default {
             id: "defaultError",
             type: "FE",
             require: false,
-            description: "Error predeterminado en caso de fallo de la solicitud.",
-        }
+            description:
+                "Error predeterminado en caso de fallo de la solicitud.",
+        },
     ],
     returns: [
         {
@@ -64,7 +67,8 @@ export default {
         {
             id: "onClear",
             type: "() => void",
-            description: "Función para limpiar el estado del resultado y el error.",
-        }
-    ]
+            description:
+                "Función para limpiar el estado del resultado y el error.",
+        },
+    ],
 };

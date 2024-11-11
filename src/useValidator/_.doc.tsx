@@ -1,7 +1,8 @@
 export default {
     id: "useValidator",
     name: "useValidator",
-    description: "Hook personalizado para gestionar la validación de datos con una instancia de validador.",
+    description:
+        "Hook personalizado para gestionar la validación de datos con una instancia de validador.",
     props: [
         {
             id: "data",
@@ -13,14 +14,16 @@ export default {
             id: "validator",
             type: "FenextjsValidatorClass<T>",
             require: false,
-            description: "La instancia del validador utilizada para la validación.",
-        }
+            description:
+                "La instancia del validador utilizada para la validación.",
+        },
     ],
     returns: [
         {
             id: "error",
             type: "ErrorFenextjs | undefined",
-            description: "Error de validación si la validación falla, o `undefined` si es exitosa.",
+            description:
+                "Error de validación si la validación falla, o `undefined` si es exitosa.",
         },
         {
             id: "isValid",
@@ -35,7 +38,8 @@ export default {
         {
             id: "validator",
             type: "FenextjsValidatorClass<T>",
-            description: "Instancia del validador utilizada para la validación.",
-        }
-    ]
+            description:
+                "Instancia del validador utilizada para la validación.",
+        },
+    ],
 };
