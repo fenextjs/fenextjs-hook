@@ -51,12 +51,12 @@ export default {
         {
             text: "Enviar evento básico",
             content: `const { push } = useDataLayer();
-                push({ event: "pageView" });`,
+push({ event: "pageView" });`,
         },
         {
             text: "Enviar evento con datos adicionales",
             content: `const { push } = useDataLayer();
-                push({ event: "userLogin", userId: "12345", value: "Inicio de sesión" });`,
+push({ event: "userLogin", userId: "12345", value: "Inicio de sesión" });`,
         },
     ],
 };

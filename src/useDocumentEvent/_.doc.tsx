@@ -28,14 +28,14 @@ export default {
         {
             text: "Múltiples eventos con diferentes funciones",
             content: `useDocumentEvent({ 
-                    click: (e) => console.log("Click en el documento:", e), 
-                    keydown: (e) => console.log("Tecla presionada:", e.key) 
-                });`,
+    click: (e) => console.log("Click en el documento:", e), 
+    keydown: (e) => console.log("Tecla presionada:", e.key) 
+});`,
         },
         {
             text: "Recargar listeners manualmente",
             content: `const { onReload } = useDocumentEvent({ mousemove: (e) => console.log("Movimiento del mouse:", e) });
-                onReload(); // Vuelve a cargar los listeners manualmente.`,
+onReload(); // Vuelve a cargar los listeners manualmente.`,
         },
     ],
 };

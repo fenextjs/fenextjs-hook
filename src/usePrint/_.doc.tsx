@@ -51,11 +51,11 @@ export default {
         {
             text: "Uso de usePrintIframe",
             content: `const { loader, onPrint } = usePrintIframe({
-                    url: "/my-print-page",
-                    data: { key: "value" },
-                    delayForPrint: 2000
-                });
-                onPrint(); // Inicia la impresión`,
+    url: "/my-print-page",
+    data: { key: "value" },
+    delayForPrint: 2000
+});
+onPrint(); // Inicia la impresión`,
         },
     ],
 };

@@ -119,20 +119,20 @@ export default {
         {
             text: "Uso básico del hook useModal",
             content: `const { active, onActive, onClose } = useModal({
-                    name: "myModal",
-                    defaultActive: false,
-                    onActive: () => console.log("Modal activado"),
-                    onClose: () => console.log("Modal cerrado")
-                });`,
+    name: "myModal",
+    defaultActive: false,
+    onActive: () => console.log("Modal activado"),
+    onClose: () => console.log("Modal cerrado")
+});`,
         },
         {
             text: "Control de estado usando almacenamiento local",
             content: `const { active, listNamesLocalStorage } = useModal({
-                    name: "myModal",
-                    nameLocalStorage: "modalState",
-                    activeByNameLocalStorage: true,
-                    onChange: (isActive) => console.log("Estado del modal:", isActive)
-                });`,
+    name: "myModal",
+    nameLocalStorage: "modalState",
+    activeByNameLocalStorage: true,
+    onChange: (isActive) => console.log("Estado del modal:", isActive)
+});`,
         },
     ],
 };

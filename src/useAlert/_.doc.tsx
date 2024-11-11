@@ -37,14 +37,12 @@ export default {
         {
             text: "Detectar alerta",
             content: `const { alert, setAlert, onClearAlert } = useAlert();
-                setAlert({ message: "Nueva alerta", type: "info" });
-            `,
+setAlert({ message: "Nueva alerta", type: "info" });`,
         },
         {
             text: "Limpiar alerta",
             content: `const { onClearAlert } = useAlert();
-                onClearAlert();
-            `,
+onClearAlert();`,
         },
     ],
 };

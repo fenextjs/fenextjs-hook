@@ -48,8 +48,8 @@ export default {
         {
             text: "Obtener y establecer el tema",
             content: `const { theme, setTheme } = useTheme();
-                console.log(theme); // Muestra el tema actual
-                setTheme("dark"); // Cambia el tema a oscuro`,
+console.log(theme); // Muestra el tema actual
+setTheme("dark"); // Cambia el tema a oscuro`,
         },
     ],
 };

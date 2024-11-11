@@ -81,18 +81,18 @@ export default {
         {
             text: "Uso básico con un valor JSON inicial",
             content: `const { value, onChange } = useJsonString({
-                    value: { name: "Example" },
-                    onChange: (data) => console.log("Nuevo valor JSON:", data)
-                });`,
+    value: { name: "Example" },
+    onChange: (data) => console.log("Nuevo valor JSON:", data)
+});`,
         },
         {
             text: "Sincronización entre JSON y string",
             content: `const { value, onChange } = useJsonString({
-                    valueJsonString: '{"name":"Example"}',
-                    parseString_to_Json: JSON.parse,
-                    parseJson_to_String: JSON.stringify,
-                    onChangeJsonString: (data) => console.log("Nuevo valor string:", data)
-                });`,
+    valueJsonString: '{"name":"Example"}',
+    parseString_to_Json: JSON.parse,
+    parseJson_to_String: JSON.stringify,
+    onChangeJsonString: (data) => console.log("Nuevo valor string:", data)
+});`,
         },
     ],
 };

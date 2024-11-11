@@ -58,12 +58,12 @@ export default {
         {
             text: "Mostrar una notificación",
             content: `const { pop } = useNotification();
-                pop({ message: "Notificación de éxito", type: "success" });`,
+pop({ message: "Notificación de éxito", type: "success" });`,
         },
         {
             text: "Reiniciar la notificación",
             content: `const { reset } = useNotification();
-                reset();`,
+reset();`,
         },
     ],
 };

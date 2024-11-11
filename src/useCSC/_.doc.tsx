@@ -110,19 +110,33 @@ export default {
     useExample: [
         {
             text: "Uso básico",
-            content: `const { countrys, states, citys, onChangeCSC, value } = useCSC({
-                defaultValue: {
-                    country: { id: 1, text: "México" },
-                    state: { id: 1, text: "CDMX" },
-                    city: { id: 1, text: "Coyoacán" }
-                }
-            });
-            onChangeCSC("country")(countrys[0]);`,
+            content: `const { onChangeCSC, value } = useCSC({
+    defaultValue: {
+        country: {
+            "id": 42,
+            "text": "México",
+            "code": "MX",
+            "code_phone": "+52"
+        },
+    }
+});
+onChangeCSC("country")({
+    "id": 82,
+    "text": "Colombia",
+    "code": "CO",
+    "code_phone": "+57"
+});`,
         },
         {
             text: "Cambiar ciudad",
-            content: `const { onChangeCSC, citys } = useCSC();
-                onChangeCSC("city")(citys[1]);`,
+            content: `const { onChangeCSC } = useCSC();
+onChangeCSC("city")({
+    "id": 465167,
+    "id_state": 1700,
+    "text": "Medellín",
+    "id_country": 82,
+    "nameAve": "MEDELLIN(ANTIOQUIA)"
+});`,
         },
     ],
 };

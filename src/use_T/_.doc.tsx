@@ -21,7 +21,7 @@ export default {
         {
             id: "_t",
             type: "(message: any) => any",
-            description: "Función que valida o transforma el mensaje de entrada basado en la configuración proporcionada.",
+            description: "Función que transforma el mensaje de entrada basado en la configuración proporcionada.",
         }
     ],
     useExample: [

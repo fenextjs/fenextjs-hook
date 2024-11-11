@@ -18,10 +18,7 @@ export default {
         },
         {
             id: "env_log",
-            type: `{
-                    onActionExecute?: boolean;
-                    onAction?: boolean;
-                }`,
+            type: `object`,
             require: false,
             description:
                 "Objeto que define qué eventos serán registrados en la consola.",
@@ -64,13 +61,13 @@ export default {
         {
             text: "Ejecutar acción",
             content: `const { onAction } = useAction({ name: "name_action" });
-                onAction()
+onAction()
             `,
         },
         {
             text: "Definiendo interfaz",
             content: `const { onAction } = useAction<string>({ name: "name_action" });
-                onAction("Data")
+onAction("Data")
             `,
         },
     ],
