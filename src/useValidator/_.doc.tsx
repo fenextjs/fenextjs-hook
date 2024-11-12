@@ -23,12 +23,12 @@ export default {
             id: "error",
             type: "ErrorFenextjs | undefined",
             description:
-                "Error de validación si la validación falla, o `undefined` si es exitosa.",
+                "Error de validación si la validación falla, o `undefined` si es éxitosa.",
         },
         {
             id: "isValid",
             type: "boolean",
-            description: "Indica si la validación es exitosa.",
+            description: "Indica si la validación es éxitosa.",
         },
         {
             id: "data",

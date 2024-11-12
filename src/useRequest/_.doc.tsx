@@ -14,7 +14,7 @@ export default {
             id: "onResult",
             type: "(data: FR) => void",
             require: false,
-            description: "Función de callback al recibir un resultado exitoso.",
+            description: "Función de callback al recibir un resultado éxitoso.",
         },
         {
             id: "onError",

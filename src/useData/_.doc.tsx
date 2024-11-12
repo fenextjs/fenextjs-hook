@@ -64,7 +64,7 @@ export default {
                 },
                 {
                     Nombre: "onAfterSubmitDataOk",
-                    Descripcion: "Función de callback que se llama después de un envío exitoso de datos.",
+                    Descripcion: "Función de callback que se llama después de un envío éxitoso de datos.",
 
                 },
                 {
@@ -89,7 +89,7 @@ export default {
                 },
                 {
                     Nombre: "onAfterSubmitDataMemoOk",
-                    Descripcion: "Función de callback que se llama después de un envío exitoso de datos de dataMemo.",
+                    Descripcion: "Función de callback que se llama después de un envío éxitoso de datos de dataMemo.",
 
                 },
                 {
@@ -375,7 +375,7 @@ const {
                     .isMinOrEqual(6, 'La contraseña es muy corta'),
             }),
         onAfterSubmitDataOk: async ({ result }) => {
-            console.log("Ingreso exitoso")
+            console.log("Ingreso éxitoso")
         },
         onAfterSubmitDataError: ({ error }) => {
             console.log("Ocurrio un error", error)
