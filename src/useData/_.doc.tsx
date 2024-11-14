@@ -115,6 +115,10 @@ export default {
                     Nombre: "env_log",
                     Descripcion: "Objetos que determinar que variables se muestran en la consola.",
                 },
+                {
+                    Nombre: "useGlobalContext",
+                    Descripcion: "Activar contexto global para que la data que se maneje en distintos useData, con el mismo nombre de useGlobalContext, este sincronizada. (Solo funciona despues que window cargue). **No se recomienda usar para datos sencibles**.",
+                },
             ]
         },
         {
@@ -407,9 +411,44 @@ const {
         full={true}
         size="extra-strong"
     >
-        {_t('Entrar')}
+        Entrar
     </Button>
 </FormBase>
+`
+        },
+
+        {
+            text: "Usando useGlobalContext",
+            content: `const DATA1 = useData<string>(
+    "",
+    {
+        useGlobalContext:"name-of-context-custom"
+    },
+);
+const DATA2 = useData<string>(
+    "",
+    {
+        useGlobalContext:"name-of-context-custom"
+    },
+);
+
+<Title>DATA1 value = {DATA1.data}</Title>
+<Title>DATA2 value = {DATA2.data}</Title>
+
+<Button
+    onClick={()=>{
+        DATA1.setData("value1")
+    }}
+>
+    setData1 to "value1"
+</Button>
+<Button
+    onClick={()=>{
+        DATA2.setData("value2")
+    }}
+>
+    setData2 to "value2"
+</Button>
 `
         },
     ]
