@@ -64,7 +64,7 @@ export interface useDataOptions<
         [id in useDataOptionsEnvLog]?: boolean;
     };
 
-    useGlobalContext?:string
+    useGlobalContext?: string;
 }
 
 export type useDataOptionsEnvLog =
@@ -115,33 +115,34 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         () => options?.data ?? data_,
         [data_, options?.data],
     );
-    const NAME_DATA_ACTION = `fenextjs-data-action-${options?.useGlobalContext}`
-    const {onAction} =useAction<T>({
-        name:NAME_DATA_ACTION,
-        onActionExecute: options?.useGlobalContext ? (e)=>{
-            const w = (window ?? {}) as any
+    const NAME_DATA_ACTION = `fenextjs-data-action-${options?.useGlobalContext}`;
+    const { onAction } = useAction<T>({
+        name: NAME_DATA_ACTION,
+        onActionExecute: options?.useGlobalContext
+            ? (e) => {
+                  const w = (window ?? {}) as any;
 
-            w[NAME_DATA_ACTION]= e
+                  w[NAME_DATA_ACTION] = e;
 
-            setDataD(e as T)
-        } : undefined
-    })
-    const setDataAction = (d:T) => {
-        if(options?.useGlobalContext){
-            onAction(d)
+                  setDataD(e as T);
+              }
+            : undefined,
+    });
+    const setDataAction = (d: T) => {
+        if (options?.useGlobalContext) {
+            onAction(d);
         }
-    }
+    };
     const onLoadDataAction = () => {
-        if(options?.useGlobalContext){
-            const w = (window ?? {}) as any
-            const e = w?.[NAME_DATA_ACTION]
-            if(e != undefined){
-                setDataD(e as T)
+        if (options?.useGlobalContext) {
+            const w = (window ?? {}) as any;
+            const e = w?.[NAME_DATA_ACTION];
+            if (e != undefined) {
+                setDataD(e as T);
             }
         }
-    }
-    useEffect(onLoadDataAction, [])
-    
+    };
+    useEffect(onLoadDataAction, []);
 
     /**
      * Update a keyData
@@ -168,29 +169,35 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 return;
             }
             setDataD((pre: T) => {
-                let nData : any;
+                let nData: any;
                 if (typeof pre === "string" || typeof pre === "number") {
                     nData = `${pre}` as T;
-                    if (typeof id  == "number" && id >=0 && id < nData.length) {
-                        nData = nData.substring(0, id) + value + nData.substring(id + 1);
+                    if (typeof id == "number" && id >= 0 && id < nData.length) {
+                        nData =
+                            nData.substring(0, id) +
+                            value +
+                            nData.substring(id + 1);
                     }
-                    if(typeof pre === "number"){
-                        nData =parseNumber(nData)
+                    if (typeof pre === "number") {
+                        nData = parseNumber(nData);
                     }
-                }else if (Array.isArray(pre)) {
+                } else if (Array.isArray(pre)) {
                     nData = [...pre] as T;
                     nData[id] = value;
-                }else if (typeof pre == "object"){
+                } else if (typeof pre == "object") {
                     nData = { ...pre, [id]: value };
-                }else {
-                    return pre
+                } else {
+                    return pre;
                 }
                 options?.onChangeDataAfter?.(nData);
                 _options?.onCallback?.(nData);
                 if (_options?.parseDataBeforeOnChangeData) {
-                    nData = _options?.parseDataBeforeOnChangeData(id, nData) as any;
+                    nData = _options?.parseDataBeforeOnChangeData(
+                        id,
+                        nData,
+                    ) as any;
                 }
-                setDataAction(nData)
+                setDataAction(nData);
                 return nData;
             });
             setIsChange(true);
@@ -204,28 +211,28 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
      */
     const onDeleteData = (id: keyof T) => {
         setDataD((pre: T) => {
-            let nData : any;
+            let nData: any;
             if (typeof pre === "string" || typeof pre === "number") {
                 nData = `${pre}` as T;
-                if (typeof id  == "number" && id >=0 && id < nData.length) {
+                if (typeof id == "number" && id >= 0 && id < nData.length) {
                     nData = nData.substring(0, id) + nData.substring(id + 1);
                 }
-                if(typeof pre === "number"){
-                    nData = parseNumber(nData)
+                if (typeof pre === "number") {
+                    nData = parseNumber(nData);
                 }
-            }else if (Array.isArray(pre)) {
+            } else if (Array.isArray(pre)) {
                 nData = [...pre].filter(
                     (v, i) => i !== (id as number) && (v || !v),
                 ) as T;
-            }else if (typeof pre == "object"){
+            } else if (typeof pre == "object") {
                 nData = { ...pre };
                 delete nData[id];
-            }else {
-                return pre
+            } else {
+                return pre;
             }
             options?.onChangeDataAfter?.(nData);
             options?.onDeleteDataAfter?.(nData);
-            setDataAction(nData)
+            setDataAction(nData);
             return nData;
         });
         setIsChange(true);
@@ -243,7 +250,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
             if (!(optionsData?.useOptionsOnChangeDataAfter === false)) {
                 options?.onChangeDataAfter?.(n);
             }
-            setDataAction(n)
+            setDataAction(n);
             return n;
         });
         if (!(optionsData?.useSetIsChange === false)) {
@@ -261,7 +268,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         if (!(optionsData?.useOptionsOnChangeDataAfter === false)) {
             options?.onChangeDataAfter?.(nData);
         }
-        setDataAction(nData)
+        setDataAction(nData);
         setDataD(nData);
         if (!(optionsData?.useSetIsChange === false)) {
             setIsChange(true);
@@ -277,7 +284,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
             if (Array.isArray(pre)) {
                 const nData = [...pre, ...(v as Array<T>)] as T;
                 options?.onChangeDataAfter?.(nData);
-                setDataAction(nData)
+                setDataAction(nData);
                 return nData;
             }
             if (typeof pre === "object") {
@@ -286,13 +293,13 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                     ...v,
                 };
                 options?.onChangeDataAfter?.(nData);
-                setDataAction(nData)
+                setDataAction(nData);
                 return nData;
             }
             if (typeof pre === "string" || typeof pre === "number") {
                 const nData = `${pre}${v}` as T;
                 options?.onChangeDataAfter?.(nData);
-                setDataAction(nData)
+                setDataAction(nData);
                 return nData;
             }
             return pre;
@@ -305,7 +312,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
      */
     const onRestart = () => {
         setDataD(defaultData);
-        setDataAction(defaultData)
+        setDataAction(defaultData);
         setIsChange(false);
     };
 

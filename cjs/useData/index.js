@@ -4,6 +4,7 @@ exports.useData = void 0;
 const react_1 = require("react");
 const useDataValidator_1 = require("../useDataValidator");
 const fenextjs_functions_1 = require("fenextjs-functions");
+const useAction_1 = require("../useAction");
 /**
  * A custom hook to manage data state and changes.
  *
@@ -23,6 +24,32 @@ const useData = (defaultData, options) => {
     const [resultSubmitData, setResultSubmitData] = (0, react_1.useState)(undefined);
     const [resultSubmitDataMemo, setResultSubmitDataMemo] = (0, react_1.useState)(undefined);
     const data = (0, react_1.useMemo)(() => options?.data ?? data_, [data_, options?.data]);
+    const NAME_DATA_ACTION = `fenextjs-data-action-${options?.useGlobalContext}`;
+    const { onAction } = (0, useAction_1.useAction)({
+        name: NAME_DATA_ACTION,
+        onActionExecute: options?.useGlobalContext
+            ? (e) => {
+                const w = (window ?? {});
+                w[NAME_DATA_ACTION] = e;
+                setDataD(e);
+            }
+            : undefined,
+    });
+    const setDataAction = (d) => {
+        if (options?.useGlobalContext) {
+            onAction(d);
+        }
+    };
+    const onLoadDataAction = () => {
+        if (options?.useGlobalContext) {
+            const w = (window ?? {});
+            const e = w?.[NAME_DATA_ACTION];
+            if (e != undefined) {
+                setDataD(e);
+            }
+        }
+    };
+    (0, react_1.useEffect)(onLoadDataAction, []);
     /**
      * Update a keyData
      *
@@ -42,22 +69,35 @@ const useData = (defaultData, options) => {
             return;
         }
         setDataD((pre) => {
-            if (Array.isArray(pre)) {
-                const nData = [...pre];
-                nData[id] = value;
-                options?.onChangeDataAfter?.(nData);
-                _options?.onCallback?.(nData);
-                if (_options?.parseDataBeforeOnChangeData) {
-                    return _options?.parseDataBeforeOnChangeData(id, nData);
+            let nData;
+            if (typeof pre === "string" || typeof pre === "number") {
+                nData = `${pre}`;
+                if (typeof id == "number" && id >= 0 && id < nData.length) {
+                    nData =
+                        nData.substring(0, id) +
+                            value +
+                            nData.substring(id + 1);
                 }
-                return nData;
+                if (typeof pre === "number") {
+                    nData = (0, fenextjs_functions_1.parseNumber)(nData);
+                }
             }
-            const nData = { ...pre, [id]: value };
+            else if (Array.isArray(pre)) {
+                nData = [...pre];
+                nData[id] = value;
+            }
+            else if (typeof pre == "object") {
+                nData = { ...pre, [id]: value };
+            }
+            else {
+                return pre;
+            }
             options?.onChangeDataAfter?.(nData);
             _options?.onCallback?.(nData);
             if (_options?.parseDataBeforeOnChangeData) {
-                return _options?.parseDataBeforeOnChangeData(id, nData);
+                nData = _options?.parseDataBeforeOnChangeData(id, nData);
             }
+            setDataAction(nData);
             return nData;
         });
         setIsChange(true);
@@ -70,16 +110,29 @@ const useData = (defaultData, options) => {
      */
     const onDeleteData = (id) => {
         setDataD((pre) => {
-            if (Array.isArray(pre)) {
-                const nData = [...pre].filter((v, i) => i !== id && (v || !v));
-                options?.onChangeDataAfter?.(nData);
-                options?.onDeleteDataAfter?.(nData);
-                return nData;
+            let nData;
+            if (typeof pre === "string" || typeof pre === "number") {
+                nData = `${pre}`;
+                if (typeof id == "number" && id >= 0 && id < nData.length) {
+                    nData = nData.substring(0, id) + nData.substring(id + 1);
+                }
+                if (typeof pre === "number") {
+                    nData = (0, fenextjs_functions_1.parseNumber)(nData);
+                }
             }
-            const nData = { ...pre };
-            delete nData[id];
+            else if (Array.isArray(pre)) {
+                nData = [...pre].filter((v, i) => i !== id && (v || !v));
+            }
+            else if (typeof pre == "object") {
+                nData = { ...pre };
+                delete nData[id];
+            }
+            else {
+                return pre;
+            }
             options?.onChangeDataAfter?.(nData);
             options?.onDeleteDataAfter?.(nData);
+            setDataAction(nData);
             return nData;
         });
         setIsChange(true);
@@ -96,6 +149,7 @@ const useData = (defaultData, options) => {
             if (!(optionsData?.useOptionsOnChangeDataAfter === false)) {
                 options?.onChangeDataAfter?.(n);
             }
+            setDataAction(n);
             return n;
         });
         if (!(optionsData?.useSetIsChange === false)) {
@@ -112,6 +166,7 @@ const useData = (defaultData, options) => {
         if (!(optionsData?.useOptionsOnChangeDataAfter === false)) {
             options?.onChangeDataAfter?.(nData);
         }
+        setDataAction(nData);
         setDataD(nData);
         if (!(optionsData?.useSetIsChange === false)) {
             setIsChange(true);
@@ -127,6 +182,7 @@ const useData = (defaultData, options) => {
             if (Array.isArray(pre)) {
                 const nData = [...pre, ...v];
                 options?.onChangeDataAfter?.(nData);
+                setDataAction(nData);
                 return nData;
             }
             if (typeof pre === "object") {
@@ -135,11 +191,13 @@ const useData = (defaultData, options) => {
                     ...v,
                 };
                 options?.onChangeDataAfter?.(nData);
+                setDataAction(nData);
                 return nData;
             }
             if (typeof pre === "string" || typeof pre === "number") {
                 const nData = `${pre}${v}`;
                 options?.onChangeDataAfter?.(nData);
+                setDataAction(nData);
                 return nData;
             }
             return pre;
@@ -151,6 +209,7 @@ const useData = (defaultData, options) => {
      */
     const onRestart = () => {
         setDataD(defaultData);
+        setDataAction(defaultData);
         setIsChange(false);
     };
     /**

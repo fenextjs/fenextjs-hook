@@ -60,6 +60,7 @@ export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM =
     env_log?: {
         [id in useDataOptionsEnvLog]?: boolean;
     };
+    useGlobalContext?: string;
 }
 export type useDataOptionsEnvLog = "data" | "dataMemo" | "isValidData" | "isValidDataMemo" | "dataError" | "dataErrorMemo" | "loaderSubmit" | "loaderSubmitMemo" | "keyData" | "isChange";
 export interface onChangeDataOptionsProps<T> {
