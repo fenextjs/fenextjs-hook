@@ -51,6 +51,11 @@ export default {
                         "Función de memoización para transformar los datos antes de pasarlos como valor memorizado.",
                 },
                 {
+                    Nombre: "memoDependencies",
+                    Descripcion:
+                        "Lista de variable que depende onMemo para actualizarce o ejecutarce.",
+                },
+                {
                     Nombre: "validator",
                     Descripcion:
                         "Instancia de clase validadora para validar los datos de data.",
