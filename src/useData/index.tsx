@@ -44,6 +44,7 @@ export interface useDataOptions<
     onChangeDataAfter?: (data: T) => void;
     onDeleteDataAfter?: (data: T) => void;
     onChangeDataMemoAfter?: (data: M) => void;
+    memoDependencies?:any[]
     onMemo?: (data: T) => M;
     validator?: FenextjsValidatorClass<T>;
     validatorMemo?: FenextjsValidatorClass<M>;
@@ -324,7 +325,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
             return options?.onMemo?.(data);
         }
         return data as any;
-    }, [data]);
+    }, [data,JSON.stringify({a:options?.memoDependencies})]);
 
     useEffect(() => {
         options?.onChangeDataMemoAfter?.(dataMemo);
