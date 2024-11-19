@@ -31,6 +31,7 @@ export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM =
     onChangeDataAfter?: (data: T) => void;
     onDeleteDataAfter?: (data: T) => void;
     onChangeDataMemoAfter?: (data: M) => void;
+    memoDependencies?: any[];
     onMemo?: (data: T) => M;
     validator?: FenextjsValidatorClass<T>;
     validatorMemo?: FenextjsValidatorClass<M>;

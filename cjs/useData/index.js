@@ -220,7 +220,7 @@ const useData = (defaultData, options) => {
             return options?.onMemo?.(data);
         }
         return data;
-    }, [data]);
+    }, [data, JSON.stringify({ a: options?.memoDependencies })]);
     (0, react_1.useEffect)(() => {
         options?.onChangeDataMemoAfter?.(dataMemo);
     }, [dataMemo]);
