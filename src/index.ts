@@ -17,3 +17,5 @@ export * from "./useJsonString";
 export * from "./useDate";
 export * from "./use_T";
 export * from "./useDataLayer";
+export * from "./useLocalStorage";
+export * from "./useSessionStorage";

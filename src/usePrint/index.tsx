@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocalStorage, useLocalStorageProps } from "uselocalstoragenextjs";
+import { useLocalStorage, useLocalStorageProps } from "../useLocalStorage";
 
 export interface usePrintDataProps
     extends Pick<useLocalStorageProps, "parse"> {}

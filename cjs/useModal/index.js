@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useModal = void 0;
 const react_1 = require("react");
 const useAction_1 = require("../useAction");
-const uselocalstoragenextjs_1 = require("uselocalstoragenextjs");
+const useLocalStorage_1 = require("../useLocalStorage");
 const useModal = ({ name, nameLocalStorage, active: activeProps, defaultActive: defaultActiveProps, onActive: onActiveProps, onChange: onChangeProps, onClose: onCloseProps, disabled = false, activeByNameLocalStorage = false, activeByNameContentLocalStorage = false, }) => {
     const [ifReload, setIfReload] = (0, react_1.useState)(false);
     const [active, setActive] = (0, react_1.useState)(defaultActiveProps ?? false);
-    const { value, setLocalStorage } = (0, uselocalstoragenextjs_1.useLocalStorage)({
+    const { value, setLocalStorage } = (0, useLocalStorage_1.useLocalStorage)({
         name: nameLocalStorage ?? "fenext-modal-active-name",
         parse: (e) => {
             try {

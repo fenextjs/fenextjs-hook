@@ -1,4 +1,4 @@
-import useLocalStorage from "uselocalstoragenextjs";
+import { useLocalStorage } from "../useLocalStorage";
 import { ThemeType } from "fenextjs-interface/cjs/Theme";
 import { useEffect } from "react";
 

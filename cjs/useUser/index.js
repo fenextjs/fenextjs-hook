@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useUser = void 0;
-const uselocalstoragenextjs_1 = require("uselocalstoragenextjs");
+const useLocalStorage_1 = require("../useLocalStorage");
 const jwt_decode_1 = require("jwt-decode");
 const Error_1 = require("fenextjs-interface/cjs/Error");
 const Request_1 = require("fenextjs-interface/cjs/Request");
@@ -56,7 +56,7 @@ const useUser = ({ validateTokenUser: validateTokenUserProps, varName = "fenextj
         }
     };
     const validateTokenUser = (0, react_1.useCallback)(validateTokenUserProps ?? validateTokenUserDefault, [validateTokenUserProps, validateTokenUserDefault]);
-    const { value: user, load, setLocalStorage: setUser, } = (0, uselocalstoragenextjs_1.useLocalStorage)({
+    const { value: user, load, setLocalStorage: setUser, } = (0, useLocalStorage_1.useLocalStorage)({
         name: varName,
         defaultValue: null,
         parse: (v) => {

@@ -1,11 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useTheme = void 0;
-const tslib_1 = require("tslib");
-const uselocalstoragenextjs_1 = tslib_1.__importDefault(require("uselocalstoragenextjs"));
+const useLocalStorage_1 = require("../useLocalStorage");
 const react_1 = require("react");
 const useTheme = ({}) => {
-    const { setLocalStorage: setTheme, value: theme } = (0, uselocalstoragenextjs_1.default)({
+    const { setLocalStorage: setTheme, value: theme } = (0, useLocalStorage_1.useLocalStorage)({
         name: "fenext-theme",
         defaultValue: "auto",
     });

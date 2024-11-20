@@ -1,4 +1,4 @@
-import { useLocalStorageProps } from "uselocalstoragenextjs";
+import { useLocalStorageProps } from "../useLocalStorage";
 export interface usePrintDataProps extends Pick<useLocalStorageProps, "parse"> {
 }
 export declare const usePrintData: <T>({ parse }: usePrintDataProps) => {

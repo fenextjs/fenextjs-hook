@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.usePrintIframe = exports.usePrintData = void 0;
 const react_1 = require("react");
-const uselocalstoragenextjs_1 = require("uselocalstoragenextjs");
+const useLocalStorage_1 = require("../useLocalStorage");
 const usePrintData = ({ parse }) => {
-    const { value, load } = (0, uselocalstoragenextjs_1.useLocalStorage)({
+    const { value, load } = (0, useLocalStorage_1.useLocalStorage)({
         name: "fenext-print",
         parse,
     });
@@ -16,7 +16,7 @@ const usePrintData = ({ parse }) => {
 exports.usePrintData = usePrintData;
 const usePrintIframe = ({ urlBase = "/print", url, data, delayForPrint = 1500, }) => {
     const [loader, setLoader] = (0, react_1.useState)(false);
-    const { setLocalStorage } = (0, uselocalstoragenextjs_1.useLocalStorage)({
+    const { setLocalStorage } = (0, useLocalStorage_1.useLocalStorage)({
         name: "fenext-print",
     });
     const onPrint = () => {

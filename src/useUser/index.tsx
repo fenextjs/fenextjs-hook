@@ -1,4 +1,4 @@
-import { useLocalStorage } from "uselocalstoragenextjs";
+import { useLocalStorage } from "../useLocalStorage";
 import { jwtDecode } from "jwt-decode";
 import { UserProps } from "fenextjs-interface/cjs/User";
 import { ErrorCode } from "fenextjs-interface/cjs/Error";
