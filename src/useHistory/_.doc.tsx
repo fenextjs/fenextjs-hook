@@ -36,12 +36,11 @@ export default {
         {
             id: "useHistoryOnBackProps",
             title: "useHistoryOnBackProps",
-            description:
-                "Propiedades para el uso de onBack:",
+            description: "Propiedades para el uso de onBack:",
             tableItems: [
                 {
                     Nombre: "onValidateRuteBack",
-                    Requerido:"no",
+                    Requerido: "no",
                     Descripcion:
                         "Función para validar si la ruta de destino es valida para redireccionar.",
                 },

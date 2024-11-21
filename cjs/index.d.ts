@@ -19,3 +19,4 @@ export * from "./use_T";
 export * from "./useDataLayer";
 export * from "./useLocalStorage";
 export * from "./useSessionStorage";
+export * from "./useHistory";

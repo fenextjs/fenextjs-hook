@@ -22,4 +22,5 @@ tslib_1.__exportStar(require("./use_T"), exports);
 tslib_1.__exportStar(require("./useDataLayer"), exports);
 tslib_1.__exportStar(require("./useLocalStorage"), exports);
 tslib_1.__exportStar(require("./useSessionStorage"), exports);
+tslib_1.__exportStar(require("./useHistory"), exports);
 //# sourceMappingURL=index.js.map
