@@ -32,6 +32,20 @@ export default {
                 "Función para retroceder a una ruta anterior en el historial.",
         },
     ],
+    extras: [
+        {
+            id: "NOTA",
+            title: "__NOTA__",
+            description: "Para que useHistory funcione correctamente debe ser ejecutado en _app o el layout mas superior que se posea.",
+            code: `import type { AppProps } from "next/app";
+import { useHistory } from "fenextjs";
+
+export default function App({ Component, pageProps }: AppProps) {
+  useHistory({})
+  return <Component {...pageProps} />
+}`,
+        },
+    ],
     extrasReturns: [
         {
             id: "useHistoryOnBackProps",
