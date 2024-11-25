@@ -2,13 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useOnline = void 0;
 const react_1 = require("react");
-const useOnline = ({} = {}) => {
+const useOnline = ({ onOffline, onOnline } = {}) => {
     const [isOnline, setIsOnline] = (0, react_1.useState)(() => {
         // Fallback para entornos donde navigator.onLine no esté disponible.
         return typeof navigator !== "undefined" ? navigator.onLine : true;
     });
-    const handleOnline = (0, react_1.useCallback)(() => setIsOnline(true), []);
-    const handleOffline = (0, react_1.useCallback)(() => setIsOnline(false), []);
+    const handleOnline = (0, react_1.useCallback)(() => {
+        setIsOnline(true);
+        onOnline?.();
+    }, [onOnline]);
+    const handleOffline = (0, react_1.useCallback)(() => {
+        setIsOnline(false);
+        onOffline?.();
+    }, [onOffline]);
     (0, react_1.useEffect)(() => {
         window.addEventListener("online", handleOnline);
         window.addEventListener("offline", handleOffline);

@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 
 export interface useOnlineProps {
-    onOnline?: () => void
-    onOffline?: () => void
+    onOnline?: () => void;
+    onOffline?: () => void;
 }
 
 export const useOnline = ({ onOffline, onOnline }: useOnlineProps = {}) => {
@@ -11,8 +11,14 @@ export const useOnline = ({ onOffline, onOnline }: useOnlineProps = {}) => {
         return typeof navigator !== "undefined" ? navigator.onLine : true;
     });
 
-    const handleOnline = useCallback(() => { setIsOnline(true); onOnline?.() }, [onOnline]);
-    const handleOffline = useCallback(() => { setIsOnline(false); onOffline?.() }, [onOffline]);
+    const handleOnline = useCallback(() => {
+        setIsOnline(true);
+        onOnline?.();
+    }, [onOnline]);
+    const handleOffline = useCallback(() => {
+        setIsOnline(false);
+        onOffline?.();
+    }, [onOffline]);
 
     useEffect(() => {
         window.addEventListener("online", handleOnline);
