@@ -61,6 +61,17 @@ export default {
                 "Función que recibe una palabra y devuelve su traducción en el idioma actual o la traducción alternativa, si no se encuentra.",
         },
         {
+            id: "load",
+            type: "boolean",
+            description:
+                "Variable que determina si currentLang temino de cargar.",
+        },
+        {
+            id: "currentLang",
+            type: "Langs[number]",
+            description: "El idioma actual seleccionado.",
+        },
+        {
             id: "setCurrentLang",
             type: "(lang: Langs[number]) => void",
             description: "Función para cambiar el idioma actual.",
