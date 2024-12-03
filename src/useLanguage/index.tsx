@@ -1,62 +1,70 @@
-import { useCallback } from 'react'
-import { useLocalStorage } from '../useLocalStorage'
+import { useCallback } from "react";
+import { cleanTextForTranslate } from "fenextjs-functions";
+import { useLocalStorage } from "../useLocalStorage";
 
-export interface useLanguageProps<langs extends string[]> {
-    defaultLang?: langs[number]
-    langs: langs
-    listTranductions: {
-        [word: string]: {
-            [lang in langs[number]]: any
-        }
-    }
-
-    onNoFoundTranslate?: (data: {
-        word: string,
-        lang: langs[number]
-    }) => void
+export interface LanguageListProps<Langs extends string[]> {
+    [word: string]: {
+        [lang in Langs[number]]: any;
+    };
 }
 
-export const useLanguage = <langs extends string[],>({ langs, listTranductions, defaultLang,onNoFoundTranslate, }: useLanguageProps<langs>) => {
-    const { load, setLocalStorage: setCurrentLang, value: currentLang } = useLocalStorage<langs[number]>({
-        name: "fenextjs-lang",
-        defaultValue: defaultLang ?? langs?.[0],
-    })
+export interface useLanguageProps<Langs extends string[]> {
+    defaultLang?: Langs[number];
+    langs: Langs;
+    listTranductions: LanguageListProps<Langs>;
+    onNoFoundTranslate?: (data: { word: string; lang: Langs[number] }) => void;
 
-    const _t: (word?: any) => typeof word = useCallback(
-        (word) => {
-            if (word === '') {
-                return '';
-            }
+    fallbackNoFoundTranslation?:string
+}
+
+export const useLanguage = <Langs extends string[]>({
+    langs,
+    listTranductions,
+    defaultLang,
+    onNoFoundTranslate,
+    fallbackNoFoundTranslation= undefined
+}: useLanguageProps<Langs>) => {
+    const { setLocalStorage: setCurrentLang, value: currentLang } =
+        useLocalStorage<Langs[number]>({
+            name: "fenextjs-lang",
+            defaultValue: defaultLang ?? langs?.[0],
+        });
+
+    const onTranslate = useCallback(
+        (word?: any) => {
+            if (!word || word === "") return word;
+
             if (
-                typeof word == 'string' &&
+                typeof word === "string" &&
                 currentLang &&
-                typeof window != 'undefined'
+                typeof window !== "undefined"
             ) {
-                let T = word.replaceAll('\\n', '').replaceAll('\n', '');
-                while (T.includes('  ')) {
-                    T = T.replaceAll('  ', ' ');
-                }
-                T = T.trim();
-                if (T === '') {
-                    return '';
-                }
-                const textTra = listTranductions?.[T]?.[currentLang];
-                if (textTra) {
-                    return textTra;
+                const cleanedWord = cleanTextForTranslate(word);
+
+                if (cleanedWord === "") return "";
+
+                const translation =
+                    listTranductions?.[cleanedWord]?.[currentLang];
+                if (translation) {
+                    return translation;
                 } else {
                     onNoFoundTranslate?.({
-                        lang : T,
-                        word
-                    })
+                        lang: currentLang,
+                        word: cleanedWord,
+                    });
+                    if(fallbackNoFoundTranslation!= undefined){
+                        return fallbackNoFoundTranslation;
+                    }
                 }
             }
+
             return word;
         },
-        [currentLang, load,onNoFoundTranslate],
-    )
+        [currentLang, listTranductions, onNoFoundTranslate,fallbackNoFoundTranslation],
+    );
 
     return {
-        _t,
-        setCurrentLang
+        onTranslate,
+        setCurrentLang,
     };
 };
