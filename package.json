@@ -1,6 +1,6 @@
 {
   "name": "fenextjs-hook",
-  "version": "13.5.2",
+  "version": "13.6.0",
   "description": "",
   "main": "./cjs/index.js",
   "module": "./cjs/index.js",
@@ -40,6 +40,7 @@
     "useQuery",
     "useUser",
     "usePhone",
+    "useLanguage",
     "useValidator"
   ],
   "author": "franciscoblancojn",
