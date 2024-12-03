@@ -14,7 +14,7 @@ export interface useLanguageProps<Langs extends string[]> {
     listTranductions: LanguageListProps<Langs>;
     onNoFoundTranslate?: (data: { word: string; lang: Langs[number] }) => void;
 
-    fallbackNoFoundTranslation?:string
+    fallbackNoFoundTranslation?: string;
 }
 
 export const useLanguage = <Langs extends string[]>({
@@ -22,7 +22,7 @@ export const useLanguage = <Langs extends string[]>({
     listTranductions,
     defaultLang,
     onNoFoundTranslate,
-    fallbackNoFoundTranslation= undefined
+    fallbackNoFoundTranslation = undefined,
 }: useLanguageProps<Langs>) => {
     const { setLocalStorage: setCurrentLang, value: currentLang } =
         useLocalStorage<Langs[number]>({
@@ -52,7 +52,7 @@ export const useLanguage = <Langs extends string[]>({
                         lang: currentLang,
                         word: cleanedWord,
                     });
-                    if(fallbackNoFoundTranslation!= undefined){
+                    if (fallbackNoFoundTranslation != undefined) {
                         return fallbackNoFoundTranslation;
                     }
                 }
@@ -60,7 +60,12 @@ export const useLanguage = <Langs extends string[]>({
 
             return word;
         },
-        [currentLang, listTranductions, onNoFoundTranslate,fallbackNoFoundTranslation],
+        [
+            currentLang,
+            listTranductions,
+            onNoFoundTranslate,
+            fallbackNoFoundTranslation,
+        ],
     );
 
     return {
