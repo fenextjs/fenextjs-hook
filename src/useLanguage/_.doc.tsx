@@ -44,13 +44,12 @@ export default {
         {
             id: "LanguageListProps",
             title: "LanguageListProps",
-            description:
-                "Interface para definir la lista de idiomas.",
-                code:`interface LanguageListProps<Langs extends string[]> {
+            description: "Interface para definir la lista de idiomas.",
+            code: `interface LanguageListProps<Langs extends string[]> {
     [word: string]: {
         [lang in Langs[number]]: any;
     };
-}`
+}`,
         },
     ],
     returns: [

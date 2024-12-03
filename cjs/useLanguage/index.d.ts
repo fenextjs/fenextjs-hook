@@ -15,5 +15,7 @@ export interface useLanguageProps<Langs extends string[]> {
 }
 export declare const useLanguage: <Langs extends string[]>({ langs, listTranductions, defaultLang, onNoFoundTranslate, fallbackNoFoundTranslation, }: useLanguageProps<Langs>) => {
     onTranslate: (word?: any) => any;
+    load: boolean;
+    currentLang: Langs[number] | undefined;
     setCurrentLang: (newValue: any) => void;
 };

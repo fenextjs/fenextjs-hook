@@ -5,7 +5,7 @@ const react_1 = require("react");
 const fenextjs_functions_1 = require("fenextjs-functions");
 const useLocalStorage_1 = require("../useLocalStorage");
 const useLanguage = ({ langs, listTranductions, defaultLang, onNoFoundTranslate, fallbackNoFoundTranslation = undefined, }) => {
-    const { setLocalStorage: setCurrentLang, value: currentLang } = (0, useLocalStorage_1.useLocalStorage)({
+    const { setLocalStorage: setCurrentLang, value: currentLang, load, } = (0, useLocalStorage_1.useLocalStorage)({
         name: "fenextjs-lang",
         defaultValue: defaultLang ?? langs?.[0],
     });
@@ -41,6 +41,8 @@ const useLanguage = ({ langs, listTranductions, defaultLang, onNoFoundTranslate,
     ]);
     return {
         onTranslate,
+        load,
+        currentLang,
         setCurrentLang,
     };
 };
