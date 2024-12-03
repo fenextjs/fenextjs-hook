@@ -40,6 +40,19 @@ export default {
                 "Traducción alternativa que se usará cuando no se encuentre la traducción específica para una palabra.",
         },
     ],
+    extras: [
+        {
+            id: "LanguageListProps",
+            title: "LanguageListProps",
+            description:
+                "Interface para definir la lista de idiomas.",
+                code:`interface LanguageListProps<Langs extends string[]> {
+    [word: string]: {
+        [lang in Langs[number]]: any;
+    };
+}`
+        },
+    ],
     returns: [
         {
             id: "onTranslate",
@@ -56,7 +69,7 @@ export default {
     useExample: [
         {
             text: "Traducción básica",
-            content: `const { onTranslate } = useLanguage({
+            content: `const { onTranslate } = useLanguage<["en", "es"]>({
     langs: ["en", "es"],
     listTranductions: {
         hello: { en: "Hello", es: "Hola" },
@@ -69,7 +82,7 @@ const translatedWord = onTranslate("hello"); // "Hello" si el idioma actual es "
         },
         {
             text: "Cambio de idioma",
-            content: `const { setCurrentLang } = useLanguage({
+            content: `const { setCurrentLang } = useLanguage<["en", "es"]>({
     langs: ["en", "es"],
     listTranductions: {
         goodbye: { en: "Goodbye", es: "Adiós" },
@@ -81,7 +94,7 @@ setCurrentLang("en"); // Cambia el idioma actual a "en"`,
         },
         {
             text: "Fallback para traducciones no encontradas",
-            content: `const { onTranslate } = useLanguage({
+            content: `const { onTranslate } = useLanguage<["en", "es"]>({
     langs: ["en", "fr"],
     listTranductions: {
         welcome: { en: "Welcome", fr: "Bienvenue" },
