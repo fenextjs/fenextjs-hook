@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 import { useCallback, useMemo, useState } from "react";
 /**
  * Query parameters for useQuery hook
  */
 
-export interface useQuery_QueryProps {
+export interface QueryDataDefault {
     id?: string;
     search?: string;
     searchAddress?: string;
@@ -19,19 +20,16 @@ export interface useQuery_QueryProps {
     orderBy?: string;
     exportBy?: string[];
 }
-/**
- * Keys of useQuery_QueryProps
- */
-export type useQuery_QueryKeysProps = keyof useQuery_QueryProps;
 
-export interface useQueryProps {
-    ignoreQuerys?: [id: useQuery_QueryKeysProps];
+export interface useQueryProps <T=QueryDataDefault,> {
+    ignoreQuerys?: [id: keyof T];
+    parseQuery?:(data:ParsedUrlQuery)=>T
 }
 
 /**
  * A hook that provides access to the query parameters in the URL.
  */
-export const useQuery = (props?: useQueryProps) => {
+export const useQuery = <T=QueryDataDefault,>(props?: useQueryProps<T>) => {
     const tomorrow = useMemo(() => {
         const tomorrow = new Date();
         tomorrow.setHours(tomorrow.getHours() + 24);
@@ -49,47 +47,55 @@ export const useQuery = (props?: useQueryProps) => {
     /**
      * The query parameters in the URL.
      */
-    const query: useQuery_QueryProps = useMemo(() => {
+    const query: T = useMemo(() => {
         if (!(router?.isReady ?? false)) {
-            return {};
+            return {} as T;
         }
         const q: any = router?.query ?? {};
-        const {
-            id = undefined,
-            search = "",
-            searchAddress = "",
-            tab = "all",
-            page = "0",
-            npage = "10",
-            totalpage = "100",
-            allitems = "1000",
-            start = undefined,
-            end = undefined,
-            order = undefined,
-            orderBy = undefined,
-        } = q;
 
-        const r: useQuery_QueryProps = {
-            ...q,
-            id,
-            search,
-            searchAddress,
-            tab,
-            page: parseInt(page),
-            npage: parseInt(npage),
-            totalpage: parseInt(totalpage),
-            allitems: parseInt(allitems),
-            start: start ? parseInt(start) : 0,
-            end: end ? parseInt(end) : tomorrow?.getTime(),
-            order,
-            orderBy,
-            exportBy: [q?.export ?? []].flat(2),
-        };
-        (props?.ignoreQuerys ?? []).map((e: useQuery_QueryKeysProps) => {
+        const parseQuery = props?.parseQuery ?? ((q)=>{
+            const {
+                id = undefined,
+                search = "",
+                searchAddress = "",
+                tab = "all",
+                page = "0",
+                npage = "10",
+                totalpage = "100",
+                allitems = "1000",
+                start = undefined,
+                end = undefined,
+                order = undefined,
+                orderBy = undefined,
+            } = q as any;
+    
+            const r: T = {
+                ...q,
+                id,
+                search,
+                searchAddress,
+                tab,
+                page: parseInt(page),
+                npage: parseInt(npage),
+                totalpage: parseInt(totalpage),
+                allitems: parseInt(allitems),
+                start: start ? parseInt(start) : 0,
+                end: end ? parseInt(end) : tomorrow?.getTime(),
+                order,
+                orderBy,
+                exportBy: [q?.export ?? []].flat(2),
+            } as T;
+            return r
+        });
+        
+
+        const r = parseQuery(q);
+        
+        (props?.ignoreQuerys ?? []).map((e: keyof T) => {
             delete r[e];
         });
         return r;
-    }, [router?.query, router?.isReady, props]);
+    }, [router?.query, router?.isReady, props?.ignoreQuerys,props?.parseQuery]);
 
     /**
      * Sets the query parameters in the URL.
@@ -97,15 +103,15 @@ export const useQuery = (props?: useQueryProps) => {
      * @param query - The query parameters to set.
      */
     const setQuery = useCallback(
-        (query: useQuery_QueryProps) => {
+        (query: T) => {
             if (!(router?.isReady ?? false)) {
                 return false;
             }
             const queryParse: {
                 [id: string]: string;
             } = {};
-            Object.keys(query).forEach((key) => {
-                const v = `${query[key] ?? ""}`;
+            Object.keys(query as any).forEach((key) => {
+                const v = `${(query as any)?.[key] ?? ""}`;
                 if (v != "") {
                     queryParse[key] = v;
                 }
@@ -129,7 +135,7 @@ export const useQuery = (props?: useQueryProps) => {
      * @param query - The query parameters to set.
      */
     const onConcatQuery = useCallback(
-        (newQuery: useQuery_QueryProps) => {
+        (newQuery: T) => {
             const nQuery = {
                 ...query,
                 ...newQuery,
@@ -144,8 +150,8 @@ export const useQuery = (props?: useQueryProps) => {
      * @param id - The key of the query parameter to set.
      */
     const onChangeQuery = useCallback(
-        (id: keyof useQuery_QueryProps) =>
-            (value: (typeof query)[useQuery_QueryKeysProps]) => {
+        (id: keyof T) =>
+            (value: (typeof query)[keyof T]) => {
                 if (!(router?.isReady ?? false)) {
                     return false;
                 }
@@ -155,7 +161,7 @@ export const useQuery = (props?: useQueryProps) => {
                         query: {
                             ...(router?.query ?? {}),
                             [id]: value,
-                        },
+                        } as any,
                     },
                     undefined,
                     { scroll: false },
@@ -167,11 +173,11 @@ export const useQuery = (props?: useQueryProps) => {
     );
 
     const onDeleteQuery = useCallback(
-        (id: keyof useQuery_QueryProps) => {
+        (id: keyof T) => {
             if (!(router?.isReady ?? false)) {
                 return false;
             }
-            const q = { ...(router?.query ?? {}) };
+            const q = { ...(router?.query ?? {}) } as any;
             delete q[id];
             router?.push?.(
                 {
