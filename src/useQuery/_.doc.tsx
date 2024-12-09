@@ -8,7 +8,8 @@ export default {
             id: "ignoreQuerys",
             type: "[id: keyof T]",
             require: false,
-            description: "Lista de claves de los parámetros de consulta que deben ser ignorados.",
+            description:
+                "Lista de claves de los parámetros de consulta que deben ser ignorados.",
         },
         {
             id: "parseQuery",
@@ -22,21 +23,70 @@ export default {
         {
             id: "QueryDataDefault",
             title: "QueryDataDefault",
-            description: "Interfaz de los parámetros de consulta predeterminados.",
+            description:
+                "Interfaz de los parámetros de consulta predeterminados.",
             tableItems: [
-                { Nombre: "id", Descripcion: "ID único.", Default: "undefined" },
-                { Nombre: "search", Descripcion: "Término de búsqueda.", Default: "''" },
-                { Nombre: "searchAddress", Descripcion: "Dirección de búsqueda.", Default: "''" },
-                { Nombre: "tab", Descripcion: "Nombre de la pestaña activa.", Default: "'all'" },
+                {
+                    Nombre: "id",
+                    Descripcion: "ID único.",
+                    Default: "undefined",
+                },
+                {
+                    Nombre: "search",
+                    Descripcion: "Término de búsqueda.",
+                    Default: "''",
+                },
+                {
+                    Nombre: "searchAddress",
+                    Descripcion: "Dirección de búsqueda.",
+                    Default: "''",
+                },
+                {
+                    Nombre: "tab",
+                    Descripcion: "Nombre de la pestaña activa.",
+                    Default: "'all'",
+                },
                 { Nombre: "page", Descripcion: "Página actual.", Default: "0" },
-                { Nombre: "npage", Descripcion: "Número de elementos por página.", Default: "10" },
-                { Nombre: "totalpage", Descripcion: "Total de páginas.", Default: "100" },
-                { Nombre: "allitems", Descripcion: "Total de elementos.", Default: "1000" },
-                { Nombre: "start", Descripcion: "Inicio del rango.", Default: "undefined" },
-                { Nombre: "end", Descripcion: "Fin del rango.", Default: "undefined" },
-                { Nombre: "order", Descripcion: "Orden de los elementos.", Default: "undefined" },
-                { Nombre: "orderBy", Descripcion: "Campo por el cual ordenar.", Default: "undefined" },
-                { Nombre: "exportBy", Descripcion: "Exportaciones adicionales.", Default: "[]" },
+                {
+                    Nombre: "npage",
+                    Descripcion: "Número de elementos por página.",
+                    Default: "10",
+                },
+                {
+                    Nombre: "totalpage",
+                    Descripcion: "Total de páginas.",
+                    Default: "100",
+                },
+                {
+                    Nombre: "allitems",
+                    Descripcion: "Total de elementos.",
+                    Default: "1000",
+                },
+                {
+                    Nombre: "start",
+                    Descripcion: "Inicio del rango.",
+                    Default: "undefined",
+                },
+                {
+                    Nombre: "end",
+                    Descripcion: "Fin del rango.",
+                    Default: "undefined",
+                },
+                {
+                    Nombre: "order",
+                    Descripcion: "Orden de los elementos.",
+                    Default: "undefined",
+                },
+                {
+                    Nombre: "orderBy",
+                    Descripcion: "Campo por el cual ordenar.",
+                    Default: "undefined",
+                },
+                {
+                    Nombre: "exportBy",
+                    Descripcion: "Exportaciones adicionales.",
+                    Default: "[]",
+                },
             ],
         },
     ],
@@ -54,7 +104,8 @@ export default {
         {
             id: "setQuery",
             type: "(query: T) => boolean",
-            description: "Función para sobrescribir los parámetros de consulta.",
+            description:
+                "Función para sobrescribir los parámetros de consulta.",
         },
         {
             id: "onConcatQuery",
@@ -65,12 +116,14 @@ export default {
         {
             id: "onChangeQuery",
             type: "(id: keyof T) => (value: T[keyof T]) => boolean",
-            description: "Devuelve una función que modifica un parámetro específico.",
+            description:
+                "Devuelve una función que modifica un parámetro específico.",
         },
         {
             id: "onDeleteQuery",
             type: "(id: keyof T) => boolean",
-            description: "Función para eliminar un parámetro de consulta específico.",
+            description:
+                "Función para eliminar un parámetro de consulta específico.",
         },
         {
             id: "isChange",

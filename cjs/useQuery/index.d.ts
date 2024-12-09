@@ -1,7 +1,9 @@
+/// <reference types="node" />
+import { ParsedUrlQuery } from "querystring";
 /**
  * Query parameters for useQuery hook
  */
-export interface useQuery_QueryProps {
+export interface QueryDataDefault {
     id?: string;
     search?: string;
     searchAddress?: string;
@@ -16,22 +18,19 @@ export interface useQuery_QueryProps {
     orderBy?: string;
     exportBy?: string[];
 }
-/**
- * Keys of useQuery_QueryProps
- */
-export type useQuery_QueryKeysProps = keyof useQuery_QueryProps;
-export interface useQueryProps {
-    ignoreQuerys?: [id: useQuery_QueryKeysProps];
+export interface useQueryProps<T = QueryDataDefault> {
+    ignoreQuerys?: [id: keyof T];
+    parseQuery?: (data: ParsedUrlQuery) => T;
 }
 /**
  * A hook that provides access to the query parameters in the URL.
  */
-export declare const useQuery: (props?: useQueryProps) => {
+export declare const useQuery: <T = QueryDataDefault>(props?: useQueryProps<T>) => {
     load: boolean;
-    query: useQuery_QueryProps;
-    setQuery: (query: useQuery_QueryProps) => boolean;
-    onConcatQuery: (newQuery: useQuery_QueryProps) => boolean;
-    onChangeQuery: (id: keyof useQuery_QueryProps) => (value: string | number | string[] | undefined) => boolean;
-    onDeleteQuery: (id: keyof useQuery_QueryProps) => boolean;
+    query: T;
+    setQuery: (query: T) => boolean;
+    onConcatQuery: (newQuery: T) => boolean;
+    onChangeQuery: (id: keyof T) => (value: T[keyof T]) => boolean;
+    onDeleteQuery: (id: keyof T) => boolean;
     isChange: boolean;
 };

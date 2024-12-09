@@ -21,15 +21,15 @@ export interface QueryDataDefault {
     exportBy?: string[];
 }
 
-export interface useQueryProps <T=QueryDataDefault,> {
+export interface useQueryProps<T = QueryDataDefault> {
     ignoreQuerys?: [id: keyof T];
-    parseQuery?:(data:ParsedUrlQuery)=>T
+    parseQuery?: (data: ParsedUrlQuery) => T;
 }
 
 /**
  * A hook that provides access to the query parameters in the URL.
  */
-export const useQuery = <T=QueryDataDefault,>(props?: useQueryProps<T>) => {
+export const useQuery = <T = QueryDataDefault,>(props?: useQueryProps<T>) => {
     const tomorrow = useMemo(() => {
         const tomorrow = new Date();
         tomorrow.setHours(tomorrow.getHours() + 24);
@@ -53,49 +53,55 @@ export const useQuery = <T=QueryDataDefault,>(props?: useQueryProps<T>) => {
         }
         const q: any = router?.query ?? {};
 
-        const parseQuery = props?.parseQuery ?? ((q)=>{
-            const {
-                id = undefined,
-                search = "",
-                searchAddress = "",
-                tab = "all",
-                page = "0",
-                npage = "10",
-                totalpage = "100",
-                allitems = "1000",
-                start = undefined,
-                end = undefined,
-                order = undefined,
-                orderBy = undefined,
-            } = q as any;
-    
-            const r: T = {
-                ...q,
-                id,
-                search,
-                searchAddress,
-                tab,
-                page: parseInt(page),
-                npage: parseInt(npage),
-                totalpage: parseInt(totalpage),
-                allitems: parseInt(allitems),
-                start: start ? parseInt(start) : 0,
-                end: end ? parseInt(end) : tomorrow?.getTime(),
-                order,
-                orderBy,
-                exportBy: [q?.export ?? []].flat(2),
-            } as T;
-            return r
-        });
-        
+        const parseQuery =
+            props?.parseQuery ??
+            ((q) => {
+                const {
+                    id = undefined,
+                    search = "",
+                    searchAddress = "",
+                    tab = "all",
+                    page = "0",
+                    npage = "10",
+                    totalpage = "100",
+                    allitems = "1000",
+                    start = undefined,
+                    end = undefined,
+                    order = undefined,
+                    orderBy = undefined,
+                } = q as any;
+
+                const r: T = {
+                    ...q,
+                    id,
+                    search,
+                    searchAddress,
+                    tab,
+                    page: parseInt(page),
+                    npage: parseInt(npage),
+                    totalpage: parseInt(totalpage),
+                    allitems: parseInt(allitems),
+                    start: start ? parseInt(start) : 0,
+                    end: end ? parseInt(end) : tomorrow?.getTime(),
+                    order,
+                    orderBy,
+                    exportBy: [q?.export ?? []].flat(2),
+                } as T;
+                return r;
+            });
 
         const r = parseQuery(q);
-        
+
         (props?.ignoreQuerys ?? []).map((e: keyof T) => {
             delete r[e];
         });
         return r;
-    }, [router?.query, router?.isReady, props?.ignoreQuerys,props?.parseQuery]);
+    }, [
+        router?.query,
+        router?.isReady,
+        props?.ignoreQuerys,
+        props?.parseQuery,
+    ]);
 
     /**
      * Sets the query parameters in the URL.
@@ -150,25 +156,24 @@ export const useQuery = <T=QueryDataDefault,>(props?: useQueryProps<T>) => {
      * @param id - The key of the query parameter to set.
      */
     const onChangeQuery = useCallback(
-        (id: keyof T) =>
-            (value: (typeof query)[keyof T]) => {
-                if (!(router?.isReady ?? false)) {
-                    return false;
-                }
-                router?.push?.(
-                    {
-                        pathname: router.pathname,
-                        query: {
-                            ...(router?.query ?? {}),
-                            [id]: value,
-                        } as any,
-                    },
-                    undefined,
-                    { scroll: false },
-                );
-                setIsChange(true);
-                return true;
-            },
+        (id: keyof T) => (value: (typeof query)[keyof T]) => {
+            if (!(router?.isReady ?? false)) {
+                return false;
+            }
+            router?.push?.(
+                {
+                    pathname: router.pathname,
+                    query: {
+                        ...(router?.query ?? {}),
+                        [id]: value,
+                    } as any,
+                },
+                undefined,
+                { scroll: false },
+            );
+            setIsChange(true);
+            return true;
+        },
         [router?.isReady, router?.query, router?.pathname],
     );
 
