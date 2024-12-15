@@ -8,13 +8,15 @@ export default {
             id: "name",
             type: "string",
             require: false,
-            description: "Nombre único para identificar el dropdown en el contexto de las acciones.",
+            description:
+                "Nombre único para identificar el dropdown en el contexto de las acciones.",
         },
         {
             id: "onChange",
             type: "(e?: boolean) => void",
             require: false,
-            description: "Función que se ejecuta cuando se detecta un cambio en el estado del dropdown (activo o cerrado).",
+            description:
+                "Función que se ejecuta cuando se detecta un cambio en el estado del dropdown (activo o cerrado).",
         },
     ],
     returns: [
