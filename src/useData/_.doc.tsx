@@ -70,6 +70,11 @@ export default {
                     Descripcion: "Función de callback para enviar los datos.",
                 },
                 {
+                    Nombre: "onBeforeSubmitData",
+                    Descripcion:
+                        "Función de callback que se llama antes de un envío de datos, proporcionando los datos que se van a enviar y el resultado de su validacion.",
+                },
+                {
                     Nombre: "onAfterSubmitDataOk",
                     Descripcion:
                         "Función de callback que se llama después de un envío éxitoso de datos.",
@@ -93,6 +98,11 @@ export default {
                     Nombre: "onSubmitDataMemo",
                     Descripcion:
                         "Función de callback para enviar los datos de dataMemo.",
+                },
+                {
+                    Nombre: "onBeforeSubmitDataMemo",
+                    Descripcion:
+                        "Función de callback que se llama antes de un envío de datos de dataMemo, proporcionando los dataMemo que se van a enviar y el resultado de su validacion.",
                 },
                 {
                     Nombre: "onAfterSubmitDataMemoOk",
