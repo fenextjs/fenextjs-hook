@@ -240,6 +240,10 @@ const useData = (defaultData, options) => {
             (optionsSubmitData?.data
                 ? options?.validator?.onValidate?.(optionsSubmitData?.data) ?? true
                 : isValidData);
+        options?.onBeforeSubmitData?.({
+            data: dataUse,
+            isValid: isValidDataUse,
+        });
         if (options?.onSubmitData && isValidDataUse === true) {
             try {
                 setDataError(undefined);
@@ -258,9 +262,11 @@ const useData = (defaultData, options) => {
                     });
                     setData(newData);
                 }
+                setLoaderSubmit(false);
                 return result;
             }
             catch (err) {
+                setLoaderSubmit(false);
                 const error = (options?.onAfterSubmitParseError?.(err) ??
                     err);
                 setDataError(error);
@@ -278,6 +284,10 @@ const useData = (defaultData, options) => {
             (optionsSubmitDataMemo?.dataMemo
                 ? options?.validatorMemo?.onValidate?.(optionsSubmitDataMemo?.dataMemo) ?? true
                 : isValidDataMemo);
+        options?.onBeforeSubmitDataMemo?.({
+            dataMemo: dataUse,
+            isValidDataMemo: isValidDataUse,
+        });
         if (options?.onSubmitDataMemo && isValidDataUse === true) {
             try {
                 setDataErrorMemo(undefined);

@@ -1,5 +1,6 @@
 /// <reference types="react" />
 import { FenextjsValidatorClass } from "fenextjs-validator";
+import { ErrorFenextjs } from "fenextjs-error";
 export interface useDataOptionsRefreshDataIfChangeDefaultDataOptions {
     active?: boolean;
     useReloadKeyData?: boolean;
@@ -36,6 +37,10 @@ export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM =
     validator?: FenextjsValidatorClass<T>;
     validatorMemo?: FenextjsValidatorClass<M>;
     onSubmitData?: (data: T) => RT | Promise<RT>;
+    onBeforeSubmitData?: (d: {
+        data: T;
+        isValid?: ErrorFenextjs | true;
+    }) => void;
     onAfterSubmitDataOk?: (d: {
         data: T;
         result: RT;
@@ -47,6 +52,10 @@ export interface useDataOptions<T, M = any, RT = void, RM = void, ET = any, EM =
     }) => void;
     afterSubmitDataSetIsChangeFalse?: boolean;
     onSubmitDataMemo?: (data: M) => RM | Promise<RM>;
+    onBeforeSubmitDataMemo?: (d: {
+        dataMemo: M;
+        isValidDataMemo?: ErrorFenextjs | true;
+    }) => void;
     onAfterSubmitDataMemoOk?: (d: {
         dataMemo: M;
         result: RM;
@@ -94,8 +103,8 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     validatorData: { [id in keyof T]?: FenextjsValidatorClass<any> | undefined; } | undefined;
     validatorMemo: FenextjsValidatorClass<M> | undefined;
     validatorMemoData: { [id_1 in keyof M]?: FenextjsValidatorClass<any> | undefined; } | undefined;
-    isValidData: true | import("fenextjs-error").ErrorFenextjs<any> | undefined;
-    isValidDataMemo: true | import("fenextjs-error").ErrorFenextjs<any> | undefined;
+    isValidData: true | ErrorFenextjs<any> | undefined;
+    isValidDataMemo: true | ErrorFenextjs<any> | undefined;
     onValidateData: () => void;
     onValidateDataMemo: () => void;
     onSubmitData: (optionsSubmitData?: {

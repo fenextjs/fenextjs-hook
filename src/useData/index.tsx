@@ -50,14 +50,20 @@ export interface useDataOptions<
     validator?: FenextjsValidatorClass<T>;
     validatorMemo?: FenextjsValidatorClass<M>;
     onSubmitData?: (data: T) => RT | Promise<RT>;
-    onBeforeSubmitData?: (d: { data: T; isValid?: ErrorFenextjs | true }) => void;
+    onBeforeSubmitData?: (d: {
+        data: T;
+        isValid?: ErrorFenextjs | true;
+    }) => void;
     onAfterSubmitDataOk?: (d: { data: T; result: RT }) => void;
     onAfterSubmitParseError?: (error: any) => ET;
     onAfterSubmitDataError?: (d: { data: T; error: ET }) => void;
     afterSubmitDataSetIsChangeFalse?: boolean;
 
     onSubmitDataMemo?: (data: M) => RM | Promise<RM>;
-    onBeforeSubmitDataMemo?: (d: { dataMemo: M; isValidDataMemo?: ErrorFenextjs | true }) => void;
+    onBeforeSubmitDataMemo?: (d: {
+        dataMemo: M;
+        isValidDataMemo?: ErrorFenextjs | true;
+    }) => void;
     onAfterSubmitDataMemoOk?: (d: { dataMemo: M; result: RM }) => void;
     onAfterSubmitParseErrorMemo?: (error: any) => EM;
     onAfterSubmitDataMemoError?: (d: { dataMemo: M; error: EM }) => void;
@@ -124,12 +130,12 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         name: NAME_DATA_ACTION,
         onActionExecute: options?.useGlobalContext
             ? (e) => {
-                const w = (window ?? {}) as any;
+                  const w = (window ?? {}) as any;
 
-                w[NAME_DATA_ACTION] = e;
+                  w[NAME_DATA_ACTION] = e;
 
-                setDataD(e as T);
-            }
+                  setDataD(e as T);
+              }
             : undefined,
     });
     const setDataAction = (d: T) => {
@@ -165,47 +171,47 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
      */
     const onChangeData =
         (id: keyof T) =>
-            (
-                value: (typeof data)[keys],
-                _options?: onChangeDataOptionsProps<T>,
-            ) => {
-                if (value === data[id]) {
-                    return;
+        (
+            value: (typeof data)[keys],
+            _options?: onChangeDataOptionsProps<T>,
+        ) => {
+            if (value === data[id]) {
+                return;
+            }
+            setDataD((pre: T) => {
+                let nData: any;
+                if (typeof pre === "string" || typeof pre === "number") {
+                    nData = `${pre}` as T;
+                    if (typeof id == "number" && id >= 0 && id < nData.length) {
+                        nData =
+                            nData.substring(0, id) +
+                            value +
+                            nData.substring(id + 1);
+                    }
+                    if (typeof pre === "number") {
+                        nData = parseNumber(nData);
+                    }
+                } else if (Array.isArray(pre)) {
+                    nData = [...pre] as T;
+                    nData[id] = value;
+                } else if (typeof pre == "object") {
+                    nData = { ...pre, [id]: value };
+                } else {
+                    return pre;
                 }
-                setDataD((pre: T) => {
-                    let nData: any;
-                    if (typeof pre === "string" || typeof pre === "number") {
-                        nData = `${pre}` as T;
-                        if (typeof id == "number" && id >= 0 && id < nData.length) {
-                            nData =
-                                nData.substring(0, id) +
-                                value +
-                                nData.substring(id + 1);
-                        }
-                        if (typeof pre === "number") {
-                            nData = parseNumber(nData);
-                        }
-                    } else if (Array.isArray(pre)) {
-                        nData = [...pre] as T;
-                        nData[id] = value;
-                    } else if (typeof pre == "object") {
-                        nData = { ...pre, [id]: value };
-                    } else {
-                        return pre;
-                    }
-                    options?.onChangeDataAfter?.(nData);
-                    _options?.onCallback?.(nData);
-                    if (_options?.parseDataBeforeOnChangeData) {
-                        nData = _options?.parseDataBeforeOnChangeData(
-                            id,
-                            nData,
-                        ) as any;
-                    }
-                    setDataAction(nData);
-                    return nData;
-                });
-                setIsChange(true);
-            };
+                options?.onChangeDataAfter?.(nData);
+                _options?.onCallback?.(nData);
+                if (_options?.parseDataBeforeOnChangeData) {
+                    nData = _options?.parseDataBeforeOnChangeData(
+                        id,
+                        nData,
+                    ) as any;
+                }
+                setDataAction(nData);
+                return nData;
+            });
+            setIsChange(true);
+        };
 
     /**
      * Delete a single property of the data.
@@ -358,10 +364,13 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 optionsSubmitData?.useValidator === false ||
                 (optionsSubmitData?.data
                     ? options?.validator?.onValidate?.(
-                        optionsSubmitData?.data,
-                    ) ?? true
+                          optionsSubmitData?.data,
+                      ) ?? true
                     : isValidData);
-            options?.onBeforeSubmitData?.({ data: dataUse, isValid: isValidDataUse })
+            options?.onBeforeSubmitData?.({
+                data: dataUse,
+                isValid: isValidDataUse,
+            });
             if (options?.onSubmitData && isValidDataUse === true) {
                 try {
                     setDataError(undefined);
@@ -406,10 +415,13 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 optionsSubmitDataMemo?.useValidatorMemo === false ||
                 (optionsSubmitDataMemo?.dataMemo
                     ? options?.validatorMemo?.onValidate?.(
-                        optionsSubmitDataMemo?.dataMemo,
-                    ) ?? true
+                          optionsSubmitDataMemo?.dataMemo,
+                      ) ?? true
                     : isValidDataMemo);
-            options?.onBeforeSubmitDataMemo?.({ dataMemo: dataUse, isValidDataMemo: isValidDataUse })
+            options?.onBeforeSubmitDataMemo?.({
+                dataMemo: dataUse,
+                isValidDataMemo: isValidDataUse,
+            });
             if (options?.onSubmitDataMemo && isValidDataUse === true) {
                 try {
                     setDataErrorMemo(undefined);
