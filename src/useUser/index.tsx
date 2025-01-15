@@ -1,35 +1,19 @@
 import { useLocalStorage } from "../useLocalStorage";
-import { jwtDecode } from "jwt-decode";
 import { UserProps } from "fenextjs-interface/cjs/User";
-import { ErrorCode } from "fenextjs-interface/cjs/Error";
-import {
-    RequestResultTypeProps,
-    RequestProps,
-    RequestResultDataProps,
-} from "fenextjs-interface/cjs/Request";
-import { useCallback, useMemo } from "react";
+import {  useMemo } from "react";
 
 /**
  * Properties to configure the useUser hook.
  */
 export interface useUserProps<
-    Q = UserProps,
-    R = any,
-    E = any,
-    T = RequestResultTypeProps,
+    U = UserProps,
 > {
-    /**
-     * Function to validate the user's token. By default, it will check that the user
-     * object has a "token" property and decode it using JSON web tokens.
-     * You can replace it with your own custom validation function.
-     */
-    validateTokenUser?: RequestProps<Q, R, E, T>;
     /**
      * Name Var of save user in localStorage.
      */
     varName?: string;
 
-    onValidateUser?: (user: Q | null | undefined) => boolean;
+    onValidateUser?: (user: U | null | undefined) => boolean;
 
     urlRedirectInLogut?: string;
 
@@ -44,57 +28,11 @@ export interface useUserProps<
  * @returns An object with the user data and authentication methods.
  */
 export const useUser = <U = UserProps,>({
-    validateTokenUser: validateTokenUserProps,
     varName = "fenextjs-user",
     onValidateUser,
     urlRedirectInLogut,
     onLogOut: onLogOutProps,
 }: useUserProps<U>) => {
-    const validateTokenUserDefault = async (user: U) => {
-        const { token } = user as any;
-        if (!token) {
-            throw {
-                type: RequestResultTypeProps.ERROR,
-                message: "User not Token",
-                error: {
-                    code: ErrorCode.USER_TOKEN_NOT_FOUND,
-                    message: "User not Token",
-                },
-            } as RequestResultDataProps;
-        }
-        try {
-            const user_token = jwtDecode(token as string);
-            const { id } = user_token as any;
-            if (id) {
-                return {
-                    type: RequestResultTypeProps.OK,
-                    message: "User Validate Ok",
-                };
-            }
-            throw {
-                type: RequestResultTypeProps.ERROR,
-                message: "Token Invalid",
-                error: {
-                    code: ErrorCode.USER_TOKEN_INVALID,
-                    message: "Token Invalid",
-                },
-            } as RequestResultDataProps;
-        } catch (error) {
-            throw {
-                type: RequestResultTypeProps.ERROR,
-                message: "Token Invalid",
-                error: {
-                    code: ErrorCode.USER_TOKEN_INVALID,
-                    message: "Token Invalid",
-                },
-            } as RequestResultDataProps;
-        }
-    };
-    const validateTokenUser = useCallback(
-        validateTokenUserProps ?? validateTokenUserDefault,
-        [validateTokenUserProps, validateTokenUserDefault],
-    );
-
     const {
         value: user,
         load,
@@ -121,13 +59,15 @@ export const useUser = <U = UserProps,>({
      * the object will have a `type` of "error", a `message` of "Token Invalid", and an `error` property
      * with a `code` of `ErrorCode.USER_TOKEN_INVALID` and a `message` of "Token Invalid".
      */
-    const onLogin = async (data: U) => {
+    const onLogin = (data: U) => {
         try {
-            const result = await validateTokenUser(data);
-            if (result.type == RequestResultTypeProps.OK) {
-                setUser(data);
+            if(onValidateUser){
+                if(!onValidateUser(data)){
+                    throw new Error("Invalid User")
+                }
             }
-            return result;
+            setUser(data);
+            return true;
         } catch (error) {
             return error;
         }

@@ -4,13 +4,6 @@ export default {
     description: "Hook para gestionar datos de usuario y autenticación.",
     props: [
         {
-            id: "validateTokenUser",
-            type: "RequestProps<Q, R, E, T>",
-            require: false,
-            description:
-                "Función para validar el token del usuario. Por defecto, verifica que el objeto del usuario tenga una propiedad 'token' y la decodifica utilizando JSON Web Tokens.",
-        },
-        {
             id: "varName",
             type: "string",
             require: false,
@@ -19,7 +12,7 @@ export default {
         },
         {
             id: "onValidateUser",
-            type: "(user: Q | null | undefined) => boolean",
+            type: "(user: U | null | undefined) => boolean",
             require: false,
             description:
                 "Función personalizada para validar el objeto de usuario.",
@@ -58,9 +51,9 @@ export default {
         },
         {
             id: "onLogin",
-            type: "(data: U) => Promise<RequestResultDataProps>",
+            type: "(data: U) => true | Error",
             description:
-                "Función para iniciar sesión. Valida el token y guarda el usuario en `localStorage` si es válido.",
+                "Función para iniciar sesión. Valida el usuario con onValidateUser y guarda el usuario en `localStorage` si es válido.",
         },
         {
             id: "onLogOut",
