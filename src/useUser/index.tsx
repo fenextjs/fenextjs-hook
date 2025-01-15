@@ -1,13 +1,11 @@
 import { useLocalStorage } from "../useLocalStorage";
 import { UserProps } from "fenextjs-interface/cjs/User";
-import {  useMemo } from "react";
+import { useMemo } from "react";
 
 /**
  * Properties to configure the useUser hook.
  */
-export interface useUserProps<
-    U = UserProps,
-> {
+export interface useUserProps<U = UserProps> {
     /**
      * Name Var of save user in localStorage.
      */
@@ -61,9 +59,9 @@ export const useUser = <U = UserProps,>({
      */
     const onLogin = (data: U) => {
         try {
-            if(onValidateUser){
-                if(!onValidateUser(data)){
-                    throw new Error("Invalid User")
+            if (onValidateUser) {
+                if (!onValidateUser(data)) {
+                    throw new Error("Invalid User");
                 }
             }
             setUser(data);

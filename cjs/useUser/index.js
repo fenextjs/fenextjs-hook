@@ -2,9 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useUser = void 0;
 const useLocalStorage_1 = require("../useLocalStorage");
-const jwt_decode_1 = require("jwt-decode");
-const Error_1 = require("fenextjs-interface/cjs/Error");
-const Request_1 = require("fenextjs-interface/cjs/Request");
 const react_1 = require("react");
 /**
  * Hook to manage user data and authentication.
@@ -13,49 +10,7 @@ const react_1 = require("react");
  * You can replace it with your own custom validation function.
  * @returns An object with the user data and authentication methods.
  */
-const useUser = ({ validateTokenUser: validateTokenUserProps, varName = "fenextjs-user", onValidateUser, urlRedirectInLogut, onLogOut: onLogOutProps, }) => {
-    const validateTokenUserDefault = async (user) => {
-        const { token } = user;
-        if (!token) {
-            throw {
-                type: Request_1.RequestResultTypeProps.ERROR,
-                message: "User not Token",
-                error: {
-                    code: Error_1.ErrorCode.USER_TOKEN_NOT_FOUND,
-                    message: "User not Token",
-                },
-            };
-        }
-        try {
-            const user_token = (0, jwt_decode_1.jwtDecode)(token);
-            const { id } = user_token;
-            if (id) {
-                return {
-                    type: Request_1.RequestResultTypeProps.OK,
-                    message: "User Validate Ok",
-                };
-            }
-            throw {
-                type: Request_1.RequestResultTypeProps.ERROR,
-                message: "Token Invalid",
-                error: {
-                    code: Error_1.ErrorCode.USER_TOKEN_INVALID,
-                    message: "Token Invalid",
-                },
-            };
-        }
-        catch (error) {
-            throw {
-                type: Request_1.RequestResultTypeProps.ERROR,
-                message: "Token Invalid",
-                error: {
-                    code: Error_1.ErrorCode.USER_TOKEN_INVALID,
-                    message: "Token Invalid",
-                },
-            };
-        }
-    };
-    const validateTokenUser = (0, react_1.useCallback)(validateTokenUserProps ?? validateTokenUserDefault, [validateTokenUserProps, validateTokenUserDefault]);
+const useUser = ({ varName = "fenextjs-user", onValidateUser, urlRedirectInLogut, onLogOut: onLogOutProps, }) => {
     const { value: user, load, setLocalStorage: setUser, } = (0, useLocalStorage_1.useLocalStorage)({
         name: varName,
         defaultValue: null,
@@ -78,13 +33,15 @@ const useUser = ({ validateTokenUser: validateTokenUserProps, varName = "fenextj
      * the object will have a `type` of "error", a `message` of "Token Invalid", and an `error` property
      * with a `code` of `ErrorCode.USER_TOKEN_INVALID` and a `message` of "Token Invalid".
      */
-    const onLogin = async (data) => {
+    const onLogin = (data) => {
         try {
-            const result = await validateTokenUser(data);
-            if (result.type == Request_1.RequestResultTypeProps.OK) {
-                setUser(data);
+            if (onValidateUser) {
+                if (!onValidateUser(data)) {
+                    throw new Error("Invalid User");
+                }
             }
-            return result;
+            setUser(data);
+            return true;
         }
         catch (error) {
             return error;
