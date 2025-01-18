@@ -10,7 +10,7 @@ const react_1 = require("react");
  * You can replace it with your own custom validation function.
  * @returns An object with the user data and authentication methods.
  */
-const useUser = ({ varName = "fenextjs-user", onValidateUser, urlRedirectInLogut, onLogOut: onLogOutProps, }) => {
+const useUser = ({ varName = "fenextjs-user", onValidateUser, urlRedirectInLogin, urlRedirectInLogout, onLogOut: onLogOutProps, onLogin: onLoginProps, }) => {
     const { value: user, load, setLocalStorage: setUser, } = (0, useLocalStorage_1.useLocalStorage)({
         name: varName,
         defaultValue: null,
@@ -41,6 +41,10 @@ const useUser = ({ varName = "fenextjs-user", onValidateUser, urlRedirectInLogut
                 }
             }
             setUser(data);
+            onLoginProps?.();
+            if (urlRedirectInLogin && typeof window != "undefined") {
+                window.location.href = urlRedirectInLogin;
+            }
             return true;
         }
         catch (error) {
@@ -53,8 +57,8 @@ const useUser = ({ varName = "fenextjs-user", onValidateUser, urlRedirectInLogut
     const onLogOut = () => {
         setUser(null);
         onLogOutProps?.();
-        if (urlRedirectInLogut && typeof window != "undefined") {
-            window.location.href = urlRedirectInLogut;
+        if (urlRedirectInLogout && typeof window != "undefined") {
+            window.location.href = urlRedirectInLogout;
         }
     };
     const isValidUser = (0, react_1.useMemo)(() => (load ? onValidateUser?.(user) : true) ?? true, [load, user]);
