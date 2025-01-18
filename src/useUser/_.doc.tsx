@@ -24,10 +24,22 @@ export default {
             description: "URL de redirección al cerrar sesión.",
         },
         {
+            id: "urlRedirectInLogin",
+            type: "string",
+            require: false,
+            description: "URL de redirección al iniciar sesión.",
+        },
+        {
             id: "onLogOut",
             type: "() => void",
             require: false,
             description: "Función que se ejecuta al cerrar sesión.",
+        },
+        {
+            id: "onLogin",
+            type: "() => void",
+            require: false,
+            description: "Función que se ejecuta al iniciar sesión.",
         },
     ],
     returns: [
