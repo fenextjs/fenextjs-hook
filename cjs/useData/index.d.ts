@@ -109,6 +109,9 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     onValidateDataMemo: () => void;
     onSubmitData: (optionsSubmitData?: {
         data?: T;
+        overwrite?: {
+            onSubmitData?: useDataOptions<T, M, RT, RM, ET, EM>["onSubmitData"];
+        };
         onSaveData?: (p: {
             data: T;
             result: RT;
@@ -117,6 +120,9 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     }) => Promise<RT | undefined>;
     onSubmitDataMemo: (optionsSubmitDataMemo?: {
         dataMemo?: M;
+        overwrite?: {
+            onSubmitDataMemo?: useDataOptions<T, M, RT, RM, ET, EM>["onSubmitDataMemo"];
+        };
         useValidatorMemo?: boolean;
     }) => Promise<RM | undefined>;
     loaderSubmit: boolean;

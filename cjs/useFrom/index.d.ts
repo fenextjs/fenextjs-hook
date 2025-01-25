@@ -43,6 +43,9 @@ export declare const useForm: <T, M = any>({ defaultValue, onChangeDisabled, onC
     onValidateDataMemo: () => void;
     onSubmitData: (optionsSubmitData?: {
         data?: T | undefined;
+        overwrite?: {
+            onSubmitData?: ((data: T) => void | Promise<void>) | undefined;
+        } | undefined;
         onSaveData?: ((p: {
             data: T;
             result: void;
@@ -51,6 +54,9 @@ export declare const useForm: <T, M = any>({ defaultValue, onChangeDisabled, onC
     } | undefined) => Promise<void | undefined>;
     onSubmitDataMemo: (optionsSubmitDataMemo?: {
         dataMemo?: M | undefined;
+        overwrite?: {
+            onSubmitDataMemo?: ((data: M) => void | Promise<void>) | undefined;
+        } | undefined;
         useValidatorMemo?: boolean | undefined;
     } | undefined) => Promise<void | undefined>;
     loaderSubmit: boolean;
