@@ -1,29 +1,32 @@
-import { SetStateAction, useEffect, useState } from 'react';
-import { useAction } from '../useAction';
+import { SetStateAction, useEffect, useState } from "react";
+import { useAction } from "../useAction";
 
-export interface useStateGlobalContextProps<T,> {
-    defaultValue: T
-    name?: string
+export interface useStateGlobalContextProps<T> {
+    defaultValue: T;
+    name?: string;
 }
 
-export const useStateGlobalContext = <T,>({ name, defaultValue }: useStateGlobalContextProps<T>) => {
+export const useStateGlobalContext = <T,>({
+    name,
+    defaultValue,
+}: useStateGlobalContextProps<T>) => {
     const [data, _setData] = useState<T>(defaultValue);
     const { onAction } = useAction<T>({
-        name: `${name ?? ''}`,
+        name: `${name ?? ""}`,
         onActionExecute: name
             ? (e) => {
-                const w = (window ?? {}) as any;
-                w[name] = e;
-                _setData(e as T);
-            }
+                  const w = (window ?? {}) as any;
+                  w[name] = e;
+                  _setData(e as T);
+              }
             : undefined,
     });
     const setData = (f: SetStateAction<T>) => {
         if (name) {
-            const n = typeof f == "function" ? (f as any)(data) : f
+            const n = typeof f == "function" ? (f as any)(data) : f;
             onAction(n);
         } else {
-            _setData(f)
+            _setData(f);
         }
     };
     const onLoadDataAction = () => {
@@ -38,6 +41,6 @@ export const useStateGlobalContext = <T,>({ name, defaultValue }: useStateGlobal
     useEffect(onLoadDataAction, []);
     return {
         data,
-        setData
-    }
-}
+        setData,
+    };
+};

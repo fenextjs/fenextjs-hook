@@ -1,7 +1,8 @@
 export default {
     id: "useStateGlobalContext",
     name: "useStateGlobalContext",
-    description: "El hook useStateGlobalContext permite gestionar un estado global compartido y sincronizado entre componentes mediante el uso del DOM y acciones personalizadas.",
+    description:
+        "El hook useStateGlobalContext permite gestionar un estado global compartido y sincronizado entre componentes mediante el uso del DOM y acciones personalizadas.",
     props: [
         {
             id: "defaultValue",
@@ -13,7 +14,8 @@ export default {
             id: "name",
             type: "string",
             require: false,
-            description: "Nombre único para identificar el estado global dentro del DOM.",
+            description:
+                "Nombre único para identificar el estado global dentro del DOM.",
         },
     ],
     returns: [
@@ -25,7 +27,8 @@ export default {
         {
             id: "setData",
             type: "(f: SetStateAction<T>) => void",
-            description: "Función para actualizar el valor del estado global. Si se proporciona un nombre, también sincroniza la actualización con el DOM.",
+            description:
+                "Función para actualizar el valor del estado global. Si se proporciona un nombre, también sincroniza la actualización con el DOM.",
         },
     ],
     useExample: [

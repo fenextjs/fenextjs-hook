@@ -108,37 +108,79 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
     type keys = keyof T;
     const [keyData, setKeyData] = useState<number>(0);
 
-    const NAME_IS_CHANGE_ACTION = options?.useGlobalContext ? `fenextjs-is-change-action-${options?.useGlobalContext}` : undefined;
-    const { data: isChange, setData: setIsChange } = useStateGlobalContext<boolean>({ defaultValue: false, name: NAME_IS_CHANGE_ACTION })
+    const NAME_IS_CHANGE_ACTION = options?.useGlobalContext
+        ? `fenextjs-is-change-action-${options?.useGlobalContext}`
+        : undefined;
+    const { data: isChange, setData: setIsChange } =
+        useStateGlobalContext<boolean>({
+            defaultValue: false,
+            name: NAME_IS_CHANGE_ACTION,
+        });
 
-    const NAME_SETDATA_ACTION = options?.useGlobalContext ? `fenextjs-set-data-action-${options?.useGlobalContext}` : undefined;
-    const { data: data_, setData: setDataD } = useStateGlobalContext<T>({ defaultValue: defaultData, name: NAME_SETDATA_ACTION })
+    const NAME_SETDATA_ACTION = options?.useGlobalContext
+        ? `fenextjs-set-data-action-${options?.useGlobalContext}`
+        : undefined;
+    const { data: data_, setData: setDataD } = useStateGlobalContext<T>({
+        defaultValue: defaultData,
+        name: NAME_SETDATA_ACTION,
+    });
 
-    const NAME_DATA_ERROR_ACTION = options?.useGlobalContext ? `fenextjs-data-error-action-${options?.useGlobalContext}` : undefined;
-    const { data: dataError, setData: setDataError } = useStateGlobalContext<ET | undefined>({ defaultValue: undefined, name: NAME_DATA_ERROR_ACTION })
+    const NAME_DATA_ERROR_ACTION = options?.useGlobalContext
+        ? `fenextjs-data-error-action-${options?.useGlobalContext}`
+        : undefined;
+    const { data: dataError, setData: setDataError } = useStateGlobalContext<
+        ET | undefined
+    >({ defaultValue: undefined, name: NAME_DATA_ERROR_ACTION });
 
-    const NAME_LOADER_SUBMIT_ACTION = options?.useGlobalContext ? `fenextjs-loader-submit-action-${options?.useGlobalContext}` : undefined;
-    const { data: loaderSubmit, setData: setLoaderSubmit } = useStateGlobalContext<boolean>({ defaultValue: false, name: NAME_LOADER_SUBMIT_ACTION })
+    const NAME_LOADER_SUBMIT_ACTION = options?.useGlobalContext
+        ? `fenextjs-loader-submit-action-${options?.useGlobalContext}`
+        : undefined;
+    const { data: loaderSubmit, setData: setLoaderSubmit } =
+        useStateGlobalContext<boolean>({
+            defaultValue: false,
+            name: NAME_LOADER_SUBMIT_ACTION,
+        });
 
-    const NAME_RESULT_SUBMIT_DATA_ACTION = options?.useGlobalContext ? `fenextjs-result-submit-data-action-${options?.useGlobalContext}` : undefined;
-    const { data: resultSubmitData, setData: setResultSubmitData } = useStateGlobalContext<RT | undefined>({ defaultValue: undefined, name: NAME_RESULT_SUBMIT_DATA_ACTION })
+    const NAME_RESULT_SUBMIT_DATA_ACTION = options?.useGlobalContext
+        ? `fenextjs-result-submit-data-action-${options?.useGlobalContext}`
+        : undefined;
+    const { data: resultSubmitData, setData: setResultSubmitData } =
+        useStateGlobalContext<RT | undefined>({
+            defaultValue: undefined,
+            name: NAME_RESULT_SUBMIT_DATA_ACTION,
+        });
 
+    const NAME_DATA_ERROR_MEMO_ACTION = options?.useGlobalContext
+        ? `fenextjs-data-error-memo-action-${options?.useGlobalContext}`
+        : undefined;
+    const { data: dataErrorMemo, setData: setDataErrorMemo } =
+        useStateGlobalContext<EM | undefined>({
+            defaultValue: undefined,
+            name: NAME_DATA_ERROR_MEMO_ACTION,
+        });
 
-    const NAME_DATA_ERROR_MEMO_ACTION = options?.useGlobalContext ? `fenextjs-data-error-memo-action-${options?.useGlobalContext}` : undefined;
-    const { data: dataErrorMemo, setData: setDataErrorMemo } = useStateGlobalContext<EM | undefined>({ defaultValue: undefined, name: NAME_DATA_ERROR_MEMO_ACTION })
+    const NAME_LOADER_SUBMIT_MEMO_ACTION = options?.useGlobalContext
+        ? `fenextjs-loader-submit-memo-action-${options?.useGlobalContext}`
+        : undefined;
+    const { data: loaderSubmitMemo, setData: setLoaderSubmitMemo } =
+        useStateGlobalContext<boolean>({
+            defaultValue: false,
+            name: NAME_LOADER_SUBMIT_MEMO_ACTION,
+        });
 
-    const NAME_LOADER_SUBMIT_MEMO_ACTION = options?.useGlobalContext ? `fenextjs-loader-submit-memo-action-${options?.useGlobalContext}` : undefined;
-    const { data: loaderSubmitMemo, setData: setLoaderSubmitMemo } = useStateGlobalContext<boolean>({ defaultValue: false, name: NAME_LOADER_SUBMIT_MEMO_ACTION })
-
-    const NAME_RESULT_SUBMIT_DATA_MEMO_ACTION = options?.useGlobalContext ? `fenextjs-result-submit-data-memo-action-${options?.useGlobalContext}` : undefined;
-    const { data: resultSubmitDataMemo, setData: setResultSubmitDataMemo } = useStateGlobalContext<RM | undefined>({ defaultValue: undefined, name: NAME_RESULT_SUBMIT_DATA_MEMO_ACTION })
-
+    const NAME_RESULT_SUBMIT_DATA_MEMO_ACTION = options?.useGlobalContext
+        ? `fenextjs-result-submit-data-memo-action-${options?.useGlobalContext}`
+        : undefined;
+    const { data: resultSubmitDataMemo, setData: setResultSubmitDataMemo } =
+        useStateGlobalContext<RM | undefined>({
+            defaultValue: undefined,
+            name: NAME_RESULT_SUBMIT_DATA_MEMO_ACTION,
+        });
 
     const data = useMemo<T>(
         () => options?.data ?? data_,
         [data_, options?.data],
     );
-
 
     /**
      * Update a keyData
@@ -157,46 +199,46 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
      */
     const onChangeData =
         (id: keyof T) =>
-            (
-                value: (typeof data)[keys],
-                _options?: onChangeDataOptionsProps<T>,
-            ) => {
-                if (value === data[id]) {
-                    return;
+        (
+            value: (typeof data)[keys],
+            _options?: onChangeDataOptionsProps<T>,
+        ) => {
+            if (value === data[id]) {
+                return;
+            }
+            setDataD((pre: T) => {
+                let nData: any;
+                if (typeof pre === "string" || typeof pre === "number") {
+                    nData = `${pre}` as T;
+                    if (typeof id == "number" && id >= 0 && id < nData.length) {
+                        nData =
+                            nData.substring(0, id) +
+                            value +
+                            nData.substring(id + 1);
+                    }
+                    if (typeof pre === "number") {
+                        nData = parseNumber(nData);
+                    }
+                } else if (Array.isArray(pre)) {
+                    nData = [...pre] as T;
+                    nData[id] = value;
+                } else if (typeof pre == "object") {
+                    nData = { ...pre, [id]: value };
+                } else {
+                    return pre;
                 }
-                setDataD((pre: T) => {
-                    let nData: any;
-                    if (typeof pre === "string" || typeof pre === "number") {
-                        nData = `${pre}` as T;
-                        if (typeof id == "number" && id >= 0 && id < nData.length) {
-                            nData =
-                                nData.substring(0, id) +
-                                value +
-                                nData.substring(id + 1);
-                        }
-                        if (typeof pre === "number") {
-                            nData = parseNumber(nData);
-                        }
-                    } else if (Array.isArray(pre)) {
-                        nData = [...pre] as T;
-                        nData[id] = value;
-                    } else if (typeof pre == "object") {
-                        nData = { ...pre, [id]: value };
-                    } else {
-                        return pre;
-                    }
-                    options?.onChangeDataAfter?.(nData);
-                    _options?.onCallback?.(nData);
-                    if (_options?.parseDataBeforeOnChangeData) {
-                        nData = _options?.parseDataBeforeOnChangeData(
-                            id,
-                            nData,
-                        ) as any;
-                    }
-                    return nData;
-                });
-                setIsChange(true);
-            };
+                options?.onChangeDataAfter?.(nData);
+                _options?.onCallback?.(nData);
+                if (_options?.parseDataBeforeOnChangeData) {
+                    nData = _options?.parseDataBeforeOnChangeData(
+                        id,
+                        nData,
+                    ) as any;
+                }
+                return nData;
+            });
+            setIsChange(true);
+        };
 
     /**
      * Delete a single property of the data.
@@ -275,7 +317,7 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
         setDataD((pre: T) => {
             if (Array.isArray(pre)) {
                 const nData = [...pre, ...(v as Array<T>)] as T;
-                options?.onChangeDataAfter?.(nData)
+                options?.onChangeDataAfter?.(nData);
                 return nData;
             }
             if (typeof pre === "object") {
@@ -352,8 +394,8 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 optionsSubmitData?.useValidator === false ||
                 (optionsSubmitData?.data
                     ? options?.validator?.onValidate?.(
-                        optionsSubmitData?.data,
-                    ) ?? true
+                          optionsSubmitData?.data,
+                      ) ?? true
                     : isValidData);
             options?.onBeforeSubmitData?.({
                 data: dataUse,
@@ -417,8 +459,8 @@ export const useData = <T, M = any, RT = void, RM = void, ET = any, EM = any>(
                 optionsSubmitDataMemo?.useValidatorMemo === false ||
                 (optionsSubmitDataMemo?.dataMemo
                     ? options?.validatorMemo?.onValidate?.(
-                        optionsSubmitDataMemo?.dataMemo,
-                    ) ?? true
+                          optionsSubmitDataMemo?.dataMemo,
+                      ) ?? true
                     : isValidDataMemo);
             options?.onBeforeSubmitDataMemo?.({
                 dataMemo: dataUse,
