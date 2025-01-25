@@ -22,12 +22,12 @@ const useData = (defaultData, options) => {
         defaultValue: false,
         name: NAME_IS_CHANGE_ACTION,
     });
-    const NAME_SETDATA_ACTION = options?.useGlobalContext
-        ? `fenextjs-set-data-action-${options?.useGlobalContext}`
+    const NAME_DATA_ACTION = options?.useGlobalContext
+        ? `fenextjs-data-action-${options?.useGlobalContext}`
         : undefined;
     const { data: data_, setData: setDataD } = (0, useStateGlobalContext_1.useStateGlobalContext)({
         defaultValue: defaultData,
-        name: NAME_SETDATA_ACTION,
+        name: NAME_DATA_ACTION,
     });
     const NAME_DATA_ERROR_ACTION = options?.useGlobalContext
         ? `fenextjs-data-error-action-${options?.useGlobalContext}`
