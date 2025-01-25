@@ -12,22 +12,20 @@ import { useDataValidator } from "fenextjs";
 
 ### Parámetros
 
-| Parámetro      | Tipo                        | Requerido | Default | Descripcion                                                                         |
-| -------------- | --------------------------- | --------- | ------- | ----------------------------------------------------------------------------------- |
-| data           | T                           | sí        |         | Los datos que se van a validar.                                                     |
-| validator      | FenextjsValidatorClass\<T\> | no        |         | Instancia opcional de una clase de validación personalizada para validar los datos. |
-| autoOnValidate | boolean                     | no        | true    | Determina si la validación se debe ejecutar automáticamente al cambiar los datos.   |
-
+| Parámetro | Tipo | Requerido | Default | Descripcion |
+| --------- | ---- | --------- | ------- | ----------- |
+| data | T | sí |  | Los datos que se van a validar. |
+| validator | FenextjsValidatorClass\<T\> | no |  | Instancia opcional de una clase de validación personalizada para validar los datos. |
+| autoOnValidate | boolean | no | true | Determina si la validación se debe ejecutar automáticamente al cambiar los datos. |
 ### Returns
 
-| Parametro      | Tipo                               | Descripcion                                                                                                            |
-| -------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| isValidData    | true \| ErrorFenextjs \| undefined | Indica si los datos son válidos (`true`), si hay un error (`ErrorFenextjs`), o si aún no se ha validado (`undefined`). |
-| onValidateData | () =\> void                        | Función que ejecuta la validación de los datos de forma manual.                                                        |
-
+| Parametro | Tipo | Descripcion |
+| --------- | ---- | ----------- |
+| isValidData | true \| ErrorFenextjs \| undefined  | Indica si los datos son válidos (`true`), si hay un error (`ErrorFenextjs`), o si aún no se ha validado (`undefined`). |
+| onValidateData | () =\> void  | Función que ejecuta la validación de los datos de forma manual. |
 ### Usos
 
--   Validación automática de datos
+- Validación automática de datos
 
 ```tsx copy
 const { isValidData, onValidateData } = useDataValidator({
@@ -37,7 +35,7 @@ const { isValidData, onValidateData } = useDataValidator({
 console.log(isValidData); // Muestra el estado de la validación
 ```
 
--   Validación manual de datos
+- Validación manual de datos
 
 ```tsx copy
 const { isValidData, onValidateData } = useDataValidator({
@@ -47,3 +45,4 @@ const { isValidData, onValidateData } = useDataValidator({
 });
 onValidateData(); // Ejecuta la validación manualmente
 ```
+
