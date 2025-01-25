@@ -61,6 +61,8 @@ export declare const useForm: <T, M = any>({ defaultValue, onChangeDisabled, onC
     } | undefined) => Promise<void | undefined>;
     loaderSubmit: boolean;
     loaderSubmitMemo: boolean;
+    setLoaderSubmit: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    setLoaderSubmitMemo: import("react").Dispatch<import("react").SetStateAction<boolean>>;
     resultSubmitData: void | undefined;
     resultSubmitDataMemo: void | undefined;
     dataError: any;

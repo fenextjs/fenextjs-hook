@@ -424,6 +424,8 @@ const useData = (defaultData, options) => {
         onSubmitDataMemo,
         loaderSubmit,
         loaderSubmitMemo,
+        setLoaderSubmit,
+        setLoaderSubmitMemo,
         resultSubmitData,
         resultSubmitDataMemo,
         dataError,

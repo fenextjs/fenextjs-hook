@@ -127,6 +127,8 @@ export declare const useData: <T, M = any, RT = void, RM = void, ET = any, EM = 
     }) => Promise<RM | undefined>;
     loaderSubmit: boolean;
     loaderSubmitMemo: boolean;
+    setLoaderSubmit: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    setLoaderSubmitMemo: import("react").Dispatch<import("react").SetStateAction<boolean>>;
     resultSubmitData: RT | undefined;
     resultSubmitDataMemo: RM | undefined;
     dataError: ET | undefined;
