@@ -23,3 +23,4 @@ export * from "./useHistory";
 export * from "./useOnline";
 export * from "./useLanguage";
 export * from "./useActionDropDown";
+export * from "./usePagination";
