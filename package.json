@@ -52,11 +52,11 @@
   "dependencies": {
     "country-state-city-nextjs": "10.0.0",
     "fenextjs-date": "3.3.0",
-    "fenextjs-error": "3.2.2",
-    "fenextjs-functions": "6.1.2",
-    "fenextjs-interface": "4.7.0",
+    "fenextjs-error": "3.2.3",
+    "fenextjs-functions": "6.1.3",
+    "fenextjs-interface": "4.8.0",
     "fenextjs-nextjs-dependencies": "3.0.0",
-    "fenextjs-validator": "4.6.6",
+    "fenextjs-validator": "4.6.7",
     "jwt-decode": "4.0.0"
   },
   "files": [

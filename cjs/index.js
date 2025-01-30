@@ -28,4 +28,5 @@ tslib_1.__exportStar(require("./useLanguage"), exports);
 tslib_1.__exportStar(require("./useActionDropDown"), exports);
 tslib_1.__exportStar(require("./usePagination"), exports);
 tslib_1.__exportStar(require("./useApiError"), exports);
+tslib_1.__exportStar(require("./useFilter"), exports);
 //# sourceMappingURL=index.js.map
