@@ -10,9 +10,9 @@ export interface useApiErrorProps {
 }
 
 export const useApiError = ({ onActionExecute }: useApiErrorProps) => {
-    const { onAction: onApiErrorError } = useAction<onApiErrorData>({
+    const { onAction: onApiError } = useAction<onApiErrorData>({
         name: "api-error",
         onActionExecute,
     });
-    return { onApiErrorError };
+    return { onApiError };
 };
