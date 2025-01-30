@@ -8,7 +8,8 @@ export default {
             id: "onActionExecute",
             type: "(data?: onApiErrorData) => void",
             require: false,
-            description: "Función que se ejecuta cuando ocurre un error en la API.",
+            description:
+                "Función que se ejecuta cuando ocurre un error en la API.",
         },
     ],
     returns: [

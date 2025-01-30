@@ -1,6 +1,5 @@
 import { useAction } from "../useAction";
 
-
 export interface onApiErrorData {
     message: string;
 }
