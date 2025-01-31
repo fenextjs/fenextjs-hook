@@ -2,7 +2,10 @@ import { useData } from "../useData";
 import { SearchDataProps, DateDataProps } from "fenextjs-interface";
 
 export type useFilterDataProps<CF extends Record<string, any>> =
-    SearchDataProps & DateDataProps & Partial<CF>;
+    SearchDataProps &
+        Partial<CF> & {
+            date?: DateDataProps;
+        };
 
 export interface useFilterProps<CF extends Record<string, any>> {
     name?: string;
