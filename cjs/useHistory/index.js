@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useHistory = void 0;
 const useSessionStorage_1 = require("../useSessionStorage");
-const router_1 = require("next/router");
+const useRouter_1 = require("../useRouter");
 const react_1 = require("react");
 const useHistory = ({ name = "fenextjs-history" }) => {
     const { setSessionStorage, value: paths, load, } = (0, useSessionStorage_1.useSessionStorage)({
@@ -22,7 +22,7 @@ const useHistory = ({ name = "fenextjs-history" }) => {
         }
         setSessionStorage([...(paths ?? []), ...[n].flat(2)]);
     }, [paths]);
-    const router = (0, router_1.useRouter)();
+    const router = (0, useRouter_1.useRouter)();
     (0, react_1.useEffect)(() => {
         if (load && !router.asPath.includes("[")) {
             onPushPath(router.asPath);
