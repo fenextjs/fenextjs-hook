@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter as useRouterNextjs } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { useCallback, useMemo, useState } from "react";
 /**
@@ -43,7 +43,7 @@ export const useQuery = <T = QueryDataDefault,>(props?: useQueryProps<T>) => {
     /**
      * The router instance from Next.js.
      */
-    const router = useRouter();
+    const router = useRouterNextjs();
     /**
      * The query parameters in the URL.
      */

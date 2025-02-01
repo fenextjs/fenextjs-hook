@@ -1,5 +1,5 @@
 import { useSessionStorage } from "../useSessionStorage";
-import { useRouter } from "next/router";
+import { useRouter } from "../useRouter";
 import { useCallback, useEffect, useMemo } from "react";
 
 export interface useHistoryProps {
