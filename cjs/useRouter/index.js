@@ -29,6 +29,7 @@ const fenextjs_functions_1 = require("fenextjs-functions");
 const useWindowRouter_1 = require("../useWindowRouter");
 const useRouter = () => {
     const [router, setRouter] = (0, react_1.useState)(null);
+    const windowRouter = (0, useWindowRouter_1.useWindowRouter)();
     (0, react_1.useEffect)(() => {
         try {
             Promise.resolve().then(() => __importStar(require("next/router"))).then((module) => {
@@ -39,7 +40,7 @@ const useRouter = () => {
             (0, fenextjs_functions_1.env_log)("Next.js router no disponible, usando window.location como fallback");
         }
     }, []);
-    return (router ?? useWindowRouter_1.useWindowRouter)();
+    return router ?? windowRouter;
 };
 exports.useRouter = useRouter;
 //# sourceMappingURL=index.js.map
