@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { env_log } from 'fenextjs-functions'
-import { useFRouter } from '../useFRouter';
+import { useWindowRouter } from '../useWindowRouter';
 
 
 export const useRouter = () => {
@@ -16,5 +16,5 @@ export const useRouter = () => {
         }
     }, []);
 
-    return (router ?? useFRouter)()
+    return (router ?? useWindowRouter)()
 };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useFRouter = () => {
+export const useWindowRouter = () => {
     const [location, setLocation] = useState({
         asPath: window.location.pathname,
         query: new URLSearchParams(window.location.search),
