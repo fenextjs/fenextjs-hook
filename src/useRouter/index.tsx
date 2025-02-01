@@ -4,7 +4,7 @@ import { useWindowRouter } from "../useWindowRouter";
 
 export const useRouter = () => {
     const [router, setRouter] = useState(null);
-
+    const windowRouter = useWindowRouter()
     useEffect(() => {
         try {
             import("next/router").then((module: any) => {
@@ -17,5 +17,5 @@ export const useRouter = () => {
         }
     }, []);
 
-    return (router ?? useWindowRouter)();
+    return router ?? windowRouter;
 };
