@@ -1,9 +1,10 @@
-
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export const useWindowRouter = () => {
     const [pathname, setPathname] = useState(window.location.pathname);
-    const [query, setQuery] = useState(new URLSearchParams(window.location.search));
+    const [query, setQuery] = useState(
+        new URLSearchParams(window.location.search),
+    );
     const [hash, setHash] = useState(window.location.hash);
 
     useEffect(() => {
@@ -13,21 +14,21 @@ export const useWindowRouter = () => {
             setHash(window.location.hash);
         };
 
-        window.addEventListener('popstate', handleLocationChange); // Cambios en el historial
+        window.addEventListener("popstate", handleLocationChange); // Cambios en el historial
         return () => {
-            window.removeEventListener('popstate', handleLocationChange);
+            window.removeEventListener("popstate", handleLocationChange);
         };
     }, []);
 
     const push = (url: string) => {
-        window.location.href = url
+        window.location.href = url;
         setPathname(window.location.pathname);
         setQuery(new URLSearchParams(window.location.search));
         setHash(window.location.hash);
     };
 
     const replace = (url: string) => {
-        window.history.replaceState({}, '', url);
+        window.history.replaceState({}, "", url);
         setPathname(window.location.pathname);
         setQuery(new URLSearchParams(window.location.search));
         setHash(window.location.hash);
@@ -45,9 +46,9 @@ export const useWindowRouter = () => {
         window.location.reload();
     };
 
-
     return {
-        asPath: pathname + (query.toString() ? `?${query.toString()}` : '') + hash,
+        asPath:
+            pathname + (query.toString() ? `?${query.toString()}` : "") + hash,
         back,
         forward,
         isReady: true, // Siempre está listo en window.location

@@ -3,30 +3,52 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useWindowRouter = void 0;
 const react_1 = require("react");
 const useWindowRouter = () => {
-    const [location, setLocation] = (0, react_1.useState)({
-        asPath: window.location.pathname,
-        query: new URLSearchParams(window.location.search),
-    });
+    const [pathname, setPathname] = (0, react_1.useState)(window.location.pathname);
+    const [query, setQuery] = (0, react_1.useState)(new URLSearchParams(window.location.search));
+    const [hash, setHash] = (0, react_1.useState)(window.location.hash);
     (0, react_1.useEffect)(() => {
         const handleLocationChange = () => {
-            setLocation({
-                asPath: window.location.pathname,
-                query: new URLSearchParams(window.location.search),
-            });
+            setPathname(window.location.pathname);
+            setQuery(new URLSearchParams(window.location.search));
+            setHash(window.location.hash);
         };
-        window.addEventListener("popstate", handleLocationChange); // Detecta cambios de historial
+        window.addEventListener("popstate", handleLocationChange); // Cambios en el historial
         return () => {
             window.removeEventListener("popstate", handleLocationChange);
         };
     }, []);
+    const push = (url) => {
+        window.location.href = url;
+        setPathname(window.location.pathname);
+        setQuery(new URLSearchParams(window.location.search));
+        setHash(window.location.hash);
+    };
+    const replace = (url) => {
+        window.history.replaceState({}, "", url);
+        setPathname(window.location.pathname);
+        setQuery(new URLSearchParams(window.location.search));
+        setHash(window.location.hash);
+    };
+    const back = () => {
+        window.history.back();
+    };
+    const forward = () => {
+        window.history.forward();
+    };
+    const reload = () => {
+        window.location.reload();
+    };
     return {
-        push: (url) => {
-            window.location.href = url; // Redirigir a una nueva URL
-        },
-        replace: (url) => {
-            window.location.replace(url); // Reemplazar la URL actual
-        },
-        ...location,
+        asPath: pathname + (query.toString() ? `?${query.toString()}` : "") + hash,
+        back,
+        forward,
+        isReady: true, // Siempre está listo en window.location
+        pathname,
+        push,
+        query: Object.fromEntries(query.entries()),
+        reload,
+        replace,
+        route: pathname,
     };
 };
 exports.useWindowRouter = useWindowRouter;
