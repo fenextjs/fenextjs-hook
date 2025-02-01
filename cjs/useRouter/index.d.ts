@@ -1,4 +1,7 @@
-export declare const useRouter: () => {
+export interface useRouterProps {
+    useNextRouter?: boolean;
+}
+export declare const useRouter: ({ useNextRouter }: useRouterProps) => {
     asPath: string;
     back: () => void;
     forward: () => void;
