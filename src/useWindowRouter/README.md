@@ -12,25 +12,25 @@ import { useWindowRouter } from "fenextjs";
 
 ### Returns
 
-| Parametro | Tipo | Descripcion |
-| --------- | ---- | ----------- |
-| asPath | string  | La ruta actual (pathname) de la URL. |
-| query | URLSearchParams  | Un objeto `URLSearchParams` que contiene los parámetros de consulta de la URL. |
-| push | (url: string) =\> void  | Redirige a una nueva URL. |
-| replace | (url: string) =\> void  | Reemplaza la URL actual sin añadir una nueva entrada al historial del navegador. |
+| Parametro | Tipo                   | Descripcion                                                                      |
+| --------- | ---------------------- | -------------------------------------------------------------------------------- |
+| asPath    | string                 | La ruta actual (pathname) de la URL.                                             |
+| query     | URLSearchParams        | Un objeto `URLSearchParams` que contiene los parámetros de consulta de la URL.   |
+| push      | (url: string) =\> void | Redirige a una nueva URL.                                                        |
+| replace   | (url: string) =\> void | Reemplaza la URL actual sin añadir una nueva entrada al historial del navegador. |
+
 ### Usos
 
-- Navegar a una nueva URL
+-   Navegar a una nueva URL
 
 ```tsx copy
 const { push } = useWindowRouter();
-push('/nueva-ruta');
+push("/nueva-ruta");
 ```
 
-- Reemplazar la URL actual
+-   Reemplazar la URL actual
 
 ```tsx copy
 const { replace } = useWindowRouter();
-replace('/otra-ruta');
+replace("/otra-ruta");
 ```
-

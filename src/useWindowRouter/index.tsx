@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export const useWindowRouter = () => {
     const [location, setLocation] = useState({
@@ -14,9 +14,9 @@ export const useWindowRouter = () => {
             });
         };
 
-        window.addEventListener('popstate', handleLocationChange); // Detecta cambios de historial
+        window.addEventListener("popstate", handleLocationChange); // Detecta cambios de historial
         return () => {
-            window.removeEventListener('popstate', handleLocationChange);
+            window.removeEventListener("popstate", handleLocationChange);
         };
     }, []);
 
@@ -29,5 +29,4 @@ export const useWindowRouter = () => {
         },
         ...location,
     };
-}
-
+};
