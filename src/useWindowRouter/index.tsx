@@ -1,49 +1,68 @@
 import { useEffect, useState } from "react";
 
 export const useWindowRouter = () => {
-    const [pathname, setPathname] = useState(window.location.pathname);
+    const _w = {
+        location: {
+            pathname: "",
+            search: "",
+            hash: "",
+            href: "",
+            reload: () => {},
+        },
+        history: {
+            forward: () => {},
+            back: () => {},
+            replaceState: () => {},
+        },
+        addEventListener: () => {},
+        removeEventListener: () => {},
+    };
+
+    const w = (typeof window == "undefined" ? _w : window) ?? _w;
+
+    const [pathname, setPathname] = useState(w?.location?.pathname ?? "");
     const [query, setQuery] = useState(
-        new URLSearchParams(window.location.search),
+        new URLSearchParams(w?.location?.search ?? ""),
     );
-    const [hash, setHash] = useState(window.location.hash);
+    const [hash, setHash] = useState(w?.location?.hash ?? "");
 
     useEffect(() => {
         const handleLocationChange = () => {
-            setPathname(window.location.pathname);
-            setQuery(new URLSearchParams(window.location.search));
-            setHash(window.location.hash);
+            setPathname(w?.location?.pathname ?? "");
+            setQuery(new URLSearchParams(w?.location?.search ?? ""));
+            setHash(w?.location?.hash ?? "");
         };
 
-        window.addEventListener("popstate", handleLocationChange); // Cambios en el historial
+        w.addEventListener("popstate", handleLocationChange); // Cambios en el historial
         return () => {
-            window.removeEventListener("popstate", handleLocationChange);
+            w.removeEventListener("popstate", handleLocationChange);
         };
     }, []);
 
     const push = (url: string) => {
-        window.location.href = url;
-        setPathname(window.location.pathname);
-        setQuery(new URLSearchParams(window.location.search));
-        setHash(window.location.hash);
+        w.location.href = url;
+        setPathname(w?.location?.pathname ?? "");
+        setQuery(new URLSearchParams(w?.location?.search ?? ""));
+        setHash(w?.location?.hash ?? "");
     };
 
     const replace = (url: string) => {
-        window.history.replaceState({}, "", url);
-        setPathname(window.location.pathname);
-        setQuery(new URLSearchParams(window.location.search));
-        setHash(window.location.hash);
+        w?.history?.replaceState({}, "", url);
+        setPathname(w?.location?.pathname ?? "");
+        setQuery(new URLSearchParams(w?.location?.search ?? ""));
+        setHash(w?.location?.hash ?? "");
     };
 
     const back = () => {
-        window.history.back();
+        w?.history?.back();
     };
 
     const forward = () => {
-        window.history.forward();
+        w?.history?.forward();
     };
 
     const reload = () => {
-        window.location.reload();
+        w?.location?.reload();
     };
 
     return {
@@ -51,7 +70,7 @@ export const useWindowRouter = () => {
             pathname + (query.toString() ? `?${query.toString()}` : "") + hash,
         back,
         forward,
-        isReady: true, // Siempre está listo en window.location
+        isReady: true, // Siempre está listo en w.location
         pathname,
         push,
         query: Object.fromEntries(query.entries()),
