@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo } from "react";
 
 export interface useHistoryProps extends useRouterProps {
     name?: string;
+    useRouterCustom?: typeof useRouter;
 }
 export interface useHistoryOnBackProps {
     onValidateRuteBack?: (path: string) => boolean;
@@ -12,6 +13,7 @@ export interface useHistoryOnBackProps {
 export const useHistory = ({
     name = "fenextjs-history",
     useNextRouter,
+    useRouterCustom = useRouter,
 }: useHistoryProps) => {
     const {
         setSessionStorage,
@@ -38,7 +40,7 @@ export const useHistory = ({
         [paths],
     );
 
-    const router = useRouter({ useNextRouter });
+    const router = useRouterCustom({ useNextRouter });
     useEffect(() => {
         if (load && !router.asPath.includes("[")) {
             onPushPath(router.asPath);
