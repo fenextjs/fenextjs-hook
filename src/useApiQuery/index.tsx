@@ -4,7 +4,7 @@ import { usePagination } from "../usePagination";
 import { useApiError } from "../useApiError";
 import { useRefresh } from "../useRefresh";
 import { useQuery } from "@tanstack/react-query";
-import { sleep ,parseInputToQuery} from "fenextjs-functions";
+import { sleep, parseInputToQuery } from "fenextjs-functions";
 import { ErrorFenextjs } from "fenextjs-error";
 
 export interface IApiResult<T> {

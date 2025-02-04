@@ -1,39 +1,40 @@
-import {  useRefresh } from '../useRefresh';
-import { useUser } from '../useUser';
-import { IApiError, IApiResult } from '../useApiQuery';
-import { useApiError } from '../useApiError';
-import { useMutation } from '@tanstack/react-query';
-import { ErrorFenextjs } from 'fenextjs-error';
+import { useRefresh } from "../useRefresh";
+import { useUser } from "../useUser";
+import { IApiError, IApiResult } from "../useApiQuery";
+import { useApiError } from "../useApiError";
+import { useMutation } from "@tanstack/react-query";
+import { ErrorFenextjs } from "fenextjs-error";
 
-export interface useApiRequestCallbackProps<R> {
+export interface useApiMutationCallbackProps<R> {
     onSuccess?: (data: IApiResult<R>) => void;
     onError?: (error: IApiError) => void;
 }
-export interface useApiRequestProps<I,R> extends useApiRequestCallbackProps<R> {
+export interface useApiMutationProps<I, R>
+    extends useApiMutationCallbackProps<R> {
     url: string;
     options?: RequestInit;
     key: string;
-    parseBody?: (data:I)=>BodyInit | null
+    parseBody?: (data: I) => BodyInit | null;
 }
 
-export const useApiRequest = <I, R>({
+export const useApiMutation = <I, R>({
     url,
     onSuccess,
     onError,
     options,
     key,
-    parseBody = JSON.stringify
-}: useApiRequestProps<I,R>) => {
+    parseBody = JSON.stringify,
+}: useApiMutationProps<I, R>) => {
     const { user } = useUser({});
     const { onApiError } = useApiError({});
     const { onRefresh } = useRefresh({});
 
-    const onRequest = async (input: I): Promise<IApiResult<R>> => {
+    const onMutation = async (input: I): Promise<IApiResult<R>> => {
         const response = await fetch(url, {
-            method: 'POST',
+            method: "POST",
             ...options,
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
                 Authorization: `${user?.token}`,
                 ...options?.headers,
             },
@@ -44,7 +45,7 @@ export const useApiRequest = <I, R>({
             const err = {
                 ...data,
                 error: new ErrorFenextjs({
-                    message: data?.error?.message ?? data?.error ?? '',
+                    message: data?.error?.message ?? data?.error ?? "",
                 }),
             };
             onApiError(err);
@@ -54,7 +55,7 @@ export const useApiRequest = <I, R>({
     };
 
     return useMutation<IApiResult<R>, IApiError, I>({
-        mutationFn: onRequest,
+        mutationFn: onMutation,
         onSuccess: (data) => {
             onRefresh([key]);
             onSuccess?.(data);

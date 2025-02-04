@@ -1,10 +1,8 @@
-
-
 export default {
-    id: "useApiRequest",
-    name: "useApiRequest",
+    id: "useApiMutation",
+    name: "useApiMutation",
     description:
-        "El hook useApiRequest permite realizar peticiones POST a una API con manejo de caché y errores a través de React Query.",
+        "El hook useApiMutation permite realizar peticiones a una API con manejo de caché y errores a través de React Query.",
     props: [
         {
             id: "url",
@@ -28,7 +26,8 @@ export default {
             id: "parseBody",
             type: "(data: I) => BodyInit | null",
             require: false,
-            description: "Función para procesar los datos antes de enviarlos en la petición.",
+            description:
+                "Función para procesar los datos antes de enviarlos en la petición.",
             default: "JSON.stringify",
         },
         {
@@ -48,7 +47,8 @@ export default {
         {
             id: "mutation",
             type: "Mutation<IApiResult<R>, IApiError, I>",
-            description: "Mutación de React Query para manejar la petición API.",
+            description:
+                "Mutación de React Query para manejar la petición API.",
         },
     ],
 };

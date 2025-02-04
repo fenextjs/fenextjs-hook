@@ -20,7 +20,8 @@ export default {
             id: "input",
             type: "I",
             require: false,
-            description: "Datos de entrada para la consulta, utilizados en la generación de query params.",
+            description:
+                "Datos de entrada para la consulta, utilizados en la generación de query params.",
         },
         {
             id: "key",
@@ -32,7 +33,8 @@ export default {
             id: "useUserToken",
             type: "boolean",
             require: false,
-            description: "Indica si se debe incluir el token de usuario en la consulta.",
+            description:
+                "Indica si se debe incluir el token de usuario en la consulta.",
             default: true,
         },
         {
@@ -46,7 +48,8 @@ export default {
             id: "usepagination",
             type: "boolean",
             require: false,
-            description: "Indica si se debe incluir la paginación en la consulta.",
+            description:
+                "Indica si se debe incluir la paginación en la consulta.",
             default: true,
         },
     ],
@@ -54,7 +57,14 @@ export default {
         {
             id: "queryResult",
             type: "IApiResult<R>",
-            description: "Resultado de la consulta API, incluyendo datos o errores.",
+            description:
+                "Resultado de la consulta API, incluyendo datos o errores.",
+        },
+    ],
+    useExample: [
+        {
+            text: "Detectar error de API",
+            content: `const {data, error, isLoading} = useApiQuery({ url:"/api" })`,
         },
     ],
 };
