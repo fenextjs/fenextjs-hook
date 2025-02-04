@@ -1,9 +1,8 @@
 import { useData } from "../useData";
 
-
 export interface useRefreshData {
-    [id : string]: number;
-};
+    [id: string]: number;
+}
 
 export interface useRefreshProps {}
 
@@ -24,7 +23,7 @@ export const useRefresh = ({ ...props }: useRefreshProps) => {
         onConcatData(obj);
     };
     return {
-        data : data,
+        data: data,
         onRefresh,
     };
 };

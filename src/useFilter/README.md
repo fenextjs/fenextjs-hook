@@ -12,30 +12,31 @@ import { useFilter } from "fenextjs";
 
 ### Parámetros
 
-| Parámetro | Tipo | Requerido | Default | Descripcion |
-| --------- | ---- | --------- | ------- | ----------- |
-| name | string | no | undefined | Nombre único para el filtro, utilizado en el contexto global. |
-| onChage | (data: useFilterDataProps\<CF\>) =\> void | no | undefined | Función que se ejecuta cuando cambian los datos del filtro. |
+| Parámetro | Tipo                                      | Requerido | Default   | Descripcion                                                   |
+| --------- | ----------------------------------------- | --------- | --------- | ------------------------------------------------------------- |
+| name      | string                                    | no        | undefined | Nombre único para el filtro, utilizado en el contexto global. |
+| onChage   | (data: useFilterDataProps\<CF\>) =\> void | no        | undefined | Función que se ejecuta cuando cambian los datos del filtro.   |
+
 ### Returns
 
-| Parametro | Tipo | Descripcion |
-| --------- | ---- | ----------- |
-| useData | useData\<useFilterDataProps\<CF\>\>  | Retorna los datos de filtrado gestionados con useData, incluyendo búsqueda, fechas y propiedades personalizadas. |
+| Parametro | Tipo                                | Descripcion                                                                                                      |
+| --------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| useData   | useData\<useFilterDataProps\<CF\>\> | Retorna los datos de filtrado gestionados con useData, incluyendo búsqueda, fechas y propiedades personalizadas. |
+
 ### Usos
 
-- Uso básico del filtro
+-   Uso básico del filtro
 
 ```tsx copy
-const { data ,onChangeData} = useFilter({ name: 'productos' });
-onChangeData("search")("texto de busqueda")
+const { data, onChangeData } = useFilter({ name: "productos" });
+onChangeData("search")("texto de busqueda");
 ```
 
-- Uso con función de cambio
+-   Uso con función de cambio
 
 ```tsx copy
 const { data } = useFilter({
-    name: 'usuarios',
-    onChage: (filterData) => console.log('Filtro cambiado:', filterData),
+    name: "usuarios",
+    onChage: (filterData) => console.log("Filtro cambiado:", filterData),
 });
 ```
-

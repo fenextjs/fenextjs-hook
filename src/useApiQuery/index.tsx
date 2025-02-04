@@ -1,12 +1,23 @@
-import { useFilter } from '../useFilter';
-import { useUser } from '../useUser';
-import { usePagination } from '../usePagination';
-import { useApiError } from '../useApiError';
-import { IApiError, IApiResult } from '@/interface/api';
-import { parseInputToQuery } from '@/parse/Input';
-import { useQuery } from '@tanstack/react-query';
-import { sleep } from 'fenextjs-functions';
-import { useRefresh } from '../useRefresh';
+import { useFilter } from "../useFilter";
+import { useUser } from "../useUser";
+import { usePagination } from "../usePagination";
+import { useApiError } from "../useApiError";
+import { useRefresh } from "../useRefresh";
+import { useQuery } from "@tanstack/react-query";
+import { sleep ,parseInputToQuery} from "fenextjs-functions";
+import { ErrorFenextjs } from "fenextjs-error";
+
+export interface IApiResult<T> {
+    message: string;
+    data: T;
+}
+
+export interface IApiError {
+    message: string;
+    error: ErrorFenextjs;
+}
+
+export type IApiRespond<T> = IApiResult<T> | IApiError;
 
 export interface useApiQueryProps<I> {
     url: string;
@@ -40,10 +51,10 @@ export const useApiQuery = <I, R>({
             input: { ...dataFilter, ...input, ...pagination },
         });
         const response = await fetch(`${url}?${query}`, {
-            method: 'GET',
+            method: "GET",
             ...options,
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
                 Authorization: `${user?.token}`,
                 ...options?.headers,
             },
@@ -68,15 +79,15 @@ export const useApiQuery = <I, R>({
         queryKey: [key],
         queryFn: load ? onQuery : onQueryNotLoadUser,
         queryHash:
-        key +
-        '-' +
-        JSON.stringify({
-            _key,
-            input,
-            user,
-            load,
-            ...(usedataFilter ? { dataFilter } : {}),
-            ...(usepagination ? { pagination } : {}),
-        }),
+            key +
+            "-" +
+            JSON.stringify({
+                _key,
+                input,
+                user,
+                load,
+                ...(usedataFilter ? { dataFilter } : {}),
+                ...(usepagination ? { pagination } : {}),
+            }),
     });
 };
