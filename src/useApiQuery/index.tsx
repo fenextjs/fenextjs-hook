@@ -3,7 +3,7 @@ import { useUser } from "../useUser";
 import { usePagination } from "../usePagination";
 import { useApiError } from "../useApiError";
 import { useRefresh } from "../useRefresh";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery as useQueryTanstack } from "@tanstack/react-query";
 import { sleep, parseInputToQuery } from "fenextjs-functions";
 import { ErrorFenextjs } from "fenextjs-error";
 
@@ -75,7 +75,7 @@ export const useApiQuery = <I, R>({
         return {} as IApiResult<R>;
     };
 
-    return useQuery<IApiResult<R>, IApiError>({
+    return useQueryTanstack<IApiResult<R>, IApiError>({
         queryKey: [key],
         queryFn: load ? onQuery : onQueryNotLoadUser,
         queryHash:
