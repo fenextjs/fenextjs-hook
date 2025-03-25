@@ -1,30 +1,81 @@
 import { useEffect, useState } from "react";
-import { env_log } from "fenextjs-functions";
-import { useWindowRouter } from "../useWindowRouter";
 
-export interface useRouterProps {
-    useNextRouter?: boolean;
-}
+export const useRouter = () => {
+    const _w = {
+        location: {
+            pathname: "",
+            search: "",
+            hash: "",
+            href: "",
+            reload: () => {},
+        },
+        history: {
+            forward: () => {},
+            back: () => {},
+            replaceState: () => {},
+        },
+        addEventListener: () => {},
+        removeEventListener: () => {},
+    };
 
-export const useRouter = ({ useNextRouter = true }: useRouterProps) => {
-    const [router, setRouter] = useState(null);
-    const windowRouter = useWindowRouter();
+    const w = (typeof window == "undefined" ? _w : window) ?? _w;
+
+    const [pathname, setPathname] = useState(w?.location?.pathname ?? "");
+    const [query, setQuery] = useState(
+        new URLSearchParams(w?.location?.search ?? ""),
+    );
+    const [hash, setHash] = useState(w?.location?.hash ?? "");
+
     useEffect(() => {
-        if (
-            useNextRouter &&
-            process?.env?.["NEXT_PUBLIC_DISABLED_NEXT_ROUTER"] !== "TRUE"
-        ) {
-            try {
-                import("next/router").then((module: any) => {
-                    setRouter(module?.useRouter);
-                });
-            } catch (e) {
-                env_log(
-                    "Next.js router no disponible, usando window.location como fallback",
-                );
-            }
-        }
-    }, [useNextRouter]);
+        const handleLocationChange = () => {
+            setPathname(w?.location?.pathname ?? "");
+            setQuery(new URLSearchParams(w?.location?.search ?? ""));
+            setHash(w?.location?.hash ?? "");
+        };
 
-    return router ?? windowRouter;
+        w.addEventListener("popstate", handleLocationChange); // Cambios en el historial
+        return () => {
+            w.removeEventListener("popstate", handleLocationChange);
+        };
+    }, []);
+
+    const push = (url: string) => {
+        w.location.href = url;
+        setPathname(w?.location?.pathname ?? "");
+        setQuery(new URLSearchParams(w?.location?.search ?? ""));
+        setHash(w?.location?.hash ?? "");
+    };
+
+    const replace = (url: string) => {
+        w?.history?.replaceState({}, "", url);
+        setPathname(w?.location?.pathname ?? "");
+        setQuery(new URLSearchParams(w?.location?.search ?? ""));
+        setHash(w?.location?.hash ?? "");
+    };
+
+    const back = () => {
+        w?.history?.back();
+    };
+
+    const forward = () => {
+        w?.history?.forward();
+    };
+
+    const reload = () => {
+        w?.location?.reload();
+    };
+
+    return {
+        asPath:
+            pathname + (query.toString() ? `?${query.toString()}` : "") + hash,
+        back,
+        forward,
+        isReady: true, // Siempre está listo en w.location
+        pathname,
+        push,
+        query: Object.fromEntries(query.entries()),
+        reload,
+        replace,
+        route: pathname,
+    };
 };

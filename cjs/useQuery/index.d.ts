@@ -26,7 +26,7 @@ export interface useQueryProps<T = QueryDataDefault> {
  * A hook that provides access to the query parameters in the URL.
  */
 export declare const useQuery: <T = QueryDataDefault>(props?: useQueryProps<T>) => {
-    load: boolean;
+    load: any;
     query: T;
     setQuery: (query: T) => boolean;
     onConcatQuery: (newQuery: T) => boolean;
