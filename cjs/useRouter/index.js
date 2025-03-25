@@ -1,49 +1,72 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useRouter = void 0;
 const react_1 = require("react");
-const fenextjs_functions_1 = require("fenextjs-functions");
-const useWindowRouter_1 = require("../useWindowRouter");
-const useRouter = ({ useNextRouter = true }) => {
-    const [router, setRouter] = (0, react_1.useState)(null);
-    const windowRouter = (0, useWindowRouter_1.useWindowRouter)();
+const useRouter = () => {
+    const _w = {
+        location: {
+            pathname: "",
+            search: "",
+            hash: "",
+            href: "",
+            reload: () => { },
+        },
+        history: {
+            forward: () => { },
+            back: () => { },
+            replaceState: () => { },
+        },
+        addEventListener: () => { },
+        removeEventListener: () => { },
+    };
+    const w = (typeof window == "undefined" ? _w : window) ?? _w;
+    const [pathname, setPathname] = (0, react_1.useState)(w?.location?.pathname ?? "");
+    const [query, setQuery] = (0, react_1.useState)(new URLSearchParams(w?.location?.search ?? ""));
+    const [hash, setHash] = (0, react_1.useState)(w?.location?.hash ?? "");
     (0, react_1.useEffect)(() => {
-        if (useNextRouter &&
-            process?.env?.["NEXT_PUBLIC_DISABLED_NEXT_ROUTER"] !== "TRUE") {
-            try {
-                Promise.resolve().then(() => __importStar(require("next/router"))).then((module) => {
-                    setRouter(module?.useRouter);
-                });
-            }
-            catch (e) {
-                (0, fenextjs_functions_1.env_log)("Next.js router no disponible, usando window.location como fallback");
-            }
-        }
-    }, [useNextRouter]);
-    return router ?? windowRouter;
+        const handleLocationChange = () => {
+            setPathname(w?.location?.pathname ?? "");
+            setQuery(new URLSearchParams(w?.location?.search ?? ""));
+            setHash(w?.location?.hash ?? "");
+        };
+        w.addEventListener("popstate", handleLocationChange); // Cambios en el historial
+        return () => {
+            w.removeEventListener("popstate", handleLocationChange);
+        };
+    }, []);
+    const push = (url) => {
+        w.location.href = url;
+        setPathname(w?.location?.pathname ?? "");
+        setQuery(new URLSearchParams(w?.location?.search ?? ""));
+        setHash(w?.location?.hash ?? "");
+    };
+    const replace = (url) => {
+        w?.history?.replaceState({}, "", url);
+        setPathname(w?.location?.pathname ?? "");
+        setQuery(new URLSearchParams(w?.location?.search ?? ""));
+        setHash(w?.location?.hash ?? "");
+    };
+    const back = () => {
+        w?.history?.back();
+    };
+    const forward = () => {
+        w?.history?.forward();
+    };
+    const reload = () => {
+        w?.location?.reload();
+    };
+    return {
+        asPath: pathname + (query.toString() ? `?${query.toString()}` : "") + hash,
+        back,
+        forward,
+        isReady: true, // Siempre está listo en w.location
+        pathname,
+        push,
+        query: Object.fromEntries(query.entries()),
+        reload,
+        replace,
+        route: pathname,
+    };
 };
 exports.useRouter = useRouter;
 //# sourceMappingURL=index.js.map
