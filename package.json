@@ -1,6 +1,6 @@
 {
   "name": "fenextjs-hook",
-  "version": "14.7.4",
+  "version": "15.0.0",
   "description": "",
   "main": "./cjs/index.js",
   "module": "./cjs/index.js",
@@ -53,12 +53,13 @@
     "@tanstack/react-query": "5.59.16",
     "country-state-city-nextjs": "10.0.0",
     "fenextjs-date": "3.3.0",
+    "fenextjs-dependencies": "1.0.0",
     "fenextjs-error": "3.2.3",
-    "fenextjs-functions": "6.2.0",
+    "fenextjs-functions": "7.0.0",
     "fenextjs-interface": "4.8.1",
-    "fenextjs-nextjs-dependencies": "3.0.0",
     "fenextjs-validator": "4.7.0",
-    "jwt-decode": "4.0.0"
+    "jwt-decode": "4.0.0",
+    "tslib": "^2.8.1"
   },
   "files": [
     "cjs",
