@@ -1,8 +1,8 @@
 import { useSessionStorage } from "../useSessionStorage";
-import { useRouter, useRouterProps } from "../useRouter";
+import { useRouter } from "../useRouter";
 import { useCallback, useEffect, useMemo } from "react";
 
-export interface useHistoryProps extends useRouterProps {
+export interface useHistoryProps {
     name?: string;
     useRouterCustom?: typeof useRouter;
 }
@@ -12,7 +12,6 @@ export interface useHistoryOnBackProps {
 
 export const useHistory = ({
     name = "fenextjs-history",
-    useNextRouter,
     useRouterCustom = useRouter,
 }: useHistoryProps) => {
     const {
@@ -40,7 +39,7 @@ export const useHistory = ({
         [paths],
     );
 
-    const router = useRouterCustom({ useNextRouter });
+    const router = useRouterCustom();
     useEffect(() => {
         if (load && !router.asPath.includes("[")) {
             onPushPath(router.asPath);

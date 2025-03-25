@@ -2,7 +2,6 @@ export * from "./useData";
 export * from "./useModal";
 export * from "./useRequest";
 export * from "./useNotification";
-export * from "./useQuery";
 export * from "./useUser";
 export * from "./useCSC";
 export * from "./useValidator";
