@@ -50,12 +50,12 @@ export const useApiQuery = <I, R>({
         const query = parseInputToQuery({
             input: { ...dataFilter, ...input, ...pagination },
         });
-        let FenextUser: string | undefined = undefined
+        let FenextUser: string | undefined = undefined;
         if (user) {
             try {
-                FenextUser = JSON.stringify(user)
+                FenextUser = JSON.stringify(user);
             } catch {
-                FenextUser = undefined
+                FenextUser = undefined;
             }
         }
         const response = await fetch(`${url}?${query}`, {

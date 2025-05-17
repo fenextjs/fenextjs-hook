@@ -18,12 +18,22 @@ const useApiQuery = ({ url, options, input, key, useUserToken = true, usedataFil
         const query = (0, fenextjs_functions_1.parseInputToQuery)({
             input: { ...dataFilter, ...input, ...pagination },
         });
+        let FenextUser = undefined;
+        if (user) {
+            try {
+                FenextUser = JSON.stringify(user);
+            }
+            catch {
+                FenextUser = undefined;
+            }
+        }
         const response = await fetch(`${url}?${query}`, {
             method: "GET",
             ...options,
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `${user?.token}`,
+                ...(FenextUser ? { FenextUser } : {}),
                 ...options?.headers,
             },
         });
