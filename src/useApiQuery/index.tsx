@@ -50,12 +50,21 @@ export const useApiQuery = <I, R>({
         const query = parseInputToQuery({
             input: { ...dataFilter, ...input, ...pagination },
         });
+        let FenextUser: string | undefined = undefined
+        if (user) {
+            try {
+                FenextUser = JSON.stringify(user)
+            } catch {
+                FenextUser = undefined
+            }
+        }
         const response = await fetch(`${url}?${query}`, {
             method: "GET",
             ...options,
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `${user?.token}`,
+                ...(FenextUser ? { FenextUser } : {}),
                 ...options?.headers,
             },
         });
