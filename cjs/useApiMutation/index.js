@@ -11,12 +11,22 @@ const useApiMutation = ({ url, onSuccess, onError, options, key, parseBody = JSO
     const { onApiError } = (0, useApiError_1.useApiError)({});
     const { onRefresh } = (0, useRefresh_1.useRefresh)({});
     const onMutation = async (input) => {
+        let FenextUser = undefined;
+        if (user) {
+            try {
+                FenextUser = JSON.stringify(user);
+            }
+            catch {
+                FenextUser = undefined;
+            }
+        }
         const response = await fetch(url, {
             method: "POST",
             ...options,
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `${user?.token}`,
+                ...(FenextUser ? { FenextUser } : {}),
                 ...options?.headers,
             },
             body: parseBody(input),
