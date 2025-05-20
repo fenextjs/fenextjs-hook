@@ -31,20 +31,27 @@ export interface useNotificationProps {
  * @param time - Optional duration in milliseconds for the notification to be displayed
  * @returns An object with methods to manage notifications
  */
-export const useNotification = ({ time = 2000 }: useNotificationProps) => {
+export const useNotification = ({ time = 4000 }: useNotificationProps) => {
     const [notification, setNotification] = useState<
-        NotificationDataProps | undefined
-    >(undefined);
-    const { onAction } = useAction<NotificationDataProps>({
+        NotificationDataProps[]
+    >([]);
+    const { onAction } = useAction<NotificationDataProps[]>({
         name: "fenextjs-notification",
-        onActionExecute: setNotification,
+        onActionExecute: (e)=>{
+            if(e){
+                setNotification(a=>[...a,...e])
+                setTimeout(() => {
+                    setNotification(a=>[...a].slice(e.length))
+                }, time);
+            }
+        },
     });
 
     /**
      * Resets the notification to its default state
      */
     const reset = () => {
-        onAction(undefined);
+        onAction([]);
     };
 
     /**
@@ -55,15 +62,12 @@ export const useNotification = ({ time = 2000 }: useNotificationProps) => {
         props: NotificationDataProps,
         options?: NotificationOptions,
     ) => {
-        onAction(props);
+        onAction([props]);
         window.Notification.requestPermission().then((permission) => {
             if (permission == "granted") {
                 new window.Notification(props.message, options);
             }
         });
-        setTimeout(() => {
-            reset();
-        }, time);
     };
 
     return {
