@@ -32,16 +32,16 @@ export interface useNotificationProps {
  * @returns An object with methods to manage notifications
  */
 export const useNotification = ({ time = 4000 }: useNotificationProps) => {
-    const [notification, setNotification] = useState<
-        NotificationDataProps[]
-    >([]);
+    const [notification, setNotification] = useState<NotificationDataProps[]>(
+        [],
+    );
     const { onAction } = useAction<NotificationDataProps[]>({
         name: "fenextjs-notification",
-        onActionExecute: (e)=>{
-            if(e){
-                setNotification(a=>[...a,...e])
+        onActionExecute: (e) => {
+            if (e) {
+                setNotification((a) => [...a, ...e]);
                 setTimeout(() => {
-                    setNotification(a=>[...a].slice(e.length))
+                    setNotification((a) => [...a].slice(e.length));
                 }, time);
             }
         },

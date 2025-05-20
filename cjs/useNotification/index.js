@@ -8,32 +8,36 @@ const useAction_1 = require("../useAction");
  * @param time - Optional duration in milliseconds for the notification to be displayed
  * @returns An object with methods to manage notifications
  */
-const useNotification = ({ time = 2000 }) => {
-    const [notification, setNotification] = (0, react_1.useState)(undefined);
+const useNotification = ({ time = 4000 }) => {
+    const [notification, setNotification] = (0, react_1.useState)([]);
     const { onAction } = (0, useAction_1.useAction)({
         name: "fenextjs-notification",
-        onActionExecute: setNotification,
+        onActionExecute: (e) => {
+            if (e) {
+                setNotification((a) => [...a, ...e]);
+                setTimeout(() => {
+                    setNotification((a) => [...a].slice(e.length));
+                }, time);
+            }
+        },
     });
     /**
      * Resets the notification to its default state
      */
     const reset = () => {
-        onAction(undefined);
+        onAction([]);
     };
     /**
      * Sets a notification to be displayed
      * @param props - Notification properties
      */
     const pop = (props, options) => {
-        onAction(props);
+        onAction([props]);
         window.Notification.requestPermission().then((permission) => {
             if (permission == "granted") {
                 new window.Notification(props.message, options);
             }
         });
-        setTimeout(() => {
-            reset();
-        }, time);
     };
     return {
         /**

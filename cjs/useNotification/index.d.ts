@@ -30,7 +30,7 @@ export declare const useNotification: ({ time }: useNotificationProps) => {
     /**
      * The current notification object
      */
-    notification: NotificationDataProps | undefined;
+    notification: NotificationDataProps[];
     /**
      * Sets a new notification to be displayed
      */
